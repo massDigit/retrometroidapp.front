@@ -1,5 +1,5 @@
 import "./globals.css";
-import Navbar from "./components/Navbar";
+import Header from "./components/Header";
 import Footer from "./components/Footer";
 
 const RootLayout = ({
@@ -10,6 +10,7 @@ const RootLayout = ({
   return (
     <html lang="en">
       <body>
+        <Header/>
         {children}
         <Footer/>
       </body>
