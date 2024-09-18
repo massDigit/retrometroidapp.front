@@ -104,7 +104,7 @@ const Header: React.FC = () => {
           width: 100%;
           max-width: 1400px;
           height: 50px; 
-          padding: 0 270px; /* Ajuste les espaces à gauche et à droite */
+          padding: 0 270px;
         }
 
         /* Logo */
