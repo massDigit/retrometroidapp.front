@@ -21,7 +21,7 @@ const Header: React.FC = () => {
           <ul className="hidden md:flex space-x-8 items-center">
             <li>
               <Link
-                href="/personnalisation"
+                href="/customization"
                 className="text-black hover:text-cyan-500 transition-colors text-lg"
               >
                 PERSONNALISATION
@@ -29,7 +29,7 @@ const Header: React.FC = () => {
             </li>
             <li>
               <Link
-                href="/psvita-oled"
+                href="/"
                 className="text-black hover:text-cyan-500 transition-colors text-lg"
               >
                 PSVITA - OLED
@@ -37,7 +37,7 @@ const Header: React.FC = () => {
             </li>
             <li>
               <Link
-                href="/editions-limitees"
+                href="/"
                 className="text-black hover:text-cyan-500 transition-colors text-lg"
               >
                 ÉDITIONS LIMITÉES
@@ -45,7 +45,7 @@ const Header: React.FC = () => {
             </li>
             <li>
               <Link
-                href="/accessories"
+                href="/"
                 className="text-black hover:text-cyan-500 transition-colors text-lg"
               >
                 ACCESSOIRES
@@ -53,7 +53,7 @@ const Header: React.FC = () => {
             </li>
             <li>
               <Link
-                href="/wallpaper"
+                href="/"
                 className="text-black hover:text-cyan-500 transition-colors text-lg"
               >
                 FONDS D ÉCRAN
