@@ -11,7 +11,10 @@ import Customization from "./customization";
 import Accessories from "./accessories";
 import Wallpapers from "./wallpapers";
 
-const RootLayout = () => {
+const RootLayout = ({
+  children,
+}: Readonly<{
+  children: React.ReactNode;}>) => {
   return (
     <Router>
       <html lang="en">
@@ -25,6 +28,7 @@ const RootLayout = () => {
             <Route path="/accessories" element={<Accessories />} />
             <Route path="/wallpaper" element={<Wallpapers/>} />
           </Routes>
+          {children}
           <Footer />
         </body>
       </html>
