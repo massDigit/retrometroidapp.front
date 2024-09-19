@@ -1,39 +1,29 @@
-"use client"
-
 import "./globals.css";
+import type { Metadata } from "next";
+import { Inter } from "next/font/google";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Dashboard from "./backoffice/page";
-import Customization from "./customization";
-// import PSVitaOLED from "./pages/PSVitaOLED";
-// import EditionsLimitees from "./pages/EditionsLimitees";
-import Accessories from "./accessories";
-import Wallpapers from "./wallpapers";
 
-const RootLayout = ({
-  children,
-}: Readonly<{
-  children: React.ReactNode;}>) => {
-  return (
-    <Router>
-      <html lang="en">
-        <body>
-          <Header />
-          <Routes>
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/customization" element={< Customization/>} />
-            {/* <Route path="/psvita-oled" element={<PSVitaOLED />} />
-            <Route path="/editions-limitees" element={<EditionsLimitees />} /> */}
-            <Route path="/accessories" element={<Accessories />} />
-            <Route path="/wallpaper" element={<Wallpapers/>} />
-          </Routes>
-          {children}
-          <Footer />
-        </body>
-      </html>
-    </Router>
-  );
+const inter = Inter({ subsets: ["latin"] });
+
+export const metadata: Metadata = {
+  title: "retrometroid",
 };
 
-export default RootLayout;
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
+  return (
+    <html lang="en">
+      <body className={`${inter.className}`}>
+        <div className="flex flex-col min-h-screen">
+          <Header />
+          <main className="flex-grow">{children}</main>
+          <Footer />
+        </div>
+      </body>
+    </html>
+  );
+}
