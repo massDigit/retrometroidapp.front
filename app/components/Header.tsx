@@ -1,85 +1,80 @@
+<<<<<<< HEAD
 "use client";
 
 import React from "react";
 import Link from "next/link";
+=======
+import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+>>>>>>> 53e5e4a0286ecff83bfe1decc1e2182d2d9bcdd9
 import { FiUser, FiShoppingCart, FiTruck } from "react-icons/fi";
 
 const Header: React.FC = () => {
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  if (!isClient) {
+    return null;
+  }
+
   return (
     <>
-      {/* Header principal */}
-      <header className="header">
-        <nav className="navigation">
-          {/* Logo avec texte */}
-          <div className="logo">
-            <Link href="/" legacyBehavior>
-              <a className="logo-link">
-                <span className="logo-text">
-                  <span className="main-text">RETROMETROID</span>
-                  <span className="sub-text">CUSTOMS CREATION</span>
-                </span>
-              </a>
+      <header className="bg-white flex flex-col items-center w-full">
+        <nav className="w-full max-w-6xl flex justify-between items-center h-14 px-10">
+          <div className="flex items-center">
+            <Link to="/" className="flex items-center text-black uppercase tracking-wider">
+              <span className="text-2xl font-bold">RETROMETROID</span>
+              <span className="ml-2 text-sm text-red-600 font-semibold">CUSTOMS CREATION</span>
             </Link>
           </div>
 
-          {/* Liens de navigation */}
-          <ul className="nav-links">
+          <ul className="hidden md:flex space-x-8 items-center">
             <li>
-              <Link href="/personnalisation" legacyBehavior>
-                <a>PERSONNALISATION</a>
+              <Link to="/personnalisation" className="text-black hover:text-cyan-500 transition-colors text-lg">
+                PERSONNALISATION
               </Link>
             </li>
             <li>
-              <Link href="/psvita-oled" legacyBehavior>
-                <a>PSVITA - OLED</a>
+              <Link to="/psvita-oled" className="text-black hover:text-cyan-500 transition-colors text-lg">
+                PSVITA - OLED
               </Link>
             </li>
             <li>
-              <Link href="/editions-limitees" legacyBehavior>
-                <a>ÉDITIONS LIMITÉES</a>
+              <Link to="/editions-limitees" className="text-black hover:text-cyan-500 transition-colors text-lg">
+                ÉDITIONS LIMITÉES
               </Link>
             </li>
             <li>
-              <Link href="/accessoires" legacyBehavior>
-                <a>ACCESSOIRES</a>
+              <Link to="/accessoires" className="text-black hover:text-cyan-500 transition-colors text-lg">
+                ACCESSOIRES
               </Link>
             </li>
             <li>
-              <Link href="/fonds-ecran" legacyBehavior>
-                <a>FONDS D'ÉCRAN</a>
+              <Link to="/fonds-ecran" className="text-black hover:text-cyan-500 transition-colors text-lg">
+                FONDS D'ÉCRAN
               </Link>
             </li>
           </ul>
 
-          {/* Icônes utilisateur et panier */}
-          <div className="icons">
-            <span className="icon">
-              <Link href="/account" legacyBehavior>
-                <a>
-                  <FiUser /> {/* Icône User contour */}
-                </a>
-              </Link>
-            </span>
-            <span className="icon">
-              <Link href="/cart" legacyBehavior>
-                <a>
-                  <FiShoppingCart /> {/* Icône Shopping Cart contour */}
-                </a>
-              </Link>
-            </span>
+          <div className="flex items-center space-x-6">
+            <Link to="/account" className="text-black hover:text-cyan-500 transition-colors">
+              <FiUser size={24} />
+            </Link>
+            <Link to="/cart" className="text-black hover:text-cyan-500 transition-colors">
+              <FiShoppingCart size={24} />
+            </Link>
           </div>
         </nav>
 
-        {/* Barre promotionnelle */}
-        <div className="promo-bar">
-          <span className="promo-icon">
-            <FiTruck />
-          </span>
-          <span className="promo-text">
-            Livraison offerte dès 139€ avec Mondial Relay
-          </span>
+        <div className="bg-black text-white text-center h-12 flex items-center justify-center">
+          <FiTruck className="mr-2" />
+          <span>Livraison offerte dès 139€ avec Mondial Relay</span>
         </div>
       </header>
+<<<<<<< HEAD
 
       {/* Styles */}
       <style jsx>{`
@@ -194,6 +189,8 @@ const Header: React.FC = () => {
           vertical-align: middle;
         }
       `}</style>
+=======
+>>>>>>> 53e5e4a0286ecff83bfe1decc1e2182d2d9bcdd9
     </>
   );
 };
