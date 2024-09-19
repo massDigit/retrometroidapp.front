@@ -1,9 +1,9 @@
-"use client";
+"use client"
 
 import "./globals.css";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Dashboard from "./backoffice/page";
 import Customization from "./customization";
 // import PSVitaOLED from "./pages/PSVitaOLED";
@@ -11,14 +11,23 @@ import Customization from "./customization";
 import Accessories from "./accessories";
 import Wallpapers from "./wallpapers";
 
-import { ReactNode } from "react";
-
-const RootLayout = ({ children }: { children: ReactNode }) => {
+const RootLayout = ({
+  children,
+}: Readonly<{
+  children: React.ReactNode;}>) => {
   return (
     <Router>
       <html lang="en">
         <body>
           <Header />
+          <Routes>
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/customization" element={< Customization/>} />
+            {/* <Route path="/psvita-oled" element={<PSVitaOLED />} />
+            <Route path="/editions-limitees" element={<EditionsLimitees />} /> */}
+            <Route path="/accessories" element={<Accessories />} />
+            <Route path="/wallpaper" element={<Wallpapers/>} />
+          </Routes>
           {children}
           <Footer />
         </body>
