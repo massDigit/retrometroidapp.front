@@ -1,8 +1,8 @@
 "use client";
 
-import React from 'react';
-import Link from 'next/link';
-import { FiUser, FiShoppingCart, FiTruck } from 'react-icons/fi';
+import React from "react";
+import Link from "next/link";
+import { FiUser, FiShoppingCart, FiTruck } from "react-icons/fi";
 
 const Header: React.FC = () => {
   return (
@@ -84,7 +84,7 @@ const Header: React.FC = () => {
       {/* Styles */}
       <style jsx>{`
         /* Charger la police Bebas Neue */
-        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+        @import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap");
 
         /* Header principal */
         .header {
@@ -99,11 +99,11 @@ const Header: React.FC = () => {
         /* Style de la navigation */
         .navigation {
           display: flex;
-          align-items: center; 
+          align-items: center;
           justify-content: space-between;
           width: 100%;
           max-width: 1400px;
-          height: 50px; 
+          height: 50px;
           padding: 0 270px;
         }
 
@@ -114,7 +114,7 @@ const Header: React.FC = () => {
           text-decoration: none;
         }
         .logo-text {
-          font-family: 'Bebas Neue', sans-serif;
+          font-family: "Bebas Neue", sans-serif;
           text-transform: uppercase;
           color: #000;
         }
@@ -145,7 +145,7 @@ const Header: React.FC = () => {
           flex-grow: 1;
         }
         .nav-links a {
-          font-family: 'Bebas Neue', sans-serif;
+          font-family: "Bebas Neue", sans-serif;
           text-decoration: none;
           color: #000;
           font-weight: 300;
