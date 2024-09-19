@@ -1,5 +1,5 @@
-const customization = () => {
+const Customization = () => {
   return <div>Personnalisation</div>;
 };
 
-export default customization;
+export default Customization;

@@ -1,3 +1,5 @@
+"use client"
+
 import React from "react";
 import NavbarBackOffice from "../components/NavbarBackOffice";
 import { FaShoppingCart, FaMoneyBill, FaBoxOpen, FaUser } from 'react-icons/fa';
