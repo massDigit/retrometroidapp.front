@@ -1,32 +1,42 @@
 "use client";
+
+
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 
 interface FormValues {
   itemName: string;
+  type:string;
   description: string;
   price: number;
-  image: File | null;
+  quantityStock: number;
+  category: string;
   accessories: string;
   options: string;
 }
 
 interface FormErrors {
   itemName?: string;
+  type?:string;
   description?: string;
   price?: string;
-  image?: string;
+  quantityStock?: string;
+  category?: string;
   accessories?: string;
   options?: string;
 }
 
 const AddProductForm: React.FC = () => {
   const router = useRouter();
+
+
   const [formData, setFormData] = useState<FormValues>({
     itemName: "",
+    type:"",
     description: "",
     price: 0,
-    image: null,
+    quantityStock: 0,
+    category: "",
     accessories: "",
     options: "",
   });
@@ -66,10 +76,13 @@ const AddProductForm: React.FC = () => {
     if (formData.price <= 0) {
       newErrors.price = "Le prix doit être supérieur à 0";
     }
-    if (!formData.image) {
-      newErrors.image = "Une image est requise";
+    if (formData.quantityStock <= 0) {
+      newErrors.quantityStock = "La quantité de stock doit être supérieure à 0";
     }
-
+    if (!formData.category || formData.category.length < 3) {
+      newErrors.category = "La catégorie doit comporter au moins 3 caractères";
+    }
+  
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -80,14 +93,61 @@ const AddProductForm: React.FC = () => {
     if (validateForm()) {
       setSubmitting(true);
 
+
+      let productId = null
+      let cartUrl = null;
+
       // Requête API pour ajouter le produit
+      try {
+        // Transformation des accessoires et options en tableaux
+        const accessoriesArray = formData.accessories
+          .split(",")
+          .map((item) => item.trim());
 
-      setTimeout(() => {
-        //Redirige vers la page showProducts
-        router.push("/showProducts");
-      }, 1000);
+        const optionsArray = formData.options.split(",")
+        .map((item) => item.trim());
 
-      setSubmitting(false);
+        // Préparation des données en JSON
+        const bodyData = {
+          name: formData.itemName,
+          type: formData.type, 
+          description: formData.description,
+          price: formData.price,
+          stockQuantity: formData.quantityStock,
+          category: formData.category,
+          accessories: accessoriesArray,
+          options: optionsArray,
+        };
+      
+        
+        const response = await fetch("http://localhost:3000/products/addProduct/", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(bodyData), // Conversion des données en JSON
+        });
+
+        if (!response.ok) {
+          throw new Error("Erreur lors de l'ajout du produit");
+        }
+
+        const data = await response.json();
+        
+        productId = data.product._id;
+
+        cartUrl = `https://api-retrometroid.devprod.fr/panier/${productId}`;
+        
+
+      } catch (error) {
+        console.error("Erreur lors de l'ajout du produit:", error);
+      } finally {
+        if (cartUrl) {
+          router.push(cartUrl);
+        }
+        setSubmitting(false);
+      
+      }
     }
   };
 
@@ -134,6 +194,25 @@ const AddProductForm: React.FC = () => {
 
       <div>
         <label
+          htmlFor="type"
+          className="block text-gray-700 font-semibold mb-2"
+        >
+          Type
+        </label>
+        <textarea
+          id="type"
+          name="type"
+          value={formData.type}
+          onChange={handleChange}
+          className="w-full p-3 border border-gray-300 rounded-lg bg-gray-100 text-gray-900 placeholder-gray-400 focus:ring-2 focus:ring-indigo-500"
+        />
+        {errors.type && (
+          <div className="text-red-500 text-sm mt-1">{errors.type}</div>
+        )}
+      </div>
+
+      <div>
+        <label
           htmlFor="price"
           className="block text-gray-700 font-semibold mb-2"
         >
@@ -151,26 +230,43 @@ const AddProductForm: React.FC = () => {
           <div className="text-red-500 text-sm mt-1">{errors.price}</div>
         )}
       </div>
-
       <div>
         <label
-          htmlFor="image"
+          htmlFor="price"
           className="block text-gray-700 font-semibold mb-2"
         >
-          Image
+          Stock
         </label>
         <input
-          id="image"
-          name="image"
-          type="file"
-          onChange={handleImageChange}
+          id="quantityStock"
+          name="quantityStock"
+          type="number"
+          value={formData.quantityStock}
+          onChange={handleChange}
           className="w-full p-3 border border-gray-300 rounded-lg bg-gray-100 text-gray-900 placeholder-gray-400 focus:ring-2 focus:ring-indigo-500"
         />
-        {errors.image && (
-          <div className="text-red-500 text-sm mt-1">{errors.image}</div>
+        {errors.quantityStock && (
+          <div className="text-red-500 text-sm mt-1">{errors.quantityStock}</div>
         )}
       </div>
-
+      <div>
+        <label
+          htmlFor="category"
+          className="block text-gray-700 font-semibold mb-2"
+        >
+         Category
+        </label>
+        <input
+          id="category"
+          name="category"
+          value={formData.category}
+          onChange={handleChange}
+          className="w-full p-3 border border-gray-300 rounded-lg bg-gray-100 text-gray-900 placeholder-gray-400 focus:ring-2 focus:ring-indigo-500"
+        />
+        {errors.category && (
+          <div className="text-red-500 text-sm mt-1">{errors.category}</div>
+        )}
+      </div>
       <div>
         <label
           htmlFor="accessories"
