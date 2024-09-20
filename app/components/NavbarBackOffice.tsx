@@ -1,83 +1,100 @@
-'use client'
+"use client";
+
 import {
+  FaBars,
+  FaTimes,
   FaTachometerAlt,
   FaBoxOpen,
-  FaHeadphonesAlt,
   FaCogs,
-  FaShoppingCart,
-  FaSignOutAlt,
+  FaTools,
 } from "react-icons/fa";
-import React, { useState } from "react";
 import Link from "next/link";
+import React, { useState } from "react";
 
 const NavbarBackOffice: React.FC = () => {
-  const [menuOpen, setMenuOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
   const toggleMenu = () => {
-    setMenuOpen(!menuOpen);
+    setIsOpen(!isOpen);
   };
 
   return (
-    <nav className="bg-[#1a1a2e] text-white flex justify-between items-center px-6 py-4 border-b-4 border-cyan-400 relative z-50">
-      <div className="text-3xl uppercase text-pink-300 tracking-wider">
-        Logo
+    <nav className="bg-gray-100 text-gray-900 shadow-md">
+      <div className="container mx-auto px-4 py-4 flex justify-between items-center">
+        <div className="text-3xl font-bold">
+          <Link href="/backoffice">
+            <span className="cursor-pointer hover:text-indigo-500 transition-colors">
+              BackOffice
+            </span>
+          </Link>
+        </div>
+
+        <div className="hidden md:flex space-x-8 text-lg">
+          <Link href="/backoffice/dashboard">
+            <span className="flex items-center space-x-2 hover:text-indigo-500 transition-colors cursor-pointer">
+              <FaTachometerAlt />
+              <span>Dashboard</span>
+            </span>
+          </Link>
+          <Link href="/backoffice/products">
+            <span className="flex items-center space-x-2 hover:text-indigo-500 transition-colors cursor-pointer">
+              <FaBoxOpen />
+              <span>Produits</span>
+            </span>
+          </Link>
+          <Link href="/backoffice/options">
+            <span className="flex items-center space-x-2 hover:text-indigo-500 transition-colors cursor-pointer">
+              <FaCogs />
+              <span>Options</span>
+            </span>
+          </Link>
+          <Link href="/backoffice/accessories">
+            <span className="flex items-center space-x-2 hover:text-indigo-500 transition-colors cursor-pointer">
+              <FaTools />
+              <span>Accessoires</span>
+            </span>
+          </Link>
+        </div>
+
+        <div className="md:hidden">
+          <button onClick={toggleMenu} className="focus:outline-none">
+            {isOpen ? (
+              <FaTimes className="w-6 h-6" />
+            ) : (
+              <FaBars className="w-6 h-6" />
+            )}
+          </button>
+        </div>
       </div>
 
-      <div
-        className={`cursor-pointer flex flex-col justify-between h-6 w-8 z-50 transition-all duration-300 ${
-          menuOpen ? "transform rotate-90" : ""
-        }`}
-        onClick={toggleMenu}
-      >
-        <div className={`h-1 w-full bg-white transition-all ${menuOpen ? "rotate-45 translate-y-2" : ""}`}></div>
-        <div className={`h-1 w-full bg-white transition-all ${menuOpen ? "opacity-0" : ""}`}></div>
-        <div className={`h-1 w-full bg-white transition-all ${menuOpen ? "-rotate-45 -translate-y-2" : ""}`}></div>
-      </div>
-
-      <div
-        className={`fixed top-0 left-0 h-full w-[250px] bg-[#1a1a2e] px-6 py-12 transition-transform duration-300 shadow-lg ${
-          menuOpen ? "translate-x-0" : "-translate-x-full"
-        }`}
-      >
-        <ul className="space-y-6">
-          <li>
-            <Link href="/backoffice/dashboard" className="text-lg flex items-center text-white hover:text-cyan-400 transition">
-              <FaTachometerAlt className="mr-3" />
-              Tableau de bord
-            </Link>
-          </li>
-          <li>
-            <Link href="/backoffice/addProduct" className="text-lg flex items-center text-white hover:text-cyan-400 transition">
-              <FaBoxOpen className="mr-3" />
-              Produits
-            </Link>
-          </li>
-          <li>
-            <Link href="/backoffice/addAccessories" className="text-lg flex items-center text-white hover:text-cyan-400 transition">
-              <FaHeadphonesAlt className="mr-3" />
-              Accessoires
-            </Link>
-          </li>
-          <li>
-            <Link href="/backoffice/addOptions" className="text-lg flex items-center text-white hover:text-cyan-400 transition">
-              <FaCogs className="mr-3" />
-              Options
-            </Link>
-          </li>
-          <li>
-            <Link href="/backoffice/orders" className="text-lg flex items-center text-white hover:text-cyan-400 transition">
-              <FaShoppingCart className="mr-3" />
-              Commandes
-            </Link>
-          </li>
-          <li>
-            <Link href="/backoffice/logout" className="text-lg flex items-center text-red-500 hover:text-white hover:bg-red-500 transition">
-              <FaSignOutAlt className="mr-3" />
-              Déconnexion
-            </Link>
-          </li>
-        </ul>
-      </div>
+      {isOpen && (
+        <div className="md:hidden bg-gray-100 text-gray-900 px-4 py-4 space-y-4">
+          <Link href="/backoffice/">
+            <span className="flex items-center space-x-2 hover:text-indigo-500 transition-colors cursor-pointer">
+              <FaTachometerAlt />
+              <span>Dashboard</span>
+            </span>
+          </Link>
+          <Link href="/backoffice/products/showProducts">
+            <span className="flex items-center space-x-2 hover:text-indigo-500 transition-colors cursor-pointer">
+              <FaBoxOpen />
+              <span>Produits</span>
+            </span>
+          </Link>
+          <Link href="/backoffice/options/showOptions">
+            <span className="flex items-center space-x-2 hover:text-indigo-500 transition-colors cursor-pointer">
+              <FaCogs />
+              <span>Options</span>
+            </span>
+          </Link>
+          <Link href="/backoffice/accessories/showAccessories">
+            <span className="flex items-center space-x-2 hover:text-indigo-500 transition-colors cursor-pointer">
+              <FaTools />
+              <span>Accessoires</span>
+            </span>
+          </Link>
+        </div>
+      )}
     </nav>
   );
 };
