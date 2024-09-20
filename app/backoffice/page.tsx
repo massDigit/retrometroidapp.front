@@ -3,10 +3,14 @@
 import React from "react";
 import Link from "next/link";
 import { FaShoppingCart, FaMoneyBill, FaBoxOpen, FaUser } from "react-icons/fa";
+import NavbarBackOffice from "../components/NavbarBackOffice";
 
 const Dashboard: React.FC = () => {
   return (
     <div>
+      <div>
+        <NavbarBackOffice/>
+      </div>
       <div className="p-10 bg-gray-100 text-gray-800 min-h-screen">
         <h1 className="text-4xl font-bold mb-8 text-center">Tableau de bord</h1>
 
