@@ -17,12 +17,6 @@ const Dashboard: React.FC = () => {
             <p className="text-3xl font-bold">140</p>
           </div>
 
-          <div className="bg-gradient-to-r from-yellow-400 to-orange-500 p-6 rounded-lg shadow-lg transform hover:scale-105 transition duration-300 text-white">
-            <FaMoneyBill className="text-3xl mb-4" />
-            <h3 className="text-lg font-semibold mb-2">Revenu total</h3>
-            <p className="text-3xl font-bold">1 000 €</p>
-          </div>
-
           <div className="bg-gradient-to-r from-purple-400 to-pink-500 p-6 rounded-lg shadow-lg transform hover:scale-105 transition duration-300 text-white">
             <FaBoxOpen className="text-3xl mb-4" />
             <h3 className="text-lg font-semibold mb-2">Produits en stock</h3>
