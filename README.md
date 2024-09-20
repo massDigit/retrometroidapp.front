@@ -1,36 +1,72 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+## Introduction
 
-## Getting Started
+**RetroMetroid Customs** est un site de personnalisation de manettes rétro et d'autres consoles classiques. Il permet aux utilisateurs de configurer leurs propres manettes en personnalisant différents aspects (coque, écran, boutons, accessoires, etc.) et de passer commande en ligne. Le site inclut également des fonctionnalités de gestion pour l'administrateur (back-office) 
 
-First, run the development server:
+## Prérequis
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- Node.js (version 16 ou supérieure)
+- npm ou yarn
+- Next.js (version 14.2.12 ou supérieure)
+- TypeScript
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Installation
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1. Clonez le projet :
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+   ```
+   git clone https://github.com/massDigit/retrometroidapp.front.git
+   ```
+2. Accédez au répertoire du projet :
+   
+   ```
+   cd retrometroidapp.front
+   ```
+3. Installez les dépendances :
+   
+   Si vous utilisez npm :
+   
+   ```
+    npm install
+   ```
 
-## Learn More
+   Si vous utilisez yarn :
 
-To learn more about Next.js, take a look at the following resources:
+   ```
+    yarn install
+   ```
+4. Lancez le serveur de développement :
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+   Si vous utilisez npm :
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+     ```
+    npm run dev
+     ```
 
-## Deploy on Vercel
+   Si vous utilisez yarn :
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+      ```
+    yarn dev
+     ```
+5. Ouvrez votre navigateur à l'adresse suivante :
+   ```
+   http://localhost:3000
+   ```
+## Fonctionnalités
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Personnalisation des manettes : Les utilisateurs peuvent choisir parmi différentes options pour configurer leurs manettes.
+- Panier d'achat : Un panier d'achat interactif avec gestion des articles personnalisés.
+- Back-office : Un tableau de bord pour gérer les produits, les options et les accessoires.
+- Pages : Inclus les pages de connexion, inscription, personnalisation, panier, et gestion des produits.
+
+## Technologies utilisées
+
+**Next.js** : Framework React pour le développement d'applications web.
+
+**TypeScript** : Langage de programmation avec typage statique.
+
+**Tailwind CSS** : Framework CSS pour une mise en page réactive.
+
+**React Icons** : Librairie d'icônes pour React.
+   
+
+
