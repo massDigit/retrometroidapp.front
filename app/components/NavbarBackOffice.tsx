@@ -30,25 +30,25 @@ const NavbarBackOffice: React.FC = () => {
         </div>
 
         <div className="hidden md:flex space-x-8 text-lg">
-          <Link href="/backoffice/dashboard">
+          <Link href="/backoffice">
             <span className="flex items-center space-x-2 hover:text-indigo-500 transition-colors cursor-pointer">
               <FaTachometerAlt />
               <span>Dashboard</span>
             </span>
           </Link>
-          <Link href="/backoffice/products">
+          <Link href="/backoffice/products/addProduct">
             <span className="flex items-center space-x-2 hover:text-indigo-500 transition-colors cursor-pointer">
               <FaBoxOpen />
               <span>Produits</span>
             </span>
           </Link>
-          <Link href="/backoffice/options">
+          <Link href="/backoffice/options/addOption">
             <span className="flex items-center space-x-2 hover:text-indigo-500 transition-colors cursor-pointer">
               <FaCogs />
               <span>Options</span>
             </span>
           </Link>
-          <Link href="/backoffice/accessories">
+          <Link href="/backoffice/accessories/addAccessories">
             <span className="flex items-center space-x-2 hover:text-indigo-500 transition-colors cursor-pointer">
               <FaTools />
               <span>Accessoires</span>
