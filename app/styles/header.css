@@ -1,0 +1,73 @@
+/* Styles pour le header */
+.header {
+  background-color: #1a1a2e;
+  color: #fff;
+  display: flex; /* Utilisation de Flexbox */
+  justify-content: space-between; /* Espacement entre les éléments */
+  align-items: center; /* Alignement vertical */
+  padding: 10px 20px;
+  border-bottom: 4px solid #00f0ff;
+  position: relative;
+  z-index: 1000;
+}
+
+.header-logo h1 {
+  font-size: 2rem;
+  color: #f08080;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin: 0;
+}
+
+.navbar-menu {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  display: flex; /* Alignement horizontal */
+}
+
+.navbar-link {
+  text-decoration: none;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  padding: 15px 0;
+  font-size: 1.2rem;
+  transition: color 0.3s ease, text-shadow 0.3s ease;
+  margin-right: 20px; /* Espacement entre les liens */
+}
+
+.navbar-link:hover {
+  color: #00f0ff;
+  text-shadow: 0px 0px 10px #00f0ff;
+}
+
+.navbar-icon {
+  margin-right: 10px;
+  font-size: 20px;
+}
+
+.logout {
+  color: #ff4f4f;
+}
+
+.logout:hover {
+  color: #fff;
+  background-color: #ff4f4f;
+}
+
+.icons {
+  display: flex; /* Alignement horizontal */
+  align-items: center;
+  gap: 1.5rem; /* Espacement entre les icônes */
+}
+
+.banner {
+  background-color: #000;
+  color: #fff;
+  text-align: center;
+  height: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
