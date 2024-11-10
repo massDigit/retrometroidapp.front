@@ -12,7 +12,7 @@ interface Option {
 
 const ShowOptionsPage: React.FC = () => {
   const [options, setOptions] = useState<Option[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
+  const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
   // Récupération des options

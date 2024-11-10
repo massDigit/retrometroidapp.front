@@ -3,6 +3,8 @@
 
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
+import OptionSelector from "@/app/components/option/OptionSelector"; 
+import { log } from "console";
 
 interface FormValues {
   itemName: string;
@@ -11,8 +13,23 @@ interface FormValues {
   price: number;
   quantityStock: number;
   category: string;
-  accessories: string;
-  options: string;
+  coqueName: string;
+  coqueColor:string;
+  buttonName: string;
+  buttonColor:String;
+  padsName: string;
+  padsColor:String;
+  laniereName: string ;
+  laniereColor:string;
+  stickersName: string;
+  stickersColor:string;
+  batterieName: string ;
+  batterieColor:string;
+  screenName: string ;
+  screenColor:string;
+  sacoche:string;
+  screen_shield:string;
+  silicone_shield:string;
 }
 
 interface FormErrors {
@@ -22,8 +39,23 @@ interface FormErrors {
   price?: string;
   quantityStock?: string;
   category?: string;
-  accessories?: string;
-  options?: string;
+  coqueName?: string;
+  coqueColor?:string;
+  buttonName?: string;
+  buttonColor?:String;
+  padsName?: string;
+  padsColor?:String;
+  laniereName?: string ;
+  laniereColor?:string;
+  stickersName?: string;
+  stickersColor?:string;
+  batterieName?: string ;
+  batterieColor?:string;
+  screenName?: string ;
+  screenColor?:string;
+  sacoche?:string;
+  screen_shield?:string;
+  silicone_shield?:string;
 }
 
 const AddProductForm: React.FC = () => {
@@ -37,8 +69,24 @@ const AddProductForm: React.FC = () => {
     price: 0,
     quantityStock: 0,
     category: "",
-    accessories: "",
-    options: "",
+    coqueName: "",
+    coqueColor:"",
+    buttonName: "",
+    buttonColor:"",
+    padsName: "",
+    padsColor:"",
+    laniereName: "",
+    laniereColor:"",
+    stickersName: "",
+    stickersColor:"",
+    batterieName: "",
+    batterieColor:"",
+    screenName: "",
+    screenColor:"",
+    sacoche:"",
+    screen_shield:"",
+    silicone_shield:"",
+   
   });
 
   const [errors, setErrors] = useState<FormErrors>({});
@@ -54,13 +102,7 @@ const AddProductForm: React.FC = () => {
     }));
   };
 
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files ? e.target.files[0] : null;
-    setFormData((prev) => ({
-      ...prev,
-      image: file,
-    }));
-  };
+  
 
   const validateForm = () => {
     const newErrors: FormErrors = {};
@@ -82,7 +124,49 @@ const AddProductForm: React.FC = () => {
     if (!formData.category || formData.category.length < 3) {
       newErrors.category = "La catégorie doit comporter au moins 3 caractères";
     }
-  
+    if (!formData.coqueName ) {
+      newErrors.coqueName = "Le nom de l'option doit etre spécifier";
+
+    }if (!formData.coqueColor ) {
+      newErrors.coqueColor = "La couleur de l option doit etre specifier";
+    }
+    if (!formData.buttonName ) {
+      newErrors. buttonName = "Le nom de l'option doit etre spécifier";
+
+    }if (!formData.buttonColor ) {
+      newErrors.buttonColor = "La couleur de l option doit etre specifier";
+    }
+    if (!formData.padsName) {
+      newErrors.padsName = "Le nom de l'option doit etre spécifier";
+
+    }if (!formData.padsColor ) {
+      newErrors.padsColor= "La couleur de l option doit etre specifier";
+
+    }if (!formData.laniereName ) {
+      newErrors.laniereName = "Le nom de l'option doit etre spécifier";
+
+    }if (!formData.laniereColor ) {
+      newErrors.laniereColor = "La couleur de l option doit etre specifier";
+    }
+    if (!formData.stickersName ) {
+      newErrors.stickersName = "Le nom de l'option doit etre spécifier";
+
+    }if (!formData.stickersColor ) {
+      newErrors.stickersColor= "La couleur de l option doit etre specifier";
+    }
+    if (!formData.batterieName ) {
+      newErrors.batterieName = "Le nom de l'option doit etre spécifier";
+
+    }
+    if (!formData.batterieColor ) {
+      newErrors.batterieColor = "La couleur de l option doit etre specifier";
+    }
+    if (!formData.screenName ) {
+      newErrors.screenName = "Le nom de l'option doit etre spécifier";
+
+    }if (!formData.screenColor ) {
+      newErrors.screenColor = "La couleur de l option doit etre specifier";
+    }
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -99,14 +183,6 @@ const AddProductForm: React.FC = () => {
 
       // Requête API pour ajouter le produit
       try {
-        // Transformation des accessoires et options en tableaux
-        const accessoriesArray = formData.accessories
-          .split(",")
-          .map((item) => item.trim());
-
-        const optionsArray = formData.options.split(",")
-        .map((item) => item.trim());
-
         // Préparation des données en JSON
         const bodyData = {
           name: formData.itemName,
@@ -115,10 +191,26 @@ const AddProductForm: React.FC = () => {
           price: formData.price,
           stockQuantity: formData.quantityStock,
           category: formData.category,
-          accessories: accessoriesArray,
-          options: optionsArray,
+          coqueName: formData.coqueName,
+          coqueColor: formData.coqueColor,
+          buttonName: formData.buttonName,
+          buttonColor: formData.buttonColor,
+          padsName: formData.padsName,
+          padsColor: formData.padsColor,
+          laniereName: formData.laniereName,
+          laniereColor: formData.laniereColor,
+          stickersName: formData.stickersName,
+          stickersColor: formData.stickersColor,
+          batterieName: formData.batterieName,
+          batterieColor: formData.batterieColor,
+          screenName: formData.screenName,
+          screenColor: formData.screenColor,
+          sacoche: Array.isArray(formData.sacoche) ? formData.sacoche : [formData.sacoche],
+          screen_shield: Array.isArray(formData.screen_shield) ? formData.screen_shield : [formData.screen_shield],
+          silicone_shield: Array.isArray(formData.silicone_shield) ? formData.silicone_shield : [formData.silicone_shield],
         };
       
+        console.log(bodyData);
         
         const response = await fetch("http://localhost:3000/products/addProduct/", {
           method: "POST",
@@ -126,8 +218,10 @@ const AddProductForm: React.FC = () => {
             "Content-Type": "application/json",
           },
           body: JSON.stringify(bodyData), // Conversion des données en JSON
+          
         });
-
+        console.log(response.body);
+        
         if (!response.ok) {
           throw new Error("Erreur lors de l'ajout du produit");
         }
@@ -267,41 +361,101 @@ const AddProductForm: React.FC = () => {
           <div className="text-red-500 text-sm mt-1">{errors.category}</div>
         )}
       </div>
+      <OptionSelector
+        optionLabel="Coque"
+        optionName="coqueName"
+        colorName="coqueColor"
+        formData={formData}
+        setFormData={setFormData}
+      />
+      <OptionSelector
+        optionLabel="Bouton"
+        optionName="buttonName"
+        colorName="buttonColor"
+        formData={formData}
+        setFormData={setFormData}
+      />
+      <OptionSelector
+        optionLabel="Pad"
+        optionName="padsName"
+        colorName="padsColor"
+        formData={formData}
+        setFormData={setFormData}
+      />
+      <OptionSelector
+        optionLabel="Lanière"
+        optionName="laniereName"
+        colorName="laniereColor"
+        formData={formData}
+        setFormData={setFormData}
+      />
+      <OptionSelector
+        optionLabel="stickers"
+        optionName="stickersName"
+        colorName="stickersColor"
+        formData={formData}
+        setFormData={setFormData}
+      />
+      <OptionSelector
+        optionLabel="batterie"
+        optionName="batterieName"
+        colorName="batterieColor"
+        formData={formData}
+        setFormData={setFormData}
+      />
+      <OptionSelector
+        optionLabel="Écran"
+        optionName="screenName"
+        colorName="screenColor"
+        formData={formData}
+        setFormData={setFormData}
+      />
       <div>
-        <label
-          htmlFor="accessories"
-          className="block text-gray-700 font-semibold mb-2"
-        >
-          Accessoires
+        <label htmlFor="sacoche" className="block text-gray-700 font-semibold mb-2">
+          Sacoche
         </label>
-        <textarea
-          id="accessories"
-          name="accessories"
-          value={formData.accessories}
+        <input
+          id="sacoche"
+          name="sacoche"
+          type="text"
+          value={formData.sacoche}
           onChange={handleChange}
           className="w-full p-3 border border-gray-300 rounded-lg bg-gray-100 text-gray-900 placeholder-gray-400 focus:ring-2 focus:ring-indigo-500"
         />
-        {errors.accessories && (
-          <div className="text-red-500 text-sm mt-1">{errors.accessories}</div>
+        {errors.sacoche && <div className="text-red-500 text-sm mt-1">{errors.sacoche}</div>}
+      </div>
+
+      <div>
+        <label htmlFor="screen_shield" className="block text-gray-700 font-semibold mb-2">
+          Protection d'écran
+        </label>
+        <input
+          id="screen_shield"
+          name="screen_shield"
+          type="text"
+          value={formData.screen_shield}
+          onChange={handleChange}
+          className="w-full p-3 border border-gray-300 rounded-lg bg-gray-100 text-gray-900 placeholder-gray-400 focus:ring-2 focus:ring-indigo-500"
+        />
+        {errors.screen_shield && (
+          <div className="text-red-500 text-sm mt-1">{errors.screen_shield}</div>
         )}
       </div>
 
       <div>
-        <label
-          htmlFor="options"
-          className="block text-gray-700 font-semibold mb-2"
-        >
-          Options
+        <label htmlFor="silicone_shield" className="block text-gray-700 font-semibold mb-2">
+          Protection en silicone
         </label>
-        <textarea
-          id="options"
-          name="options"
-          value={formData.options}
+        <input
+          id="silicone_shield"
+          name="silicone_shield"
+          type="text"
+          value={formData.silicone_shield}
           onChange={handleChange}
           className="w-full p-3 border border-gray-300 rounded-lg bg-gray-100 text-gray-900 placeholder-gray-400 focus:ring-2 focus:ring-indigo-500"
         />
-        {errors.options && (
-          <div className="text-red-500 text-sm mt-1">{errors.options}</div>
+        {errors.silicone_shield && (
+          <div className="text-red-500 text-sm mt-1">{errors.silicone_shield}</div>
         )}
       </div>
 
