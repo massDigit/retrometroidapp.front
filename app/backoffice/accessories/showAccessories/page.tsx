@@ -53,7 +53,7 @@ const ShowAccessoriesPage: React.FC = () => {
       </div>
     );
   }
-  console.log(accessories)
+  
   return (
     <div>
       <div>
