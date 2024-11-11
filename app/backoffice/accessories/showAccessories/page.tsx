@@ -17,7 +17,24 @@ const ShowAccessoriesPage: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
 
   // Récupération des accessoires
-  useEffect(() => {}, []);
+  useEffect(() => {
+    const fetchAccessories = async () => {
+      try {
+        const response = await fetch("/api/accessories");
+        if (!response.ok) {
+          throw new Error("Failed to fetch accessories");
+        }
+        const data = await response.json();
+        setAccessories(data);
+      } catch (error) {
+        setError("Le contenu de la page est indisponible");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchAccessories();
+  }, []);
 
   if (loading) {
     return (

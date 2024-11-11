@@ -19,7 +19,24 @@ const ShowProductsPage: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
 
   // Récupération des produits
-  useEffect(() => {}, []);
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await fetch("/api/products");
+        if (!response.ok) {
+          throw new Error("Failed to fetch products");
+        }
+        const data = await response.json();
+        setProducts(data);
+      } catch (error) {
+        setError("Le contenu de la page est indisponible");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProducts();
+  }, []);
 
   if (loading) {
     return (

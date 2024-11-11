@@ -16,7 +16,24 @@ const ShowOptionsPage: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
 
   // Récupération des options
-  useEffect(() => {}, []);
+  useEffect(() => {
+    const fetchOptions = async () => {
+      try {
+        const response = await fetch("/api/options");
+        if (!response.ok) {
+          throw new Error("Failed to fetch options");
+        }
+        const data = await response.json();
+        setOptions(data);
+      } catch (error) {
+        setError("Le contenu de la page est indisponible");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchOptions();
+  }, []);
 
   if (loading) {
     return (
