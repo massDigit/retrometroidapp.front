@@ -4,6 +4,7 @@ const OptionForm: React.FC = () => {
   const [optionData, setOptionData] = useState({
     name: "",
     description: "",
+    type:"",
     color : "",
     imagePathFront: "",
     imagePathSide:"",
@@ -15,6 +16,7 @@ const OptionForm: React.FC = () => {
   const [errors, setErrors] = useState({
     name: "",
     description: "",
+    type:"",
     color : "",
     imagePathFront: "",
     imagePathSide:"",
@@ -53,6 +55,7 @@ const OptionForm: React.FC = () => {
     const newErrors = {
       name: "",
       description: "",
+      type:"",
       color : "",
       imagePathFront: "",
       imagePathSide: "",
@@ -66,6 +69,10 @@ const OptionForm: React.FC = () => {
     }
     if (!optionData.description) {
       newErrors.description = "La description est requise";
+      isValid = false;
+    }
+    if (!optionData.type) {
+      newErrors.type = "Le type doit etre renseigner";
       isValid = false;
     }
     if (!optionData.color) {
@@ -91,6 +98,7 @@ const OptionForm: React.FC = () => {
         const bodyData = {
           name: optionData.name,
           description: optionData.description,
+          type: optionData.type,
           imagePathFront: optionData.imagePathFront,
           imagePathSide: optionData.imagePathSide,
           imagePathBack:optionData.imagePathBack,
@@ -161,6 +169,26 @@ const OptionForm: React.FC = () => {
         />
         {errors.description && (
           <p className="text-red-500 text-sm mt-1">{errors.description}</p>
+        )}
+      </div>
+
+      <div className="mb-6">
+        <label
+          htmlFor="description"
+          className="block text-gray-700 font-semibold mb-2"
+        >
+          Type
+        </label>
+        <textarea
+          id="type"
+          name="type"
+          value={optionData.type}
+          onChange={handleChange}
+          className="w-full p-3 border border-gray-300 rounded-lg bg-gray-100 text-gray-900 placeholder-gray-400 focus:ring-2 focus:ring-indigo-500"
+          placeholder="type de l'option"
+        />
+        {errors.type && (
+          <p className="text-red-500 text-sm mt-1">{errors.type}</p>
         )}
       </div>
 

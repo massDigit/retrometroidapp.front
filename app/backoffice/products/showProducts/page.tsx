@@ -77,7 +77,7 @@ const ShowProductsPage: React.FC = () => {
   if (error) {
     return <div>{error}</div>;
   }
-  console.log(products)
+
   return (
     <div>
       <NavbarBackOffice />
@@ -102,6 +102,7 @@ const ShowProductsPage: React.FC = () => {
               ...product.screen,
             ]}
             viewType="front"
+            single={false}
           />
 
           {/* Superposition des images de côté */}
@@ -116,6 +117,7 @@ const ShowProductsPage: React.FC = () => {
               ...product.screen,
             ]}
             viewType="side"
+            single={false}
           />
 
           {/* Superposition des images arrière */}
@@ -130,6 +132,7 @@ const ShowProductsPage: React.FC = () => {
               ...product.screen,
             ]}
             viewType="back"
+            single={false}
           />
         </div>
       ))}

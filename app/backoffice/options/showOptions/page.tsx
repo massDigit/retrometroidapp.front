@@ -2,12 +2,17 @@
 
 import React, { useState, useEffect } from "react";
 import NavbarBackOffice from "@/app/components/NavbarBackOffice";
+import OptionCard from "@/app/components/option/OptionCard";
 
 interface Option {
-  id: number;
+  _id: string;
   name: string;
   description: string;
-  price: number;
+  type: string;
+  price?: number;
+  optionImgFront?: string;
+  optionImgBack?: string;
+  optionImgSide?: string;
 }
 
 const ShowOptionsPage: React.FC = () => {
@@ -15,58 +20,71 @@ const ShowOptionsPage: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
-  // Récupération des options
-  useEffect(() => {}, []);
+  useEffect(() => {
+    const fetchOptions = async () => {
+      try {
+        const response = await fetch("http://localhost:3000/options");
+        if (!response.ok) {
+          throw new Error("Erreur lors de la récupération des options");
+        }
+        const data = await response.json();
+        setOptions(data.allOptions);
+      } catch (error: unknown) {
+        console.error("Erreur :", error);
+        setError("Impossible de récupérer les options");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchOptions();
+  }, []);
 
   if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <p className="text-lg text-gray-600">Chargement des options...</p>
-      </div>
-    );
+    return <div>Chargement des options...</div>;
   }
 
   if (error) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <p className="text-lg text-red-500">{error}</p>
-      </div>
-    );
+    return <div>{error}</div>;
   }
+
+  // Fonction pour filtrer les options par type
+  const filterOptionsByType = (type: string) => {
+    return options.filter((option) => option.type === type);
+  };
+
+  const types = ["GBA", "NES", "SNES"]; // Liste des types que vous voulez afficher
 
   return (
     <div>
-      <div>
-        <NavbarBackOffice />
-      </div>
-      <div className="min-h-screen bg-gray-100 py-12">
-        <div className="container mx-auto max-w-4xl">
-          <h1 className="text-4xl font-bold text-center text-gray-800 mb-10">
-            Liste des options
-          </h1>
-          {options.length === 0 ? (
-            <div className="text-center text-gray-600">
-              <p>Aucune option n'a été ajoutée pour le moment.</p>
+      <NavbarBackOffice />
+      <div className="container mx-auto py-12">
+        <h1 className="text-4xl font-bold text-center mb-10">Liste des Options</h1>
+
+        {types.map((type) => {
+          const filteredOptions = filterOptionsByType(type);
+
+          if (filteredOptions.length === 0) return null;
+
+          return (
+            <div key={type} className="mb-12">
+              <h2 className="text-3xl font-semibold mb-6">
+                Options {type === "GBA" ? "Game Boy Advance" : type}
+              </h2>
+
+              {/* Carrousel défilant */}
+              <div className="flex overflow-x-auto space-x-6 p-4 bg-gray-100 rounded-lg">
+                {filteredOptions.map((option) => (
+                  <OptionCard 
+                    key={option._id} 
+                    options={[option]} 
+                    single={true} 
+                  />
+                ))}
+              </div>
             </div>
-          ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-              {options.map((option) => (
-                <div
-                  key={option.id}
-                  className="bg-white shadow-md rounded-lg p-6"
-                >
-                  <h2 className="text-2xl font-semibold text-gray-800 mb-2">
-                    {option.name}
-                  </h2>
-                  <p className="text-gray-600 mb-4">{option.description}</p>
-                  <p className="text-gray-900 font-bold">
-                    Prix : {option.price} €
-                  </p>
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
+          );
+        })}
       </div>
     </div>
   );
