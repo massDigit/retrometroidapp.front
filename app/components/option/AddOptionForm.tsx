@@ -1,134 +1,96 @@
+import * as yup from "yup";
 import React, { useState } from "react";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useForm, SubmitHandler } from "react-hook-form";
+
+interface FormValues {
+  name: string;
+  description: string;
+  price: number;
+}
+
+const schema = yup.object().shape({
+  name: yup.string().required("Name is required"),
+  description: yup.string().required("Description is required"),
+  price: yup
+    .number()
+    .required("Price is required")
+    .positive("Price must be positive"),
+});
 
 const OptionForm: React.FC = () => {
-  const [optionData, setOptionData] = useState({
-    name: "",
-    description: "",
-    price: "",
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormValues>({
+    resolver: yupResolver(schema),
   });
-
-  const [errors, setErrors] = useState({
-    name: "",
-    description: "",
-    price: "",
-  });
-
   const [submitting, setSubmitting] = useState(false);
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    const { name, value } = e.target;
-    setOptionData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
-
-  const validateForm = () => {
-    let isValid = true;
-    const newErrors = {
-      name: "",
-      description: "",
-      price: "",
-    };
-
-    if (!optionData.name) {
-      newErrors.name = "Le nom est requis";
-      isValid = false;
+  const onSubmit: SubmitHandler<FormValues> = async (data) => {
+    setSubmitting(true);
+    try {
+      // Requête API pour ajouter l'option
+      setTimeout(() => {
+        console.log(data);
+      }, 1000);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setSubmitting(false);
     }
-    if (!optionData.description) {
-      newErrors.description = "La description est requise";
-      isValid = false;
-    }
-    if (!optionData.price || isNaN(Number(optionData.price))) {
-      newErrors.price = "Le prix doit être un nombre valide";
-      isValid = false;
-    }
-
-    setErrors(newErrors);
-    return isValid;
-  };
-
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
   };
 
   return (
-    <form onSubmit={handleSubmit} className="bg-white p-8 rounded-lg shadow-md">
-      <div className="mb-6">
-        <label
-          htmlFor="name"
-          className="block text-gray-700 font-semibold mb-2"
-        >
-          Nom de l'option
-        </label>
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+      <div>
+        <label className="block text-sm font-medium text-gray-700">Name</label>
         <input
           type="text"
-          id="name"
-          name="name"
-          value={optionData.name}
-          onChange={handleChange}
-          className="w-full p-3 border border-gray-300 rounded-lg bg-gray-100 text-gray-900 placeholder-gray-400 focus:ring-2 focus:ring-indigo-500"
-          placeholder="Nom de l'option"
+          {...register("name")}
+          className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
         />
         {errors.name && (
-          <p className="text-red-500 text-sm mt-1">{errors.name}</p>
+          <p className="mt-2 text-sm text-red-600">{errors.name.message}</p>
         )}
       </div>
 
-      <div className="mb-6">
-        <label
-          htmlFor="description"
-          className="block text-gray-700 font-semibold mb-2"
-        >
+      <div>
+        <label className="block text-sm font-medium text-gray-700">
           Description
         </label>
         <textarea
-          id="description"
-          name="description"
-          value={optionData.description}
-          onChange={handleChange}
-          className="w-full p-3 border border-gray-300 rounded-lg bg-gray-100 text-gray-900 placeholder-gray-400 focus:ring-2 focus:ring-indigo-500"
-          placeholder="Description de l'option"
+          {...register("description")}
+          className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
         />
         {errors.description && (
-          <p className="text-red-500 text-sm mt-1">{errors.description}</p>
+          <p className="mt-2 text-sm text-red-600">
+            {errors.description.message}
+          </p>
         )}
       </div>
 
-      <div className="mb-6">
-        <label
-          htmlFor="price"
-          className="block text-gray-700 font-semibold mb-2"
-        >
-          Prix (€)
-        </label>
+      <div>
+        <label className="block text-sm font-medium text-gray-700">Price</label>
         <input
-          type="text"
-          id="price"
-          name="price"
-          value={optionData.price}
-          onChange={handleChange}
-          className="w-full p-3 border border-gray-300 rounded-lg bg-gray-100 text-gray-900 placeholder-gray-400 focus:ring-2 focus:ring-indigo-500"
-          placeholder="Prix de l'option"
+          type="number"
+          {...register("price")}
+          className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
         />
         {errors.price && (
-          <p className="text-red-500 text-sm mt-1">{errors.price}</p>
+          <p className="mt-2 text-sm text-red-600">{errors.price.message}</p>
         )}
       </div>
-
-      <div className="text-center">
-        <button
-          type="submit"
-          className={`px-6 py-3 bg-indigo-500 text-white font-bold rounded-lg hover:bg-indigo-600 transition-colors ${
-            submitting ? "opacity-50 cursor-not-allowed" : ""
-          }`}
-          disabled={submitting}
-        >
-          {submitting ? "Ajout en cours..." : "Ajouter l'option"}
-        </button>
-      </div>
+      <button
+        type="submit"
+        disabled={submitting}
+        className={`w-full bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-3 px-4 rounded-lg ${
+          submitting ? "opacity-50 cursor-not-allowed" : ""
+        }`}
+      >
+        {submitting ? "Ajout en cours..." : "Ajouter l'option"}
+      </button>
     </form>
   );
 };

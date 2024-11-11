@@ -1,211 +1,140 @@
 "use client";
+import * as yup from "yup";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useForm, SubmitHandler } from "react-hook-form";
 
 interface FormValues {
   itemName: string;
   description: string;
   price: number;
-  image: File | null;
+  image: File | any;
   accessories: string;
   options: string;
 }
 
-interface FormErrors {
-  itemName?: string;
-  description?: string;
-  price?: string;
-  image?: string;
-  accessories?: string;
-  options?: string;
-}
+const schema = yup.object().shape({
+  itemName: yup.string().required("Item name is required"),
+  description: yup.string().required("Description is required"),
+  price: yup
+    .number()
+    .required("Price is required")
+    .positive("Price must be positive"),
+  image: yup.mixed().required("Image is required"),
+  accessories: yup.string().required("Accessories are required"),
+  options: yup.string().required("Options are required"),
+});
 
 const AddProductForm: React.FC = () => {
   const router = useRouter();
-  const [formData, setFormData] = useState<FormValues>({
-    itemName: "",
-    description: "",
-    price: 0,
-    image: null,
-    accessories: "",
-    options: "",
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormValues>({
+    resolver: yupResolver(schema),
   });
-
-  const [errors, setErrors] = useState<FormErrors>({});
   const [submitting, setSubmitting] = useState(false);
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
-
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files ? e.target.files[0] : null;
-    setFormData((prev) => ({
-      ...prev,
-      image: file,
-    }));
-  };
-
-  const validateForm = () => {
-    const newErrors: FormErrors = {};
-
-    if (!formData.itemName || formData.itemName.length < 3) {
-      newErrors.itemName =
-        "Le nom du produit doit comporter au moins 3 caractères";
-    }
-    if (!formData.description || formData.description.length < 10) {
-      newErrors.description =
-        "La description doit comporter au moins 10 caractères";
-    }
-    if (formData.price <= 0) {
-      newErrors.price = "Le prix doit être supérieur à 0";
-    }
-    if (!formData.image) {
-      newErrors.image = "Une image est requise";
-    }
-
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
-
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    if (validateForm()) {
-      setSubmitting(true);
-
+  const onSubmit: SubmitHandler<FormValues> = async (data) => {
+    setSubmitting(true);
+    try {
       // Requête API pour ajouter le produit
-
       setTimeout(() => {
-        //Redirige vers la page showProducts
-        router.push("/showProducts");
+        router.push("/products");
       }, 1000);
-
+    } catch (error) {
+      console.log(error);
+    } finally {
       setSubmitting(false);
     }
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6">
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
       <div>
-        <label
-          htmlFor="itemName"
-          className="block text-gray-700 font-semibold mb-2"
-        >
+        <label className="block text-sm font-medium text-gray-700">
           Nom du produit
         </label>
         <input
-          id="itemName"
-          name="itemName"
           type="text"
-          value={formData.itemName}
-          onChange={handleChange}
-          className="w-full p-3 border border-gray-300 rounded-lg bg-gray-100 text-gray-900 placeholder-gray-400 focus:ring-2 focus:ring-indigo-500"
+          {...register("itemName")}
+          className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
         />
         {errors.itemName && (
-          <div className="text-red-500 text-sm mt-1">{errors.itemName}</div>
+          <p className="mt-2 text-sm text-red-600">{errors.itemName.message}</p>
         )}
       </div>
 
       <div>
-        <label
-          htmlFor="description"
-          className="block text-gray-700 font-semibold mb-2"
-        >
+        <label className="block text-sm font-medium text-gray-700">
           Description
         </label>
         <textarea
-          id="description"
-          name="description"
-          value={formData.description}
-          onChange={handleChange}
-          className="w-full p-3 border border-gray-300 rounded-lg bg-gray-100 text-gray-900 placeholder-gray-400 focus:ring-2 focus:ring-indigo-500"
+          {...register("description")}
+          className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
         />
         {errors.description && (
-          <div className="text-red-500 text-sm mt-1">{errors.description}</div>
+          <p className="mt-2 text-sm text-red-600">
+            {errors.description.message}
+          </p>
         )}
       </div>
 
       <div>
-        <label
-          htmlFor="price"
-          className="block text-gray-700 font-semibold mb-2"
-        >
-          Prix (€)
-        </label>
+        <label className="block text-sm font-medium text-gray-700">Price</label>
         <input
-          id="price"
-          name="price"
           type="number"
-          value={formData.price}
-          onChange={handleChange}
-          className="w-full p-3 border border-gray-300 rounded-lg bg-gray-100 text-gray-900 placeholder-gray-400 focus:ring-2 focus:ring-indigo-500"
+          {...register("price")}
+          className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
         />
         {errors.price && (
-          <div className="text-red-500 text-sm mt-1">{errors.price}</div>
+          <p className="mt-2 text-sm text-red-600">{errors.price.message}</p>
         )}
       </div>
 
       <div>
-        <label
-          htmlFor="image"
-          className="block text-gray-700 font-semibold mb-2"
-        >
-          Image
+        <label className="block text-sm font-medium text-gray-700">Image</label>
+        <input
+          type="file"
+          {...register("image")}
+          className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+        />
+        {errors.image?.message && (
+          <p className="mt-2 text-sm text-red-600">
+            {String(errors.image.message)}
+          </p>
+        )}
+      </div>
+
+      <div>
+        <label className="block text-sm font-medium text-gray-700">
+          Accessories
         </label>
         <input
-          id="image"
-          name="image"
-          type="file"
-          onChange={handleImageChange}
-          className="w-full p-3 border border-gray-300 rounded-lg bg-gray-100 text-gray-900 placeholder-gray-400 focus:ring-2 focus:ring-indigo-500"
-        />
-        {errors.image && (
-          <div className="text-red-500 text-sm mt-1">{errors.image}</div>
-        )}
-      </div>
-
-      <div>
-        <label
-          htmlFor="accessories"
-          className="block text-gray-700 font-semibold mb-2"
-        >
-          Accessoires
-        </label>
-        <textarea
-          id="accessories"
-          name="accessories"
-          value={formData.accessories}
-          onChange={handleChange}
-          className="w-full p-3 border border-gray-300 rounded-lg bg-gray-100 text-gray-900 placeholder-gray-400 focus:ring-2 focus:ring-indigo-500"
+          type="text"
+          {...register("accessories")}
+          className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
         />
         {errors.accessories && (
-          <div className="text-red-500 text-sm mt-1">{errors.accessories}</div>
+          <p className="mt-2 text-sm text-red-600">
+            {errors.accessories.message}
+          </p>
         )}
       </div>
 
       <div>
-        <label
-          htmlFor="options"
-          className="block text-gray-700 font-semibold mb-2"
-        >
+        <label className="block text-sm font-medium text-gray-700">
           Options
         </label>
-        <textarea
-          id="options"
-          name="options"
-          value={formData.options}
-          onChange={handleChange}
-          className="w-full p-3 border border-gray-300 rounded-lg bg-gray-100 text-gray-900 placeholder-gray-400 focus:ring-2 focus:ring-indigo-500"
+        <input
+          type="text"
+          {...register("options")}
+          className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
         />
         {errors.options && (
-          <div className="text-red-500 text-sm mt-1">{errors.options}</div>
+          <p className="mt-2 text-sm text-red-600">{errors.options.message}</p>
         )}
       </div>
 
