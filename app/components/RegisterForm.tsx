@@ -1,43 +1,46 @@
 "use client";
 
-import React, { useState } from "react";
+import * as yup from "yup";
 import Link from "next/link";
+import React, { useState } from "react";
 import { useRouter } from "next/navigation";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useForm, SubmitHandler } from "react-hook-form";
+
+interface IFormInput {
+  email: string;
+  password: string;
+  confirmPassword: string;
+}
+
+const schema = yup.object().shape({
+  email: yup
+    .string()
+    .email("Invalid email format")
+    .required("Email is required"),
+  password: yup
+    .string()
+    .min(12, "Password must be at least 12 characters")
+    .required("Password is required"),
+  confirmPassword: yup
+    .string()
+    .oneOf([yup.ref("password"), undefined], "Passwords must match")
+    .required("Confirm Password is required"),
+});
 
 const RegisterForm: React.FC = () => {
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-    confirmPassword: "",
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<IFormInput>({
+    resolver: yupResolver(schema),
   });
-  const [errorMessage, setErrorMessage] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const router = useRouter();
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
-
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    if (!formData.email || !formData.password || !formData.confirmPassword) {
-      setErrorMessage("Veuillez remplir tous les champs.");
-      return;
-    }
-
-    if (formData.password !== formData.confirmPassword) {
-      setErrorMessage("Les mots de passe ne correspondent pas.");
-      return;
-    }
-
+  const onSubmit: SubmitHandler<IFormInput> = async (data) => {
     setSubmitting(true);
-    setErrorMessage("");
-
     try {
       // Requête API
       setTimeout(() => {
@@ -45,81 +48,52 @@ const RegisterForm: React.FC = () => {
         router.push("/");
       }, 1000);
     } catch (error) {
-      setErrorMessage("Échec de l'inscription. Veuillez réessayer.");
+      console.log("Échec de l'inscription. Veuillez réessayer.");
     } finally {
       setSubmitting(false);
     }
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6">
-      {errorMessage && (
-        <div className="text-red-500 text-center mb-4">{errorMessage}</div>
-      )}
-
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
       <div>
-        <label
-          htmlFor="email"
-          className="block text-gray-700 font-semibold mb-2"
-        >
-          Email
-        </label>
+        <label className="block text-sm font-medium text-gray-700">Email</label>
         <input
-          id="email"
-          name="email"
           type="email"
-          value={formData.email}
-          onChange={handleChange}
-          className="w-full p-3 border border-gray-300 rounded-lg bg-gray-100 text-gray-900 placeholder-gray-400 focus:ring-2 focus:ring-indigo-500"
-          placeholder="Votre email"
-          required
+          {...register("email")}
+          className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
         />
+        {errors.email && (
+          <p className="mt-2 text-sm text-red-600">{errors.email.message}</p>
+        )}
       </div>
-
       <div>
-        <label
-          htmlFor="password"
-          className="block text-gray-700 font-semibold mb-2"
-        >
-          Mot de passe
+        <label className="block text-sm font-medium text-gray-700">
+          Password
         </label>
         <input
-          id="password"
-          name="password"
           type="password"
-          value={formData.password}
-          onChange={handleChange}
-          className="w-full p-3 border border-gray-300 rounded-lg bg-gray-100 text-gray-900 placeholder-gray-400 focus:ring-2 focus:ring-indigo-500"
-          placeholder="Votre mot de passe"
-          required
+          {...register("password")}
+          className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
         />
+        {errors.password && (
+          <p className="mt-2 text-sm text-red-600">{errors.password.message}</p>
+        )}
       </div>
-
       <div>
-        <label
-          htmlFor="confirmPassword"
-          className="block text-gray-700 font-semibold mb-2"
-        >
-          Confirmer le mot de passe
+        <label className="block text-sm font-medium text-gray-700">
+          Confirm Password
         </label>
         <input
-          id="confirmPassword"
-          name="confirmPassword"
           type="password"
-          value={formData.confirmPassword}
-          onChange={handleChange}
-          className="w-full p-3 border border-gray-300 rounded-lg bg-gray-100 text-gray-900 placeholder-gray-400 focus:ring-2 focus:ring-indigo-500"
-          placeholder="Confirmez votre mot de passe"
-          required
+          {...register("confirmPassword")}
+          className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
         />
-      </div>
-
-      <div className="flex justify-between items-center">
-        <Link href="/login">
-          <span className="text-sm text-indigo-600 hover:underline cursor-pointer">
-            Vous avez déjà un compte ? Connexion
-          </span>
-        </Link>
+        {errors.confirmPassword && (
+          <p className="mt-2 text-sm text-red-600">
+            {errors.confirmPassword.message}
+          </p>
+        )}
       </div>
 
       <button
@@ -131,6 +105,14 @@ const RegisterForm: React.FC = () => {
       >
         {submitting ? "Inscription en cours..." : "S'inscrire"}
       </button>
+
+      <div className="flex justify-between items-center">
+        <Link href="/login">
+          <span className="text-sm text-indigo-600 hover:underline cursor-pointer">
+            Vous avez déjà un compte ? Connexion
+          </span>
+        </Link>
+      </div>
     </form>
   );
 };
