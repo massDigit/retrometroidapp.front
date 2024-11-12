@@ -12,7 +12,7 @@ const AddOptionPage: React.FC = () => {
       </div>
       <div className="min-h-screen bg-gray-100 py-12">
         <div className="container mx-auto max-w-2xl">
-          <h1 className="text-4xl font-bold text-center text-gray-800 mb-8">
+          <h1 className="text-4xl font-bold text-center text-yellow-500 mb-8">
             Ajouter une Option
           </h1>
           <AddOptionForm />
