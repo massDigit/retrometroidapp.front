@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { FiUser, FiShoppingCart, FiTruck } from "react-icons/fi";
 
 const Header: React.FC = () => {
@@ -11,10 +12,13 @@ const Header: React.FC = () => {
               href="/"
               className="flex items-center text-black uppercase tracking-wider"
             >
-              <span className="text-2xl font-bold">RETROMETROID</span>
-              <span className="ml-2 text-sm text-red-600 font-semibold">
-                CUSTOMS CREATION
-              </span>
+              <Image
+                src="/logo.png"
+                alt="Logo RetroMetroid"
+                width={50}
+                height={50}
+                className="mr-2"
+              />
             </Link>
           </div>
 
@@ -77,7 +81,7 @@ const Header: React.FC = () => {
           </div>
         </nav>
 
-        <div className="bg-black text-white text-center h-12 flex items-center justify-center">
+        <div className="bg-black text-white text-center h-12 flex items-center justify-center w-full">
           <FiTruck className="mr-2" />
           <span>Livraison offerte dès 139€ avec Mondial Relay</span>
         </div>

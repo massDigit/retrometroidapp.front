@@ -1,16 +1,27 @@
 import React from "react";
+import Link from "next/link";
+import Image from "next/image";
 import { FaInstagram, FaTiktok, FaEnvelope } from "react-icons/fa";
 
 const Footer: React.FC = () => {
   return (
-    <footer className="footer bg-black text-white py-12 border-t-2 border-red-500">
-      {" "}
-      {/* Ajout d'une bordure temporaire */}
-      <div className="footer-container max-w-6xl mx-auto flex flex-wrap justify-between items-start text-sm space-y-8 md:space-y-0 md:space-x-8">
-        <div className="footer-about flex-1 text-center md:text-left">
-          <h3 className="text-xl font-bold uppercase mb-4 tracking-wider text-cyan-400">
-            Retrometroid
-          </h3>
+    <footer className="bg-black text-white py-12">
+      <div className="max-w-6xl mx-auto flex flex-wrap justify-between items-start text-sm space-y-8 md:space-y-0 md:space-x-8">
+        <div className="flex-1 text-center md:text-left">
+          <div className="flex items-center">
+            <Link
+              href="/"
+              className="flex items-center text-black uppercase tracking-wider"
+            >
+              <Image
+                src="/logo.png"
+                alt="Logo RetroMetroid"
+                width={50}
+                height={50}
+                className="mr-2"
+              />
+            </Link>
+          </div>
           <p className="mb-4 text-gray-300">
             Découvrez notre large gamme de produits rétro
           </p>
@@ -19,7 +30,7 @@ const Footer: React.FC = () => {
           </p>
         </div>
 
-        <div className="footer-social flex-1 text-center">
+        <div className="flex-1 text-center">
           <p className="mb-4 text-gray-300">Suivez-nous sur :</p>
           <div className="flex justify-center space-x-6">
             <a

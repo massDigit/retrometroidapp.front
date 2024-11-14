@@ -1,63 +1,113 @@
 import React, { useState } from "react";
+import { useRouter } from "next/navigation";
+
+
+
+
+
+interface FormValues {
+  name: string;
+  description: string;
+  price: number;
+}
+
+interface FormErrors {
+  name?: string;
+  description?: string;
+  price?: string;
+}
 
 const AccessoryForm: React.FC = () => {
-  const [accessoryData, setAccessoryData] = useState({
+
+  const router = useRouter();
+
+  const [formData, setFormData] = useState<FormValues>({
     name: "",
     description: "",
-    price: "",
-    category: "",
+    price: 0,
   });
-
-  const [errors, setErrors] = useState({
-    name: "",
-    description: "",
-    price: "",
-    category: "",
-  });
-
+ 
+  const [errors, setErrors] = useState<FormErrors>({});
   const [submitting, setSubmitting] = useState(false);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target;
-    setAccessoryData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
+
+    if (name === 'price') {
+      setFormData((prevData) => ({
+        ...prevData,
+        [name]: parseFloat(value) || 0, // Conversion en nombre
+      }));
+    } else {
+      setFormData((prevData) => ({
+        ...prevData,
+        [name]: value,
+      }));
+    }
   };
+
+
+  
 
   const validateForm = () => {
     let isValid = true;
-    const newErrors = {
-      name: "",
-      description: "",
-      price: "",
-      category: "",
-    };
+    const newErrors: FormErrors = {};
 
-    if (!accessoryData.name) {
+    if (!formData.name) {
       newErrors.name = "Le nom est requis";
       isValid = false;
     }
-    if (!accessoryData.description) {
+    if (!formData.description) {
       newErrors.description = "La description est requise";
       isValid = false;
     }
-    if (!accessoryData.price || isNaN(Number(accessoryData.price))) {
+    if (!formData.price || isNaN(Number(formData.price))) {
       newErrors.price = "Le prix doit être un nombre valide";
       isValid = false;
     }
-    if (!accessoryData.category) {
-      newErrors.category = "La catégorie est requise";
-      isValid = false;
-    }
-
     setErrors(newErrors);
     return isValid;
   };
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {};
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+
+    if(validateForm()){
+      setSubmitting(true);
+
+      try{
+
+
+        const bodyData = {
+          name: formData.name,
+          description: formData.description,
+          price: formData.price,
+        };
+        console.log("Données envoyées:", bodyData); 
+
+        const response = await fetch("http://localhost:3000/accessories/addAccessorie", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(bodyData), // Conversion des données en JSON
+        });
+
+        if (!response.ok) {
+          throw new Error("Erreur lors de l'ajout du produit");
+        }
+
+      }catch(error) {
+        console.error("Erreur lors de l'ajout du produit:", error);
+      }finally {
+        setSubmitting(false);
+      }
+    }
+  };
 
   return (
     <form onSubmit={handleSubmit} className="bg-white p-8 rounded-lg shadow-md">
@@ -72,7 +122,7 @@ const AccessoryForm: React.FC = () => {
           type="text"
           id="name"
           name="name"
-          value={accessoryData.name}
+          value={formData.name}
           onChange={handleChange}
           className="w-full p-3 border border-gray-300 rounded-lg bg-gray-100 text-gray-900 placeholder-gray-400 focus:ring-2 focus:ring-indigo-500"
           placeholder="Nom de l'accessoire"
@@ -92,7 +142,7 @@ const AccessoryForm: React.FC = () => {
         <textarea
           id="description"
           name="description"
-          value={accessoryData.description}
+          value={formData.description}
           onChange={handleChange}
           className="w-full p-3 border border-gray-300 rounded-lg bg-gray-100 text-gray-900 placeholder-gray-400 focus:ring-2 focus:ring-indigo-500"
           placeholder="Description de l'accessoire"
@@ -110,40 +160,19 @@ const AccessoryForm: React.FC = () => {
           Prix (€)
         </label>
         <input
-          type="text"
+          type="number"
           id="price"
           name="price"
-          value={accessoryData.price}
+          value={formData.price === 0 ? '' : formData.price} 
           onChange={handleChange}
           className="w-full p-3 border border-gray-300 rounded-lg bg-gray-100 text-gray-900 placeholder-gray-400 focus:ring-2 focus:ring-indigo-500"
           placeholder="Prix de l'accessoire"
+          step="any"
         />
         {errors.price && (
           <p className="text-red-500 text-sm mt-1">{errors.price}</p>
         )}
       </div>
-
-      <div className="mb-6">
-        <label
-          htmlFor="category"
-          className="block text-gray-700 font-semibold mb-2"
-        >
-          Catégorie
-        </label>
-        <input
-          type="text"
-          id="category"
-          name="category"
-          value={accessoryData.category}
-          onChange={handleChange}
-          className="w-full p-3 border border-gray-300 rounded-lg bg-gray-100 text-gray-900 placeholder-gray-400 focus:ring-2 focus:ring-indigo-500"
-          placeholder="Catégorie de l'accessoire"
-        />
-        {errors.category && (
-          <p className="text-red-500 text-sm mt-1">{errors.category}</p>
-        )}
-      </div>
-
       <div className="text-center">
         <button
           type="submit"

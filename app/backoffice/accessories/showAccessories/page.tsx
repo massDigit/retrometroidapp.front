@@ -13,11 +13,30 @@ interface Accessory {
 
 const ShowAccessoriesPage: React.FC = () => {
   const [accessories, setAccessories] = useState<Accessory[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
+  const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
   // Récupération des accessoires
-  useEffect(() => {}, []);
+  useEffect(() => {
+
+    const fetchAccessories = async () => {
+      try {
+        const response = await fetch('http://localhost:3000/accessories/');
+        if (!response.ok) {
+          throw new Error('Erreur lors de la récupération des accessoires');
+        }
+        const data = await response.json();
+        setAccessories(data.allAccessories) 
+      } catch (error: unknown) {
+        console.error('Erreur :', error);
+        setError('Impossible de récupérer les accessoires');
+      } finally {
+        setLoading(false); // Arrête le chargement
+      }
+    };
+
+    fetchAccessories();
+  }, []);
 
   if (loading) {
     return (
@@ -34,7 +53,7 @@ const ShowAccessoriesPage: React.FC = () => {
       </div>
     );
   }
-
+  
   return (
     <div>
       <div>
