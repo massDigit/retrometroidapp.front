@@ -9,7 +9,7 @@ const Dashboard: React.FC = () => {
   return (
     <div>
       <div>
-        <NavbarBackOffice/>
+        <NavbarBackOffice />
       </div>
       <div className="p-10 bg-gray-100 text-gray-800 min-h-screen">
         <h1 className="text-4xl font-bold mb-8 text-center">Tableau de bord</h1>
@@ -77,13 +77,6 @@ const Dashboard: React.FC = () => {
                 <td className="border px-4 py-2">01/09/2024</td>
                 <td className="border px-4 py-2">€149.00</td>
                 <td className="border px-4 py-2 text-green-500">Expédiée</td>
-              </tr>
-              <tr className="hover:bg-gray-100">
-                <td className="border px-4 py-2">#12346</td>
-                <td className="border px-4 py-2">Jane Smith</td>
-                <td className="border px-4 py-2">02/09/2024</td>
-                <td className="border px-4 py-2">€200.00</td>
-                <td className="border px-4 py-2 text-yellow-500">En attente</td>
               </tr>
             </tbody>
           </table>

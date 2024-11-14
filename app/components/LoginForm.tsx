@@ -1,26 +1,38 @@
 "use client";
 
+import * as yup from "yup";
 import Link from "next/link";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useForm, SubmitHandler } from "react-hook-form";
+
+interface IFormInput {
+  email: string;
+  password: string;
+}
+
+const schema = yup.object().shape({
+  email: yup
+    .string()
+    .email("Format d'email invalide")
+    .required("Email est requis"),
+  password: yup.string().required("Mot de passe est requis"),
+});
 
 const LoginForm: React.FC = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<IFormInput>({
+    resolver: yupResolver(schema),
+  });
   const [submitting, setSubmitting] = useState(false);
   const router = useRouter();
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    if (!email || !password) {
-      setErrorMessage("Veuillez remplir tous les champs.");
-      return;
-    }
-
+  const onSubmit: SubmitHandler<IFormInput> = async (data) => {
     setSubmitting(true);
-    setErrorMessage("");
 
     try {
       //Requête API
@@ -29,65 +41,39 @@ const LoginForm: React.FC = () => {
         router.push("/");
       }, 1000);
     } catch (error) {
-      setErrorMessage("Échec de la connexion. Veuillez réessayer.");
+      console.log("Échec de la connexion. Veuillez réessayer.");
+      console.error(error);
     } finally {
       setSubmitting(false);
     }
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6">
-      {errorMessage && (
-        <div className="text-red-500 text-center mb-4">{errorMessage}</div>
-      )}
-
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
       <div>
-        <label
-          htmlFor="email"
-          className="block text-gray-700 font-semibold mb-2"
-        >
-          Email
-        </label>
+        <label className="block text-sm font-medium text-gray-700">Email</label>
         <input
-          id="email"
           type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          className="w-full p-3 border border-gray-300 rounded-lg bg-gray-100 text-gray-900 placeholder-gray-400 focus:ring-2 focus:ring-indigo-500"
-          placeholder="Votre email"
-          required
+          {...register("email")}
+          className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
         />
+        {errors.email && (
+          <p className="mt-2 text-sm text-red-600">{errors.email.message}</p>
+        )}
       </div>
 
       <div>
-        <label
-          htmlFor="password"
-          className="block text-gray-700 font-semibold mb-2"
-        >
+        <label className="block text-sm font-medium text-gray-700">
           Mot de passe
         </label>
         <input
-          id="password"
           type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          className="w-full p-3 border border-gray-300 rounded-lg bg-gray-100 text-gray-900 placeholder-gray-400 focus:ring-2 focus:ring-indigo-500"
-          placeholder="Votre mot de passe"
-          required
+          {...register("password")}
+          className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
         />
-      </div>
-
-      <div className="flex justify-between items-center">
-        <Link href="/forgot-password">
-          <span className="text-sm text-indigo-600 hover:underline cursor-pointer">
-            Mot de passe oublié ?
-          </span>
-        </Link>
-        <Link href="/register">
-          <span className="text-sm text-indigo-600 hover:underline cursor-pointer">
-            Créer un compte
-          </span>
-        </Link>
+        {errors.password && (
+          <p className="mt-2 text-sm text-red-600">{errors.password.message}</p>
+        )}
       </div>
 
       <button
@@ -99,6 +85,14 @@ const LoginForm: React.FC = () => {
       >
         {submitting ? "Connexion en cours..." : "Se connecter"}
       </button>
+
+      <div className="flex justify-between items-center">
+        <Link href="/register">
+          <span className="text-sm text-indigo-600 hover:underline cursor-pointer">
+            Pas de compte ? Inscrivez-vous
+          </span>
+        </Link>
+      </div>
     </form>
   );
 };
