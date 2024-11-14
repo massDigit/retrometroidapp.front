@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useEffect, useState } from 'react';
 
 type Color = {
@@ -14,7 +16,7 @@ const Colors: React.FC = () => {
       try {
         const response = await fetch('http://localhost:3000/colors');
         const data = await response.json();
-        setColors(data.);
+        setColors(data.allColor);
         setLoading(false);
       } catch (error) {
         console.error('Erreur lors du chargement des couleurs:', error);

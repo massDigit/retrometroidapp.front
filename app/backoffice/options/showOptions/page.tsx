@@ -9,6 +9,7 @@ interface Option {
   name: string;
   description: string;
   type: string;
+  consoleType:String;
   price?: number;
   optionImgFront?: string;
   optionImgBack?: string;
@@ -49,11 +50,11 @@ const ShowOptionsPage: React.FC = () => {
   }
 
   // Fonction pour filtrer les options par type
-  const filterOptionsByType = (type: string) => {
-    return options.filter((option) => option.type === type);
+  const filterOptionsByType = (consoleType: string) => {
+    return options.filter((option) => option.consoleType === consoleType);
   };
 
-  const types = ["GBA", "NES", "SNES"]; // Liste des types que vous voulez afficher
+  const consoleTypes = ["GBA", "NES", "SNES"]; // Liste des types que vous voulez afficher
 
   return (
     <div>
@@ -61,15 +62,15 @@ const ShowOptionsPage: React.FC = () => {
       <div className="container mx-auto py-12">
         <h1 className="text-4xl font-bold text-center mb-10">Liste des Options</h1>
 
-        {types.map((type) => {
-          const filteredOptions = filterOptionsByType(type);
+        {consoleTypes.map((consoleType) => {
+          const filteredOptions = filterOptionsByType(consoleType);
 
           if (filteredOptions.length === 0) return null;
 
           return (
-            <div key={type} className="mb-12">
+            <div key={consoleType} className="mb-12">
               <h2 className="text-3xl font-semibold mb-6">
-                Options {type === "GBA" ? "Game Boy Advance" : type}
+                Options {consoleType === "GBA" ? "Game Boy Advance" : consoleType}
               </h2>
 
               {/* Carrousel défilant */}

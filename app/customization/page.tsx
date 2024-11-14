@@ -1,78 +1,102 @@
 "use client";
 
-import React, { useState } from "react";
-import Header from "@/app/components/Header";
-import CustomizationForm from "@/app/components/CustomizationForm";
+import React, { useState } from 'react';
+import OptionsList from '../components/option/OptionList';
 
-const CustomizationPage: React.FC = () => {
-  const [totalPrice, setTotalPrice] = useState(149);
-  const [customItem, setCustomItem] = useState<any>(null);
-
-  const handlePriceUpdate = (newPrice: number) => {
-    setTotalPrice(newPrice);
-  };
-
-  const handleAddToCart = (item: any) => {
-    const currentCart = JSON.parse(localStorage.getItem("cart") || "[]");
-    const updatedCart = [...currentCart, item];
-    localStorage.setItem("cart", JSON.stringify(updatedCart));
-    setCustomItem(item);
-  };
+const CustomisationPage: React.FC = () => {
+  const [selectedCoque, setSelectedCoque] = useState<any>(null);
+  const [selectedLaniere, setSelectedLaniere] = useState<any>(null);
+  const [selectedButton, setSelectedButton] = useState<any>(null);
+  const [selectedPad, setSelectedPad] = useState<any>(null);
+  const [selectedSticker, setSelectedSticker] = useState<any>(null);
+  const [selectedBatterie, setSelectedBatterie] = useState<any>(null);
+  const [selectedScreen, setSelectedScreen] = useState<any>(null);
 
   return (
-    <div>
-      <div>
-        <Header />
+    <div className="flex">
+      {/* Aperçu du produit à gauche */}
+      <div className="w-1/2 p-4">
+        <h2>Aperçu du produit</h2>
+        <div className="relative w-64 h-64 mb-8">
+          {/* Afficher les options sélectionnées en fonction de la vue */}
+          {selectedCoque && (
+            <img
+              src={`http://localhost:3000${selectedCoque.optionImgFront}`}
+              alt={selectedCoque.name}
+              className="absolute w-full h-auto object-contain"
+            />
+          )}
+          {selectedLaniere && (
+            <img
+              src={`http://localhost:3000${selectedLaniere.optionImgFront}`}
+              alt={selectedLaniere.name}
+              className="absolute w-full h-auto object-contain"
+            />
+          )}
+          {selectedButton && (
+            <img
+              src={`http://localhost:3000${selectedButton.optionImgFront}`}
+              alt={selectedButton.name}
+              className="absolute w-full h-auto object-contain"
+            />
+          )}
+          {selectedPad && (
+            <img
+              src={`http://localhost:3000${selectedPad.optionImgFront}`}
+              alt={selectedPad.name}
+              className="absolute w-full h-auto object-contain"
+            />
+          )}
+          {selectedSticker && (
+            <img
+              src={`http://localhost:3000${selectedSticker.optionImgBack}`}
+              alt={selectedSticker.name}
+              className="absolute w-full h-auto object-contain"
+            />
+          )}
+          {selectedBatterie && (
+            <img
+              src={`http://localhost:3000${selectedBatterie.optionImgFront}`}
+              alt={selectedBatterie.name}
+              className="absolute w-full h-auto object-contain"
+            />
+          )}
+          {selectedScreen && (
+            <img
+              src={`http://localhost:3000${selectedScreen.optionImgFront}`}
+              alt={selectedScreen.name}
+              className="absolute w-full h-auto object-contain"
+            />
+          )}
+        </div>
       </div>
-      <div className="min-h-screen bg-white">
-        <section className="bg-black text-white py-16">
-          <div className="container mx-auto text-center">
-            <h1 className="text-5xl font-bold">GAMEBOY ADVANCE</h1>
-            <p className="mt-4 text-lg">À partir de 149€</p>
-          </div>
-        </section>
 
-        <section className="py-12">
-          <div className="container mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8">
-            <div className="flex justify-center">
-              <img
-                src=""
-                alt="Gameboy Advance"
-                className="w-3/4 h-auto rounded-lg shadow-lg"
-              />
-            </div>
+      {/* Section de personnalisation à droite */}
+      <div className="w-1/2 p-4">
+        <h2>Personnalisation</h2>
+        <h3>Choisir une Coque</h3>
+        <OptionsList type="coque" consoleType="GBA" onSelectOption={setSelectedCoque} />
 
-            <div className="bg-gray-100 p-8 rounded-lg shadow-lg">
-              <h2 className="text-3xl font-bold mb-6 text-gray-800">
-                Configuration
-              </h2>
-              <CustomizationForm
-                onPriceUpdate={handlePriceUpdate}
-                onAddToCart={handleAddToCart}
-              />
-            </div>
-          </div>
-        </section>
+        <h3>Choisir une Lanière</h3>
+        <OptionsList type="lanière" consoleType="GBA" onSelectOption={setSelectedLaniere} />
 
-        <section className="py-12 bg-gray-50">
-          <div className="container mx-auto text-center">
-            <h3 className="text-4xl font-semibold text-gray-800">
-              Total: {totalPrice} €
-            </h3>
-            <p className="text-gray-500 mt-2">
-              Acompte (30%) : {(totalPrice * 0.3).toFixed(2)} €
-            </p>
-            <button
-              className="mt-6 bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-3 px-6 rounded-lg"
-              onClick={() => handleAddToCart(customItem)}
-            >
-              Ajouter au panier
-            </button>
-          </div>
-        </section>
+        <h3>Choisir des Boutons</h3>
+        <OptionsList type="button" consoleType="GBA" onSelectOption={setSelectedButton} />
+
+        <h3>Choisir un Pad</h3>
+        <OptionsList type="pad" consoleType="GBA" onSelectOption={setSelectedPad} />
+
+        <h3>Choisir des Stickers</h3>
+        <OptionsList type="stickers" consoleType="GBA" onSelectOption={setSelectedSticker} />
+
+        <h3>Choisir une Batterie</h3>
+        <OptionsList type="batterie" consoleType="GBA" onSelectOption={setSelectedBatterie} />
+
+        <h3>Choisir un Écran</h3>
+        <OptionsList type="screen" consoleType="GBA" onSelectOption={setSelectedScreen} />
       </div>
     </div>
   );
 };
 
-export default CustomizationPage;
+export default CustomisationPage;
