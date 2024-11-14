@@ -50,6 +50,7 @@ const ShowProductsPage: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
+<<<<<<< HEAD
   // Récupération des produits
   useEffect(() => {
     const fetchProducts = async () => {
@@ -62,10 +63,25 @@ const ShowProductsPage: React.FC = () => {
         setProducts(data);
       } catch (error) {
         setError("Le contenu de la page est indisponible");
+=======
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await fetch("http://localhost:3000/products");
+        if (!response.ok) {
+          throw new Error("Erreur lors de la récupération des produits");
+        }
+        const data = await response.json();
+        setProducts(data.allProduct);
+      } catch (error: unknown) {
+        console.error("Erreur :", error);
+        setError("Impossible de récupérer les produits");
+>>>>>>> devv
       } finally {
         setLoading(false);
       }
     };
+<<<<<<< HEAD
 
     fetchProducts();
   }, []);
@@ -136,8 +152,82 @@ const ShowProductsPage: React.FC = () => {
               </tbody>
             </table>
           </div>
+=======
+
+    fetchProducts();
+  }, []);
+
+  if (loading) {
+    return <div>Chargement des produits...</div>;
+  }
+
+  if (error) {
+    return <div>{error}</div>;
+  }
+
+  return (
+    <div>
+      <NavbarBackOffice />
+      <div className="container mx-auto py-12">
+  <h1 className="text-4xl font-bold text-center mb-10">Liste des produits</h1>
+  {products.length === 0 ? (
+    <p>Aucun produit disponible</p>
+  ) : (
+    <div className="flex flex-wrap gap-8 justify-center">
+      {products.map((product) => (
+        <div key={product._id} className="bg-white shadow-lg rounded-lg p-6 flex flex-col items-center w-full sm:w-[45%] md:w-[30%] lg:w-[22%] xl:w-[18%]">
+          <h2 className="text-2xl font-bold mb-4">{product.name}</h2>
+          {/* Superposition des images de face */}
+          <OptionCard
+            options={[
+              ...product.coque,
+              ...product.button,
+              ...product.pads,
+              ...product.laniere,
+              ...product.stickers,
+              ...product.batterie,
+              ...product.screen,
+            ]}
+            viewType="front"
+            single={false}
+          />
+
+          {/* Superposition des images de côté */}
+          <OptionCard
+            options={[
+              ...product.coque,
+              ...product.button,
+              ...product.pads,
+              ...product.laniere,
+              ...product.stickers,
+              ...product.batterie,
+              ...product.screen,
+            ]}
+            viewType="side"
+            single={false}
+          />
+
+          {/* Superposition des images arrière */}
+          <OptionCard
+            options={[
+              ...product.coque,
+              ...product.button,
+              ...product.pads,
+              ...product.laniere,
+              ...product.stickers,
+              ...product.batterie,
+              ...product.screen,
+            ]}
+            viewType="back"
+            single={false}
+          />
+>>>>>>> devv
         </div>
-      </div>
+      ))}
+    </div>
+  )}
+</div>
+
     </div>
   );
 };

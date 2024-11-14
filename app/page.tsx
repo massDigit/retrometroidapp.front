@@ -1,11 +1,13 @@
 "use client";
 
 import React from "react";
+import "./styles/globals.css"; // Assurez-vous que le chemin est correct
+import CarouselComponent from "./components/CarouselComponent"; // Assurez-vous que le chemin est correct
 import Header from "./components/Header";
 import Carousel from "./components/Caroussel";
 import Card from "./components/Card";
 
-const Home: React.FC = () => {
+const Page = () => {
   return (
     <div>
       <header>
@@ -23,4 +25,4 @@ const Home: React.FC = () => {
   );
 };
 
-export default Home;
+export default Page;

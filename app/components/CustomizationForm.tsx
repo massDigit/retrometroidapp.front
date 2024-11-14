@@ -1,13 +1,18 @@
+<<<<<<< HEAD
 import * as yup from "yup";
 import React, { useState, useEffect } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm, SubmitHandler } from "react-hook-form";
+=======
+import React, { useState, useEffect } from "react";
+>>>>>>> devv
 
 interface CustomizationFormProps {
   onPriceUpdate: (newPrice: number) => void;
   onAddToCart: (item: any) => void;
 }
 
+<<<<<<< HEAD
 interface IFormInput {
   baseConsole: string;
   shell: string;
@@ -26,10 +31,13 @@ const schema = yup.object().shape({
   accessories: yup.string().required("Accessories are required"),
 });
 
+=======
+>>>>>>> devv
 const CustomizationForm: React.FC<CustomizationFormProps> = ({
   onPriceUpdate,
   onAddToCart,
 }) => {
+<<<<<<< HEAD
   const {
     register,
     handleSubmit,
@@ -48,6 +56,17 @@ const CustomizationForm: React.FC<CustomizationFormProps> = ({
   });
 
   const formData = watch();
+=======
+  const [formData, setFormData] = useState({
+    baseConsole: "Je fournis la console",
+    shell: "Coque avant et arrière",
+    screen: "Écran IPS rétroéclairé",
+    buttons: "Boutons standard",
+    pads: "Pads standard",
+    accessories: "Lanière incluse",
+  });
+  const [price, setPrice] = useState(149);
+>>>>>>> devv
 
   useEffect(() => {
     let newPrice = 149;
@@ -64,6 +83,7 @@ const CustomizationForm: React.FC<CustomizationFormProps> = ({
       newPrice += 30;
     }
 
+<<<<<<< HEAD
     onPriceUpdate(newPrice);
   }, [formData, onPriceUpdate]);
 
@@ -167,6 +187,153 @@ const CustomizationForm: React.FC<CustomizationFormProps> = ({
             {errors.accessories.message}
           </p>
         )}
+=======
+    setPrice(newPrice);
+    onPriceUpdate(newPrice);
+  }, [formData, onPriceUpdate]);
+
+  const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const { name, value } = e.target;
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const customItem = {
+      ...formData,
+      price,
+    };
+
+    onAddToCart(customItem);
+  };
+
+  return (
+    <form onSubmit={handleSubmit} className="space-y-6">
+      <div>
+        <label
+          htmlFor="baseConsole"
+          className="block text-gray-700 font-semibold mb-2"
+        >
+          Base Console
+        </label>
+        <select
+          id="baseConsole"
+          name="baseConsole"
+          value={formData.baseConsole}
+          onChange={handleChange}
+          className="w-full p-3 border border-gray-300 rounded-lg bg-gray-100 text-gray-900"
+        >
+          <option value="Je fournis la console">Je fournis la console</option>
+          <option value="Je n'ai pas de console à fournir">
+            Je n'ai pas de console à fournir (+40€)
+          </option>
+        </select>
+      </div>
+
+      <div>
+        <label
+          htmlFor="shell"
+          className="block text-gray-700 font-semibold mb-2"
+        >
+          Coque
+        </label>
+        <select
+          id="shell"
+          name="shell"
+          value={formData.shell}
+          onChange={handleChange}
+          className="w-full p-3 border border-gray-300 rounded-lg bg-gray-100 text-gray-900"
+        >
+          <option value="Coque avant et arrière">Coque avant et arrière</option>
+          <option value="Coque personnalisée">
+            Coque personnalisée (+20€)
+          </option>
+        </select>
+      </div>
+
+      <div>
+        <label
+          htmlFor="screen"
+          className="block text-gray-700 font-semibold mb-2"
+        >
+          Écran
+        </label>
+        <select
+          id="screen"
+          name="screen"
+          value={formData.screen}
+          onChange={handleChange}
+          className="w-full p-3 border border-gray-300 rounded-lg bg-gray-100 text-gray-900"
+        >
+          <option value="Écran IPS rétroéclairé">
+            Écran IPS rétroéclairé (+30€)
+          </option>
+          <option value="Écran standard">Écran standard</option>
+        </select>
+      </div>
+
+      <div>
+        <label
+          htmlFor="buttons"
+          className="block text-gray-700 font-semibold mb-2"
+        >
+          Boutons
+        </label>
+        <select
+          id="buttons"
+          name="buttons"
+          value={formData.buttons}
+          onChange={handleChange}
+          className="w-full p-3 border border-gray-300 rounded-lg bg-gray-100 text-gray-900"
+        >
+          <option value="Boutons standard">Boutons standard</option>
+          <option value="Boutons personnalisés">
+            Boutons personnalisés (+10€)
+          </option>
+        </select>
+      </div>
+
+      <div>
+        <label
+          htmlFor="pads"
+          className="block text-gray-700 font-semibold mb-2"
+        >
+          Pads
+        </label>
+        <select
+          id="pads"
+          name="pads"
+          value={formData.pads}
+          onChange={handleChange}
+          className="w-full p-3 border border-gray-300 rounded-lg bg-gray-100 text-gray-900"
+        >
+          <option value="Pads standard">Pads standard</option>
+          <option value="Pads personnalisés">Pads personnalisés (+5€)</option>
+        </select>
+      </div>
+
+      <div>
+        <label
+          htmlFor="accessories"
+          className="block text-gray-700 font-semibold mb-2"
+        >
+          Accessoires
+        </label>
+        <select
+          id="accessories"
+          name="accessories"
+          value={formData.accessories}
+          onChange={handleChange}
+          className="w-full p-3 border border-gray-300 rounded-lg bg-gray-100 text-gray-900"
+        >
+          <option value="Lanière incluse">Lanière incluse</option>
+          <option value="Pas de lanière">Pas de lanière</option>
+        </select>
+>>>>>>> devv
       </div>
 
       <button
