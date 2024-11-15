@@ -36,7 +36,7 @@ const CustomizationPage: React.FC = () => {
           <div className="container mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8">
             <div className="flex justify-center">
               <img
-                src="/images/green-gameboy.png"
+                src=""
                 alt="Gameboy Advance"
                 className="w-3/4 h-auto rounded-lg shadow-lg"
               />

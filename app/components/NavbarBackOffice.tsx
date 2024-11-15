@@ -19,40 +19,40 @@ const NavbarBackOffice: React.FC = () => {
   };
 
   return (
-    <nav className="bg-gray-100 text-gray-900 shadow-md">
+    <nav className="bg-gray-100 text-gray-900 shadow-md font-retro">
       <div className="container mx-auto px-4 py-4 flex justify-between items-center">
         <div className="text-3xl font-bold">
           <Link href="/backoffice">
-            <span className="cursor-pointer hover:text-indigo-500 transition-colors">
+            <span className="cursor-pointer hover:text-blue-500 transition-colors">
               BackOffice
             </span>
           </Link>
         </div>
 
         <div className="hidden md:flex space-x-8 text-lg">
-          <Link href="/backoffice/">
-            <span className="flex items-center space-x-2 hover:text-indigo-500 transition-colors cursor-pointer">
+          <Link href="/backoffice">
+            <button className="flex items-center space-x-2 bg-transparent border border-blue-500 hover:bg-blue-500 text-blue-500 hover:text-white font-bold py-2 px-4 rounded-lg transition-colors">
               <FaTachometerAlt />
               <span>Dashboard</span>
-            </span>
+            </button>
           </Link>
-          <Link href="/backoffice/products/showProducts">
-            <span className="flex items-center space-x-2 hover:text-indigo-500 transition-colors cursor-pointer">
+          <Link href="/backoffice/products/addProduct">
+            <button className="flex items-center space-x-2 bg-transparent border border-blue-500 hover:bg-blue-500 text-blue-500 hover:text-white font-bold py-2 px-4 rounded-lg transition-colors">
               <FaBoxOpen />
-              <span>Produits</span>
-            </span>
+              <span>Ajouter un produit</span>
+            </button>
           </Link>
-          <Link href="/backoffice/options/showOptions">
-            <span className="flex items-center space-x-2 hover:text-indigo-500 transition-colors cursor-pointer">
+          <Link href="/backoffice/options/addOption">
+            <button className="flex items-center space-x-2 bg-transparent border border-blue-500 hover:bg-blue-500 text-blue-500 hover:text-white font-bold py-2 px-4 rounded-lg transition-colors">
               <FaCogs />
-              <span>Options</span>
-            </span>
+              <span>Ajouter une option</span>
+            </button>
           </Link>
-          <Link href="/backoffice/accessories/showAccessories">
-            <span className="flex items-center space-x-2 hover:text-indigo-500 transition-colors cursor-pointer">
+          <Link href="/backoffice/accessories/addAccessories">
+            <button className="flex items-center space-x-2 bg-transparent border border-blue-500 hover:bg-blue-500 text-blue-500 hover:text-white font-bold py-2 px-4 rounded-lg transition-colors">
               <FaTools />
-              <span>Accessoires</span>
-            </span>
+              <span>Ajouter un accessoire</span>
+            </button>
           </Link>
         </div>
 
@@ -69,29 +69,29 @@ const NavbarBackOffice: React.FC = () => {
 
       {isOpen && (
         <div className="md:hidden bg-gray-100 text-gray-900 px-4 py-4 space-y-4">
-          <Link href="/backoffice/">
-            <span className="flex items-center space-x-2 hover:text-indigo-500 transition-colors cursor-pointer">
+          <Link href="/backoffice">
+            <button className="flex items-center space-x-2 bg-transparent border border-blue-500 hover:bg-blue-500 text-blue-500 hover:text-white font-bold py-2 px-4 rounded-lg transition-colors">
               <FaTachometerAlt />
               <span>Dashboard</span>
-            </span>
+            </button>
           </Link>
-          <Link href="/backoffice/products/showProducts">
-            <span className="flex items-center space-x-2 hover:text-indigo-500 transition-colors cursor-pointer">
+          <Link href="/backoffice/products/addProduct">
+            <button className="flex items-center space-x-2 bg-transparent border border-blue-500 hover:bg-blue-500 text-blue-500 hover:text-white font-bold py-2 px-4 rounded-lg transition-colors">
               <FaBoxOpen />
-              <span>Produits</span>
-            </span>
+              <span>Ajouter un produit</span>
+            </button>
           </Link>
-          <Link href="/backoffice/options/showOptions">
-            <span className="flex items-center space-x-2 hover:text-indigo-500 transition-colors cursor-pointer">
+          <Link href="/backoffice/options/addOption">
+            <button className="flex items-center space-x-2 bg-transparent border border-blue-500 hover:bg-blue-500 text-blue-500 hover:text-white font-bold py-2 px-4 rounded-lg transition-colors">
               <FaCogs />
-              <span>Options</span>
-            </span>
+              <span>Ajouter une option</span>
+            </button>
           </Link>
-          <Link href="/backoffice/accessories/showAccessories">
-            <span className="flex items-center space-x-2 hover:text-indigo-500 transition-colors cursor-pointer">
+          <Link href="/backoffice/accessories/addAccessories">
+            <button className="flex items-center space-x-2 bg-transparent border border-blue-500 hover:bg-blue-500 text-blue-500 hover:text-white font-bold py-2 px-4 rounded-lg transition-colors">
               <FaTools />
-              <span>Accessoires</span>
-            </span>
+              <span>Ajouter un accessoire</span>
+            </button>
           </Link>
         </div>
       )}

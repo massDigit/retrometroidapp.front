@@ -81,7 +81,7 @@ const Header: React.FC = () => {
           </div>
         </nav>
 
-        <div className="bg-black text-white text-center h-12 flex items-center justify-center">
+        <div className="bg-black text-white text-center h-12 flex items-center justify-center w-full">
           <FiTruck className="mr-2" />
           <span>Livraison offerte dès 139€ avec Mondial Relay</span>
         </div>

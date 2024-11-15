@@ -10,14 +10,12 @@ const AddProductPage: React.FC = () => {
       <div>
         <NavbarBackOffice />
       </div>
-      <div className="min-h-screen bg-gray-100 text-gray-800 py-12">
-        <div className="container mx-auto max-w-3xl">
-          <h1 className="text-3xl font-bold text-center text-green-400 mb-10">
+      <div className="min-h-screen bg-gray-100 py-12">
+        <div className="container mx-auto max-w-2xl">
+          <h1 className="text-4xl font-bold text-center text-green-500 mb-8">
             Ajouter un nouveau produit
           </h1>
-          <div className="rounded-lg shadow-lg p-8">
-            <AddProductForm />
-          </div>
+          <AddProductForm />
         </div>
       </div>
     </div>
