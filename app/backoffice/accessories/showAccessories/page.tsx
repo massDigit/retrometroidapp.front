@@ -13,7 +13,7 @@ interface Accessory {
 
 const ShowAccessoriesPage: React.FC = () => {
   const [accessories, setAccessories] = useState<Accessory[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
+  const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
   // Récupération des accessoires

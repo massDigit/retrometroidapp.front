@@ -27,6 +27,7 @@ const OptionForm: React.FC = () => {
     resolver: yupResolver(schema),
   });
   const [submitting, setSubmitting] = useState(false);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
   const onSubmit: SubmitHandler<FormValues> = async (data) => {
     setSubmitting(true);

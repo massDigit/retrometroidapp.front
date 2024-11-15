@@ -8,6 +8,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 
 interface FormValues {
   itemName: string;
+  type: string;
   description: string;
   price: number;
   image: File | any;
@@ -160,7 +161,6 @@ const AddProductForm: React.FC = () => {
           </p>
         )}
       </div>
-
       <div>
         <label className="block text-sm font-medium text-green-400">
           Accessoires

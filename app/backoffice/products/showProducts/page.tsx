@@ -2,15 +2,47 @@
 
 import React, { useState, useEffect } from "react";
 import NavbarBackOffice from "@/app/components/NavbarBackOffice";
+import OptionCard from "@/app/components/option/OptionCard";
 
-interface Product {
-  id: number;
+interface Color {
+  _id: string;
+  name: string;
+}
+
+interface Option {
+  _id: string;
+  name: string;
+  description: string;
+  color: Color[];
+  optionImgFront?: string;
+  optionImgBack?: string;
+  optionImgSide?: string;
+}
+
+interface Accessory {
+  _id: string;
   name: string;
   description: string;
   price: number;
-  imageUrl: string;
-  accessories: string;
-  options: string;
+}
+
+interface Product {
+  _id: string;
+  name: string;
+  description: string;
+  price: number;
+  type: string;
+  stockQuantity: number;
+  coque: Option[];
+  button: Option[];
+  pads: Option[];
+  laniere: Option[];
+  stickers: Option[];
+  batterie: Option[];
+  screen: Option[];
+  sacoche: Accessory[];
+  screen_shield: Accessory[];
+  silicone_shield: Accessory[];
 }
 
 const ShowProductsPage: React.FC = () => {
