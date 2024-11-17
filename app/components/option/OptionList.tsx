@@ -20,6 +20,7 @@ type Option = {
   optionImgSide?: string;
   type: string;
   consoleType: string;
+  price: number;
   imageDataFront?: string;
   imageDataBack?: string;
   imageDataSide?: string;
@@ -164,18 +165,22 @@ const OptionsList: React.FC<OptionListProps> = ({
 
   return isExpanded ? (
     <div className="flex flex-wrap gap-4 mt-2">
-      {options.map((option) =>
-        option.color.map((color) => (
+    {options.map((option) =>
+      option.color.map((color) => (
+        <div key={`${option._id}-${color.name}`} className="flex flex-col items-center">
           <button
-            key={`${option._id}-${color.name}`}
             onClick={() => handleOptionSelect(option, color)}
             style={{ backgroundColor: color.name }}
-            className="w-4 h-4 rounded-full cursor-pointer border border-gray-300 hover:border-blue-500"
+            className="w-8 h-8 rounded-full cursor-pointer border border-gray-300 hover:border-blue-500"
             title={`${option.name} - ${color.name}`}
           />
-        ))
-      )}
-    </div>
+          {option.price && option.price > 0 ? (
+            <p className="text-sm mt-1">{`${option.price.toFixed(2)} €`}</p>
+          ) : null}
+        </div>
+      ))
+    )}
+  </div>
   ) : null;
 };
 

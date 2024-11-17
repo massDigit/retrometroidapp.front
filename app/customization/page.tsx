@@ -22,7 +22,7 @@ const CustomisationPage: React.FC = () => {
   const [selectedAccessories, setSelectedAccessories] = useState<any[]>([]);
 
   // États pour contrôler l'expansion des sections
-  const [isCoqueExpanded, setIsCoqueExpanded] = useState(true); // Par défaut ouvert
+  const [isCoqueExpanded, setIsCoqueExpanded] = useState(false); // Par défaut fermer
   const [isLaniereExpanded, setIsLaniereExpanded] = useState(false);
   const [isButtonExpanded, setIsButtonExpanded] = useState(false);
   const [isPadExpanded, setIsPadExpanded] = useState(false);
@@ -31,6 +31,11 @@ const CustomisationPage: React.FC = () => {
   const [isScreenExpanded, setIsScreenExpanded] = useState(false);
 
   const [viewType, setViewType] = useState('side');
+
+  const [consoleSource, setConsoleSource] = useState<'client' | 'company'>('client');
+
+  const BASE_PRICE = 149;
+  const COMPANY_CONSOLE_FEE = 40;
 
   // Fonctions de sélection d'options avec révocation des URLs blob
   const handleSelectCoque = useCallback(
@@ -150,6 +155,44 @@ const CustomisationPage: React.FC = () => {
     return '';
   };
 
+  const calculateTotalPrice = () => {
+    let total = BASE_PRICE;
+
+    if (consoleSource === 'company') {
+      total += COMPANY_CONSOLE_FEE;
+    }
+  
+    const options = [
+      selectedCoque,
+      selectedLaniere,
+      selectedButton,
+      selectedPad,
+      selectedSticker,
+      selectedBatterie,
+      selectedScreen,
+    ];
+  
+    options.forEach((selectedOption) => {
+      if (
+        selectedOption &&
+        selectedOption.option &&
+        selectedOption.option.price &&
+        selectedOption.option.price > 0
+      ) {
+        total += selectedOption.option.price;
+      }
+    });
+  
+    selectedAccessories.forEach((accessory) => {
+      if (accessory.price && accessory.price > 0) {
+        total += accessory.price;
+      }
+    });
+  
+    return total;
+  };
+  
+
   // Nettoyage lors du démontage du composant
   useEffect(() => {
     return () => {
@@ -174,12 +217,12 @@ const CustomisationPage: React.FC = () => {
   }, []); // Dépendances vides pour n'exécuter qu'au démontage
 
   return (
-    <div>
+    <div className="flex flex-col h-screen">
       <Header />
-      <div className="flex mt-4 flex-col md:flex-row justify-center ">
+      <div className="flex mt-4 flex-col md:flex-row justify-center overflow-hidden ">
         {/* Section de gauche - Aperçu */}
         <div className="flex w-full md:w-4/6 border-4 justify-center ">
-          <div className="w-full md:w-2/5 p-4 flex flex-col items-center">
+          <div className="w-full p-4 flex flex-col items-center">
             <h2 className="text-center mb-4">Aperçu du produit</h2>
             {selectedCoque ? (
               <div className="relative w-full h-96 flex items-center justify-center bg-gray-100 rounded-lg overflow-hidden">
@@ -254,15 +297,40 @@ const CustomisationPage: React.FC = () => {
         </div>
 
         {/* Section de droite - Personnalisation */}
-        <div className="w-full md:w-2/5 p-4 flex flex-col items-center">
-          <h2 className="text-lg font-semibold text-left mb-4">Configuration</h2>
-          <div className="max-h-screen overflow-y-auto custom-scrollbar w-full">
-            <div className="space-y-4">
+        <div className="w-full md:w-2/5 p-4 flex flex-col h-[70vh] md:h-[600px]">
+        <h2 className="text-lg font-semibold text-left mb-4">Configuration</h2>
+        <div className="flex-1 overflow-y-auto">
+          <div className="space-y-4">
+            <div className="mt-4">
+                <h3 className="font-medium mb-2">Sélection de la console</h3>
+                <div className="flex flex-col">
+                  <label className="flex items-center mb-2">
+                    <input
+                      type="radio"
+                      value="client"
+                      checked={consoleSource === 'client'}
+                      onChange={() => setConsoleSource('client')}
+                      className="mr-2"
+                    />
+                    Console du client
+                  </label>
+                  <label className="flex items-center">
+                    <input
+                      type="radio"
+                      value="company"
+                      checked={consoleSource === 'company'}
+                      onChange={() => setConsoleSource('company')}
+                      className="mr-2"
+                    />
+                    Console de l'entreprise (+40€)
+                  </label>
+                </div>
+              </div>
               {/* Section Coque */}
               <div>
                 <div className="flex items-center justify-between">
                   <div className="flex items-center">
-                    <h3 className="font-medium mr-2">Choisir une Coque</h3>
+                    <h3 className="font-medium mr-2">Coque</h3>
                     {selectedCoque && (
                       <span
                         className="w-4 h-4 rounded-full border border-gray-300"
@@ -287,7 +355,7 @@ const CustomisationPage: React.FC = () => {
               <div>
                 <div className="flex items-center justify-between">
                   <div className="flex items-center">
-                    <h3 className="font-medium mr-2">Choisir une Lanière</h3>
+                    <h3 className="font-medium mr-2">Lanière</h3>
                     {selectedLaniere && (
                       <span
                         className="w-4 h-4 rounded-full border border-gray-300"
@@ -312,7 +380,7 @@ const CustomisationPage: React.FC = () => {
               <div>
                 <div className="flex items-center justify-between">
                   <div className="flex items-center">
-                    <h3 className="font-medium mr-2">Choisir des Boutons</h3>
+                    <h3 className="font-medium mr-2">Boutons</h3>
                     {selectedButton && (
                       <span
                         className="w-4 h-4 rounded-full border border-gray-300"
@@ -337,7 +405,7 @@ const CustomisationPage: React.FC = () => {
               <div>
                 <div className="flex items-center justify-between">
                   <div className="flex items-center">
-                    <h3 className="font-medium mr-2">Choisir un Pad</h3>
+                    <h3 className="font-medium mr-2">Pad</h3>
                     {selectedPad && (
                       <span
                         className="w-4 h-4 rounded-full border border-gray-300"
@@ -362,7 +430,7 @@ const CustomisationPage: React.FC = () => {
               <div>
                 <div className="flex items-center justify-between">
                   <div className="flex items-center">
-                    <h3 className="font-medium mr-2">Choisir des Stickers</h3>
+                    <h3 className="font-medium mr-2">Stickers</h3>
                     {selectedSticker && (
                       <span
                         className="w-4 h-4 rounded-full border border-gray-300"
@@ -387,7 +455,7 @@ const CustomisationPage: React.FC = () => {
               <div>
                 <div className="flex items-center justify-between">
                   <div className="flex items-center">
-                    <h3 className="font-medium mr-2">Choisir une Batterie</h3>
+                    <h3 className="font-medium mr-2">Batterie</h3>
                     {selectedBatterie && (
                       <span
                         className="w-4 h-4 rounded-full border border-gray-300"
@@ -403,7 +471,7 @@ const CustomisationPage: React.FC = () => {
                   type="batterie"
                   consoleType="GBA"
                   onSelectOption={handleSelectBatterie}
-                  selectDefaultOption={true}
+                  selectDefaultOption={false}
                   isExpanded={isBatterieExpanded}
                 />
               </div>
@@ -412,7 +480,7 @@ const CustomisationPage: React.FC = () => {
               <div>
                 <div className="flex items-center justify-between">
                   <div className="flex items-center">
-                    <h3 className="font-medium mr-2">Choisir un Écran</h3>
+                    <h3 className="font-medium mr-2">Écran</h3>
                     {selectedScreen && (
                       <span
                         className="w-4 h-4 rounded-full border border-gray-300"
@@ -435,10 +503,14 @@ const CustomisationPage: React.FC = () => {
 
               {/* Section Accessoires */}
               <AccessoryList onSelectAccessory={handleSelectAccessory} />
-
-              {/* Vous pouvez également afficher le total du prix ici si vous le souhaitez */}
             </div>
           </div>
+          {/* Affichage du prix total */}
+          <div className="mt-4">
+                <h3 className="text-xl font-semibold">
+                  Prix Total : {calculateTotalPrice().toFixed(2)} €
+                </h3>
+              </div>
         </div>
       </div>
     </div>

@@ -65,7 +65,7 @@ const AccessoryList: React.FC<AccessoryListProps> = ({ onSelectAccessory }) => {
   }
 
   return (
-    <div className="mt-4">
+<div className="mt-4">
       <h3 className="font-medium mb-2">Accessoires disponibles</h3>
       <ul>
         {accessories.map((accessory) => (
@@ -73,7 +73,9 @@ const AccessoryList: React.FC<AccessoryListProps> = ({ onSelectAccessory }) => {
             <div>
               <p className="font-semibold">{accessory.name}</p>
               <p className="text-sm text-gray-600">{accessory.description}</p>
-              <p className="text-sm font-medium">Prix: {accessory.price.toFixed(2)} €</p>
+              {accessory.price && accessory.price > 0 ? (
+                <p className="text-sm font-medium">Prix: {accessory.price.toFixed(2)} €</p>
+              ) : null}
             </div>
             <div>
               <input
