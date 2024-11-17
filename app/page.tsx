@@ -1,11 +1,9 @@
 "use client";
 
 import React from "react";
-import "./styles/globals.css"; // Assurez-vous que le chemin est correct
-import CarouselComponent from "./components/CarouselComponent"; // Assurez-vous que le chemin est correct
+import Card from "./components/Card";
 import Header from "./components/Header";
 import Carousel from "./components/Caroussel";
-import Card from "./components/Card";
 
 const Page = () => {
   return (

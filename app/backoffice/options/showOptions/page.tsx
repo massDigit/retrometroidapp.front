@@ -59,7 +59,9 @@ const ShowOptionsPage: React.FC = () => {
     <div>
       <NavbarBackOffice />
       <div className="container mx-auto py-12">
-        <h1 className="text-4xl font-bold text-center mb-10">Liste des Options</h1>
+        <h1 className="text-4xl font-bold text-center mb-10">
+          Liste des Options
+        </h1>
 
         {types.map((type) => {
           const filteredOptions = filterOptionsByType(type);

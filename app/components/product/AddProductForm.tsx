@@ -1,6 +1,5 @@
 "use client";
 
-
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import OptionSelector from "@/app/components/option/OptionSelector"; 
@@ -58,10 +57,20 @@ interface FormErrors {
   silicone_shield?:string;
 }
 
+const schema = yup.object().shape({
+  itemName: yup.string().required("Item name is required"),
+  description: yup.string().required("Description is required"),
+  price: yup
+    .number()
+    .required("Price is required")
+    .positive("Price must be positive"),
+  image: yup.mixed().required("Image is required"),
+  accessories: yup.string().required("Accessories are required"),
+  options: yup.string().required("Options are required"),
+});
+
 const AddProductForm: React.FC = () => {
   const router = useRouter();
-
-
   const [formData, setFormData] = useState<FormValues>({
     itemName: "",
     type:"",
@@ -86,10 +95,8 @@ const AddProductForm: React.FC = () => {
     sacoche:"",
     screen_shield:"",
     silicone_shield:"",
-   
+  
   });
-
-  const [errors, setErrors] = useState<FormErrors>({});
   const [submitting, setSubmitting] = useState(false);
 
   const handleChange = (
@@ -242,47 +249,41 @@ const AddProductForm: React.FC = () => {
         setSubmitting(false);
       
       }
+ 
     }
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6">
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="space-y-6 bg-black p-6 rounded-lg shadow-lg"
+    >
       <div>
-        <label
-          htmlFor="itemName"
-          className="block text-gray-700 font-semibold mb-2"
-        >
+        <label className="block text-sm font-medium text-green-400">
           Nom du produit
         </label>
         <input
-          id="itemName"
-          name="itemName"
           type="text"
-          value={formData.itemName}
-          onChange={handleChange}
-          className="w-full p-3 border border-gray-300 rounded-lg bg-gray-100 text-gray-900 placeholder-gray-400 focus:ring-2 focus:ring-indigo-500"
+          {...register("itemName")}
+          className="mt-1 block w-full px-3 py-2 border border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm bg-gray-800 text-white"
         />
         {errors.itemName && (
-          <div className="text-red-500 text-sm mt-1">{errors.itemName}</div>
+          <p className="mt-2 text-sm text-red-600">{errors.itemName.message}</p>
         )}
       </div>
 
       <div>
-        <label
-          htmlFor="description"
-          className="block text-gray-700 font-semibold mb-2"
-        >
+        <label className="block text-sm font-medium text-green-400">
           Description
         </label>
         <textarea
-          id="description"
-          name="description"
-          value={formData.description}
-          onChange={handleChange}
-          className="w-full p-3 border border-gray-300 rounded-lg bg-gray-100 text-gray-900 placeholder-gray-400 focus:ring-2 focus:ring-indigo-500"
+          {...register("description")}
+          className="mt-1 block w-full px-3 py-2 border border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm bg-gray-800 text-white"
         />
         {errors.description && (
-          <div className="text-red-500 text-sm mt-1">{errors.description}</div>
+          <p className="mt-2 text-sm text-red-600">
+            {errors.description.message}
+          </p>
         )}
       </div>
 
@@ -313,15 +314,12 @@ const AddProductForm: React.FC = () => {
           Prix (€)
         </label>
         <input
-          id="price"
-          name="price"
           type="number"
-          value={formData.price}
-          onChange={handleChange}
-          className="w-full p-3 border border-gray-300 rounded-lg bg-gray-100 text-gray-900 placeholder-gray-400 focus:ring-2 focus:ring-indigo-500"
+          {...register("price")}
+          className="mt-1 block w-full px-3 py-2 border border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm bg-gray-800 text-white"
         />
         {errors.price && (
-          <div className="text-red-500 text-sm mt-1">{errors.price}</div>
+          <p className="mt-2 text-sm text-red-600">{errors.price.message}</p>
         )}
       </div>
       <div>
@@ -443,6 +441,7 @@ const AddProductForm: React.FC = () => {
       </div>
 
       <div>
+
         <label htmlFor="silicone_shield" className="block text-gray-700 font-semibold mb-2">
           Protection en silicone
         </label>
@@ -462,7 +461,7 @@ const AddProductForm: React.FC = () => {
       <button
         type="submit"
         disabled={submitting}
-        className={`w-full bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-3 px-4 rounded-lg ${
+        className={`w-full bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-4 rounded-lg ${
           submitting ? "opacity-50 cursor-not-allowed" : ""
         }`}
       >

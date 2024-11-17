@@ -1,9 +1,6 @@
+import * as yup from "yup";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
-
-
-
-
 
 interface FormValues {
   name: string;
@@ -48,9 +45,6 @@ const AccessoryForm: React.FC = () => {
       }));
     }
   };
-
-
-  
 
   const validateForm = () => {
     let isValid = true;
@@ -108,35 +102,33 @@ const AccessoryForm: React.FC = () => {
       }
     }
   };
-
   return (
-    <form onSubmit={handleSubmit} className="bg-white p-8 rounded-lg shadow-md">
-      <div className="mb-6">
-        <label
-          htmlFor="name"
-          className="block text-gray-700 font-semibold mb-2"
-        >
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="space-y-6 bg-gray-900 p-6 rounded-lg shadow-lg"
+    >
+      <div>
+        <label className="block text-sm font-medium text-blue-400">
           Nom de l'accessoire
         </label>
         <input
           type="text"
+
           id="name"
           name="name"
           value={formData.name}
           onChange={handleChange}
           className="w-full p-3 border border-gray-300 rounded-lg bg-gray-100 text-gray-900 placeholder-gray-400 focus:ring-2 focus:ring-indigo-500"
           placeholder="Nom de l'accessoire"
+
         />
         {errors.name && (
-          <p className="text-red-500 text-sm mt-1">{errors.name}</p>
+          <p className="mt-2 text-sm text-red-600">{errors.name.message}</p>
         )}
       </div>
 
-      <div className="mb-6">
-        <label
-          htmlFor="description"
-          className="block text-gray-700 font-semibold mb-2"
-        >
+      <div>
+        <label className="block text-sm font-medium text-blue-400">
           Description
         </label>
         <textarea
@@ -148,17 +140,14 @@ const AccessoryForm: React.FC = () => {
           placeholder="Description de l'accessoire"
         />
         {errors.description && (
-          <p className="text-red-500 text-sm mt-1">{errors.description}</p>
+          <p className="mt-2 text-sm text-red-600">
+            {errors.description.message}
+          </p>
         )}
       </div>
 
-      <div className="mb-6">
-        <label
-          htmlFor="price"
-          className="block text-gray-700 font-semibold mb-2"
-        >
-          Prix (€)
-        </label>
+      <div>
+        <label className="block text-sm font-medium text-blue-400">Prix</label>
         <input
           type="number"
           id="price"
@@ -170,9 +159,10 @@ const AccessoryForm: React.FC = () => {
           step="any"
         />
         {errors.price && (
-          <p className="text-red-500 text-sm mt-1">{errors.price}</p>
+          <p className="mt-2 text-sm text-red-600">{errors.price.message}</p>
         )}
       </div>
+
       <div className="text-center">
         <button
           type="submit"

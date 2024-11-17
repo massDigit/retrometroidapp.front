@@ -50,6 +50,7 @@ const ShowProductsPage: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
+
   useEffect(() => {
     const fetchProducts = async () => {
       try {
@@ -134,6 +135,7 @@ const ShowProductsPage: React.FC = () => {
             viewType="back"
             single={false}
           />
+
         </div>
       ))}
     </div>

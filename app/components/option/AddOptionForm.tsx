@@ -1,4 +1,7 @@
+import * as yup from "yup";
 import React, { useState } from "react";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useForm, SubmitHandler } from "react-hook-form";
 
 const OptionForm: React.FC = () => {
   const [optionData, setOptionData] = useState({
@@ -23,6 +26,14 @@ const OptionForm: React.FC = () => {
     imagePathBack:"",
   });
 
+const OptionForm: React.FC = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormValues>({
+    resolver: yupResolver(schema),
+  });
   const [submitting, setSubmitting] = useState(false);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
@@ -130,45 +141,36 @@ const OptionForm: React.FC = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="bg-white p-8 rounded-lg shadow-md">
-      <div className="mb-6">
-        <label
-          htmlFor="name"
-          className="block text-gray-700 font-semibold mb-2"
-        >
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="space-y-6 bg-black p-6 rounded-lg shadow-lg"
+    >
+      <div>
+        <label className="block text-sm font-medium text-yellow-400">
           Nom de l'option
         </label>
         <input
           type="text"
-          id="name"
-          name="name"
-          value={optionData.name}
-          onChange={handleChange}
-          className="w-full p-3 border border-gray-300 rounded-lg bg-gray-100 text-gray-900 placeholder-gray-400 focus:ring-2 focus:ring-indigo-500"
-          placeholder="Nom de l'option"
+          {...register("name")}
+          className="mt-1 block w-full px-3 py-2 border border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-yellow-500 focus:border-yellow-500 sm:text-sm bg-gray-700 text-white"
         />
         {errors.name && (
-          <p className="text-red-500 text-sm mt-1">{errors.name}</p>
+          <p className="mt-2 text-sm text-red-600">{errors.name.message}</p>
         )}
       </div>
 
-      <div className="mb-6">
-        <label
-          htmlFor="description"
-          className="block text-gray-700 font-semibold mb-2"
-        >
+      <div>
+        <label className="block text-sm font-medium text-yellow-400">
           Description
         </label>
         <textarea
-          id="description"
-          name="description"
-          value={optionData.description}
-          onChange={handleChange}
-          className="w-full p-3 border border-gray-300 rounded-lg bg-gray-100 text-gray-900 placeholder-gray-400 focus:ring-2 focus:ring-indigo-500"
-          placeholder="Description de l'option"
+          {...register("description")}
+          className="mt-1 block w-full px-3 py-2 border border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-yellow-500 focus:border-yellow-500 sm:text-sm bg-gray-700 text-white"
         />
         {errors.description && (
-          <p className="text-red-500 text-sm mt-1">{errors.description}</p>
+          <p className="mt-2 text-sm text-red-600">
+            {errors.description.message}
+          </p>
         )}
       </div>
 
@@ -270,18 +272,15 @@ const OptionForm: React.FC = () => {
           <p className="text-red-500 text-sm mt-1">{errors.imagePathBack}</p>
         )}
       </div>
-
-      <div className="text-center">
-        <button
-          type="submit"
-          className={`px-6 py-3 bg-indigo-500 text-white font-bold rounded-lg hover:bg-indigo-600 transition-colors ${
-            submitting ? "opacity-50 cursor-not-allowed" : ""
-          }`}
-          disabled={submitting}
-        >
-          {submitting ? "Ajout en cours..." : "Ajouter l'option"}
-        </button>
-      </div>
+      <button
+        type="submit"
+        disabled={submitting}
+        className={`w-full bg-yellow-500 hover:bg-yellow-600 text-gray-900 font-bold py-3 px-4 rounded-lg ${
+          submitting ? "opacity-50 cursor-not-allowed" : ""
+        }`}
+      >
+        {submitting ? "Ajout en cours..." : "Ajouter l'option"}
+      </button>
     </form>
   );
 };

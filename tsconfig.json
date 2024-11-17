@@ -26,6 +26,7 @@
         "./*"
       ]
     },
+
     "forceConsistentCasingInFileNames": true
   },
   "include": [
@@ -37,4 +38,6 @@
   "exclude": [
     "node_modules"
   ]
+
 }
+
