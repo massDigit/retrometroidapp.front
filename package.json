@@ -11,7 +11,9 @@
   "dependencies": {
     "@hookform/resolvers": "^3.9.1",
     "@splidejs/react-splide": "^0.7.12",
+    "autoprefixer": "^10.4.20",
     "next": "15.0.3",
+    "postcss-preset-env": "^10.1.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-hook-form": "^7.53.2",
@@ -22,10 +24,10 @@
     "@types/node": "^22.9.0",
     "@types/react": "^18.3.12",
     "@types/react-dom": "^18.3.1",
-    "eslint": "^9.14.0",
+    "eslint": "^9.15.0",
     "eslint-config-next": "15.0.3",
     "postcss": "^8.4.49",
-    "tailwindcss": "^3.4.14",
+    "tailwindcss": "^3.4.15",
     "typescript": "^5.6.3"
   }
 }
