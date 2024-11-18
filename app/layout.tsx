@@ -1,4 +1,5 @@
-import "./styles/globals.css"; // Chemin corrigé
+import "./globals.css";
+import { ReactNode } from "react";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import Footer from "./components/Footer";
@@ -9,11 +10,11 @@ export const metadata: Metadata = {
   title: "retrometroid",
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+interface LayoutProps {
+  children: ReactNode;
+}
+
+const Layout: React.FC<LayoutProps> = ({ children }) => {
   return (
     <html lang="en">
       <body className={`${inter.className}`}>
@@ -24,4 +25,6 @@ export default function RootLayout({
       </body>
     </html>
   );
-}
+};
+
+export default Layout;
