@@ -1,5 +1,3 @@
-// components/OptionSelector.tsx
-
 import React, { useEffect, useState } from "react";
 
 interface Option {
@@ -23,17 +21,24 @@ const OptionSelector: React.FC<OptionSelectorProps> = ({
   setFormData,
 }) => {
   const [options, setOptions] = useState<Option[]>([]);
-
+  const [error, setError] = useState<string | null>(null);
 
   // Fonction pour récupérer les options depuis l'API
   useEffect(() => {
     const fetchOptions = async () => {
       try {
         const response = await fetch("http://localhost:3000/options");
+        const contentType = response.headers.get("content-type");
+
+        if (!contentType || !contentType.includes("application/json")) {
+          throw new Error("La réponse de l'API n'est pas au format JSON");
+        }
+
         const data = await response.json();
         setOptions(data.allOptions);
       } catch (error) {
         console.error("Erreur lors de la récupération des options :", error);
+        setError("Erreur lors de la récupération des options");
       }
     };
 
@@ -55,18 +60,20 @@ const OptionSelector: React.FC<OptionSelectorProps> = ({
       ...prev,
       [colorName]: value,
     }));
-
   };
 
-  
-  const selectedOption = options.find((option) => option.name === formData[optionName]);
+  const selectedOption = options.find(
+    (option) => option.name === formData[optionName]
+  );
 
-  
   return (
     <>
-      {/* Sélection de l'option */}
+      {error && <p className="text-red-500">{error}</p>}
       <div>
-        <label htmlFor={optionName} className="block text-gray-700 font-semibold mb-2">
+        <label
+          htmlFor={optionName}
+          className="block text-gray-700 font-semibold mb-2"
+        >
           {optionLabel}
         </label>
         <select
@@ -78,16 +85,21 @@ const OptionSelector: React.FC<OptionSelectorProps> = ({
         >
           <option value="">Sélectionnez une {optionLabel.toLowerCase()}</option>
           {options
-          .filter((option) => option.name.toLowerCase().startsWith(optionLabel.toLowerCase()))
-          .map((option) => (
-            <option key={option.name} value={option.name}>
-              {option.name}
-            </option>
-          ))}
+            .filter((option) =>
+              option.name.toLowerCase().startsWith(optionLabel.toLowerCase())
+            )
+            .map((option) => (
+              <option key={option.name} value={option.name}>
+                {option.name}
+              </option>
+            ))}
         </select>
       </div>
       <div>
-        <label htmlFor={colorName} className="block text-gray-700 font-semibold mb-2">
+        <label
+          htmlFor={colorName}
+          className="block text-gray-700 font-semibold mb-2"
+        >
           Couleur de {optionLabel.toLowerCase()}
         </label>
         <select
@@ -97,16 +109,12 @@ const OptionSelector: React.FC<OptionSelectorProps> = ({
           onChange={handleColorChange}
           className="w-full p-3 border border-gray-300 rounded-lg bg-gray-100"
         >
-        <option value="">Sélectionnez une couleur</option>
-        {selectedOption?.color?.length ? (
-          selectedOption.color.map((colorObj:any) => (
-            <option key={colorObj._id} value={colorObj.name}>
-              {colorObj.name}
+          <option value="">Sélectionnez une couleur</option>
+          {selectedOption?.color.map((color) => (
+            <option key={color} value={color}>
+              {color}
             </option>
-          ))
-        ) : (
-          <option value="">Aucune couleur disponible</option>
-        )}
+          ))}
         </select>
       </div>
     </>
