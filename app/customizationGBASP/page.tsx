@@ -15,8 +15,9 @@ const CustomisationPage: React.FC = () => {
   const [selectedLaniere, setSelectedLaniere] = useState<{ option: any; color: any } | null>(null);
   const [selectedButton, setSelectedButton] = useState<{ option: any; color: any } | null>(null);
   const [selectedPad, setSelectedPad] = useState<{ option: any; color: any } | null>(null);
+  const [selectedUsbC, setSelectedUsbC] = useState<{ option: any; color: any } | null>(null);
   const [selectedSticker, setSelectedSticker] = useState<{ option: any; color: any } | null>(null);
-  const [selectedBatterie, setSelectedBatterie] = useState<{ option: any; color: any } | null>(null);
+  const [selectedUpdatedBatterie, setSelectedUpdatedBatterie] = useState<{ option: any; color: any } | null>(null);
   const [selectedScreen, setSelectedScreen] = useState<{ option: any; color: any } | null>(null);
 
   // État pour les accessoires sélectionnés
@@ -25,6 +26,7 @@ const CustomisationPage: React.FC = () => {
   // États pour contrôler l'expansion des sections
   const [isCoqueExpanded, setIsCoqueExpanded] = useState(false); // Par défaut fermer
   const [isLaniereExpanded, setIsLaniereExpanded] = useState(false);
+  const [isUsbCExpanded, setIsUsbCExpanded] = useState(true);
   const [isButtonExpanded, setIsButtonExpanded] = useState(false);
   const [isPadExpanded, setIsPadExpanded] = useState(false);
   const [isStickerExpanded, setIsStickerExpanded] = useState(false);
@@ -110,17 +112,31 @@ const CustomisationPage: React.FC = () => {
 
   const handleSelectBatterie = useCallback(
     (option: any, color: any) => {
-      if (selectedBatterie && selectedBatterie.option) {
-        const prevOption = selectedBatterie.option;
+      if (selectedUpdatedBatterie && selectedUpdatedBatterie.option) {
+        const prevOption = selectedUpdatedBatterie.option;
         if (prevOption.imageDataFront) URL.revokeObjectURL(prevOption.imageDataFront);
         if (prevOption.imageDataBack) URL.revokeObjectURL(prevOption.imageDataBack);
         if (prevOption.imageDataSide) URL.revokeObjectURL(prevOption.imageDataSide);
       }
-      setSelectedBatterie({ option, color });
+      setSelectedUpdatedBatterie({ option, color });
     },
-    [selectedBatterie]
+    [selectedUpdatedBatterie]
   );
 
+  const handleSelectUsbC = useCallback(
+    (option: any, color: any) => {
+      if (selectedUsbC && selectedUsbC.option) {
+        const prevOption = selectedUsbC.option;
+        if (prevOption.imageDataFront) URL.revokeObjectURL(prevOption.imageDataFront);
+        if (prevOption.imageDataBack) URL.revokeObjectURL(prevOption.imageDataBack);
+        if (prevOption.imageDataSide) URL.revokeObjectURL(prevOption.imageDataSide);
+      }
+      setSelectedUsbC({ option, color });
+      
+    },
+    [selectedUsbC]
+  );
+  console.log(selectedUsbC)
   const handleSelectScreen = useCallback(
     (option: any, color: any) => {
       if (selectedScreen && selectedScreen.option) {
@@ -172,7 +188,8 @@ const CustomisationPage: React.FC = () => {
       selectedButton,
       selectedPad,
       selectedSticker,
-      selectedBatterie,
+      selectedUsbC,
+      selectedUpdatedBatterie,
       selectedScreen,
     ];
   
@@ -215,8 +232,9 @@ const CustomisationPage: React.FC = () => {
       revokeOptionImages(selectedButton);
       revokeOptionImages(selectedPad);
       revokeOptionImages(selectedSticker);
-      revokeOptionImages(selectedBatterie);
+      revokeOptionImages(selectedUpdatedBatterie);
       revokeOptionImages(selectedScreen);
+      revokeOptionImages(selectedUsbC);
     };
   }, []); // Dépendances vides pour n'exécuter qu'au démontage
 
@@ -265,10 +283,17 @@ const CustomisationPage: React.FC = () => {
                     className="absolute w-full h-full object-contain"
                   />
                 )}
-                {selectedBatterie && getImageData(selectedBatterie) && (
+                {selectedUsbC && getImageData(selectedUsbC) && (
                   <img
-                    src={getImageData(selectedBatterie)}
-                    alt={selectedBatterie.option.name}
+                  src={getImageData(selectedUsbC)}
+                  alt={selectedUsbC.option.name}
+                  className='absolute w-full h-full object-contain'
+                  />
+                )}
+                {selectedUpdatedBatterie && getImageData(selectedUpdatedBatterie) && (
+                  <img
+                    src={getImageData(selectedUpdatedBatterie)}
+                    alt={selectedUpdatedBatterie.option.name}
                     className="absolute w-full h-full object-contain"
                   />
                 )}
@@ -348,7 +373,7 @@ const CustomisationPage: React.FC = () => {
                 </div>
                 <OptionsList
                   type="coque"
-                  consoleType="GBA"
+                  consoleType="GBA-SP"
                   onSelectOption={handleSelectCoque}
                   selectDefaultOption={true}
                   isExpanded={isCoqueExpanded}
@@ -373,7 +398,7 @@ const CustomisationPage: React.FC = () => {
                 </div>
                 <OptionsList
                   type="lanière"
-                  consoleType="GBA"
+                  consoleType="GBA-SP"
                   onSelectOption={handleSelectLaniere}
                   selectDefaultOption={true}
                   isExpanded={isLaniereExpanded}
@@ -398,7 +423,7 @@ const CustomisationPage: React.FC = () => {
                 </div>
                 <OptionsList
                   type="button"
-                  consoleType="GBA"
+                  consoleType="GBA-SP"
                   onSelectOption={handleSelectButton}
                   selectDefaultOption={true}
                   isExpanded={isButtonExpanded}
@@ -423,7 +448,7 @@ const CustomisationPage: React.FC = () => {
                 </div>
                 <OptionsList
                   type="pad"
-                  consoleType="GBA"
+                  consoleType="GBA-SP"
                   onSelectOption={handleSelectPad}
                   selectDefaultOption={true}
                   isExpanded={isPadExpanded}
@@ -448,10 +473,33 @@ const CustomisationPage: React.FC = () => {
                 </div>
                 <OptionsList
                   type="stickers"
-                  consoleType="GBA"
+                  consoleType="GBA-SP"
                   onSelectOption={handleSelectSticker}
                   selectDefaultOption={true}
                   isExpanded={isStickerExpanded}
+                />
+              </div>
+
+              {/* Section Usb_C */}
+              <div>
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center">
+                    <h3 className="font-medium mr-2">Usb-c</h3>
+                    {selectedUsbC && (
+                      <span>(+{selectedUsbC.option.price}€)</span>
+                      
+                    )}
+                  </div>
+                  <button onClick={() => setIsUsbCExpanded(!isUsbCExpanded)}>
+                    {isUsbCExpanded ? <IoIosArrowUp /> : <IoIosArrowDown />}
+                  </button>
+                </div>
+                <OptionsList
+                  type="usb-c"
+                  consoleType="GBA-SP"
+                  onSelectOption={handleSelectUsbC}
+                  selectDefaultOption={false}
+                  isExpanded={isUsbCExpanded }
                 />
               </div>
 
@@ -459,11 +507,11 @@ const CustomisationPage: React.FC = () => {
               <div>
                 <div className="flex items-center justify-between">
                   <div className="flex items-center">
-                    <h3 className="font-medium mr-2">Batterie</h3>
-                    {selectedBatterie && (
+                    <h3 className="font-medium mr-2">Upgrade batterie</h3>
+                    {selectedUpdatedBatterie && (
                       <span
                         className="w-4 h-4 rounded-full border border-gray-300"
-                        style={{ backgroundColor: selectedBatterie.color.name }}
+                        style={{ backgroundColor: selectedUpdatedBatterie.color.name }}
                       />
                     )}
                   </div>
@@ -472,8 +520,8 @@ const CustomisationPage: React.FC = () => {
                   </button>
                 </div>
                 <OptionsList
-                  type="batterie"
-                  consoleType="GBA"
+                  type="upgraded batterie"
+                  consoleType="GBA-SP"
                   onSelectOption={handleSelectBatterie}
                   selectDefaultOption={false}
                   isExpanded={isBatterieExpanded}
@@ -498,7 +546,7 @@ const CustomisationPage: React.FC = () => {
                 </div>
                 <OptionsList
                   type="screen"
-                  consoleType="GBA"
+                  consoleType="GBA-SP"
                   onSelectOption={handleSelectScreen}
                   selectDefaultOption={true}
                   isExpanded={isScreenExpanded}
@@ -525,7 +573,7 @@ const CustomisationPage: React.FC = () => {
                 selectedButton,
                 selectedPad,
                 selectedSticker,
-                selectedBatterie,
+                selectedUpdatedBatterie,
                 selectedScreen,
               }}
               selectedAccessories={selectedAccessories}

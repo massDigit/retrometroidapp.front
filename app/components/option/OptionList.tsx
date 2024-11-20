@@ -155,7 +155,7 @@ const OptionsList: React.FC<OptionListProps> = ({
     };
 
     fetchOptions();
-  }, [consoleType, type, selectDefaultOption, handleOptionSelect]);
+  }, [consoleType, type, selectDefaultOption]);
 
   if (loading) return <p>Chargement des options...</p>;
 
@@ -171,7 +171,7 @@ const OptionsList: React.FC<OptionListProps> = ({
           <button
             onClick={() => handleOptionSelect(option, color)}
             style={{ backgroundColor: color.name }}
-            className="w-8 h-8 rounded-full cursor-pointer border border-gray-300 hover:border-blue-500"
+            className="w-4 h-4 rounded-full cursor-pointer border border-gray-300 hover:border-blue-500"
             title={`${option.name} - ${color.name}`}
           />
           {option.price && option.price > 0 ? (
