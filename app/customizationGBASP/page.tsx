@@ -11,14 +11,19 @@ import { IoIosArrowUp, IoIosArrowDown } from 'react-icons/io';
 
 const CustomisationPage: React.FC = () => {
   // États pour les options sélectionnées (option et couleur)
-  const [selectedCoque, setSelectedCoque] = useState<{ option: any; color: any } | null>(null);
-  const [selectedLaniere, setSelectedLaniere] = useState<{ option: any; color: any } | null>(null);
-  const [selectedButton, setSelectedButton] = useState<{ option: any; color: any } | null>(null);
-  const [selectedPad, setSelectedPad] = useState<{ option: any; color: any } | null>(null);
-  const [selectedUsbC, setSelectedUsbC] = useState<{ option: any; color: any } | null>(null);
-  const [selectedSticker, setSelectedSticker] = useState<{ option: any; color: any } | null>(null);
-  const [selectedUpdatedBatterie, setSelectedUpdatedBatterie] = useState<{ option: any; color: any } | null>(null);
-  const [selectedScreen, setSelectedScreen] = useState<{ option: any; color: any } | null>(null);
+  const [selectedCoque, setSelectedCoque] = useState<{ option: any | null; color: any | null } | null>(null);
+  const [selectedLaniere, setSelectedLaniere] = useState<{ option: any | null; color: any | null } | null>(null);
+  const [selectedButton, setSelectedButton] = useState<{ option: any | null; color: any | null } | null>(null);
+  const [selectedPad, setSelectedPad] = useState<{ option: any | null; color: any | null } | null>(null);
+  const [selectedUsbC, setSelectedUsbC] = useState<{ option: any | null; color: any | null } | null>(null);
+  const [selectedSticker, setSelectedSticker] = useState<{ option: any | null; color: any | null } | null>(null);
+  const [selectedUpdatedBatterie, setSelectedUpdatedBatterie] = useState<{ option: any | null; color: any | null } | null>(null);
+  const [selectedScreen, setSelectedScreen] = useState<{ option: any | null; color: any | null } | null>(null);
+  const [selectedLed, setSelectedLed] = useState<{ option: any | null; color: any | null } | null>(null);
+  const [selectedBackCoque, setSelectedBackCoque] = useState<{ option: any | null; color: any | null } | null>(null);
+
+
+
 
   // État pour les accessoires sélectionnés
   const [selectedAccessories, setSelectedAccessories] = useState<any[]>([]);
@@ -32,6 +37,12 @@ const CustomisationPage: React.FC = () => {
   const [isStickerExpanded, setIsStickerExpanded] = useState(false);
   const [isBatterieExpanded, setIsBatterieExpanded] = useState(false);
   const [isScreenExpanded, setIsScreenExpanded] = useState(false);
+  const [isLedExpanded, setIsLedExpanded] = useState(false);
+  const [isBackCoqueExpanded, setIsBackCoqueExpanded] = useState(false);
+
+
+
+
 
   const [viewType, setViewType] = useState('side');
 
@@ -55,6 +66,21 @@ const CustomisationPage: React.FC = () => {
       setSelectedCoque({ option, color });
     },
     [selectedCoque]
+  );
+  const handleSelectBackCoque = useCallback(
+    (option: any, color: any) => {
+      // Révoquer les URLs blob de l'option précédente
+      if (selectedBackCoque && selectedBackCoque.option) {
+        const prevOption = selectedBackCoque.option;
+        if (prevOption.imageDataFront) URL.revokeObjectURL(prevOption.imageDataFront);
+        if (prevOption.imageDataBack) URL.revokeObjectURL(prevOption.imageDataBack);
+        if (prevOption.imageDataSide) URL.revokeObjectURL(prevOption.imageDataSide);
+      }
+
+      // Mettre à jour l'option sélectionnée
+      setSelectedBackCoque({ option, color });
+    },
+    [selectedBackCoque]
   );
 
   const handleSelectLaniere = useCallback(
@@ -111,8 +137,8 @@ const CustomisationPage: React.FC = () => {
   );
 
   const handleSelectBatterie = useCallback(
-    (option: any, color: any) => {
-      if (selectedUpdatedBatterie && selectedUpdatedBatterie.option) {
+    (option: any|null, color: any|null) => {
+      if (selectedUpdatedBatterie && selectedUpdatedBatterie?.option) {
         const prevOption = selectedUpdatedBatterie.option;
         if (prevOption.imageDataFront) URL.revokeObjectURL(prevOption.imageDataFront);
         if (prevOption.imageDataBack) URL.revokeObjectURL(prevOption.imageDataBack);
@@ -125,7 +151,7 @@ const CustomisationPage: React.FC = () => {
 
   const handleSelectUsbC = useCallback(
     (option: any, color: any) => {
-      if (selectedUsbC && selectedUsbC.option) {
+      if (selectedUsbC && selectedUsbC?.option) {
         const prevOption = selectedUsbC.option;
         if (prevOption.imageDataFront) URL.revokeObjectURL(prevOption.imageDataFront);
         if (prevOption.imageDataBack) URL.revokeObjectURL(prevOption.imageDataBack);
@@ -136,7 +162,7 @@ const CustomisationPage: React.FC = () => {
     },
     [selectedUsbC]
   );
-  console.log(selectedUsbC)
+  
   const handleSelectScreen = useCallback(
     (option: any, color: any) => {
       if (selectedScreen && selectedScreen.option) {
@@ -150,6 +176,19 @@ const CustomisationPage: React.FC = () => {
     [selectedScreen]
   );
 
+  const handleSelectLed = useCallback(
+    (option: any, color: any) => {
+      if (selectedLed && selectedLed?.option) {
+        const prevOption = selectedLed.option;
+        if (prevOption.imageDataFront) URL.revokeObjectURL(prevOption.imageDataFront);
+        if (prevOption.imageDataBack) URL.revokeObjectURL(prevOption.imageDataBack);
+        if (prevOption.imageDataSide) URL.revokeObjectURL(prevOption.imageDataSide);
+      }
+      setSelectedLed({ option, color });
+    },
+    [selectedLed]
+  );
+
   // Gestion de la sélection des accessoires
   const handleSelectAccessory = useCallback((accessory: any, isSelected: boolean) => {
     if (isSelected) {
@@ -161,15 +200,18 @@ const CustomisationPage: React.FC = () => {
 
   // Fonction pour obtenir l'image à afficher
   const getImageData = (selectedOption: any) => {
-    if (!selectedOption) return '';
+    if (!selectedOption || !selectedOption.option) return ''; // Vérifie si l'option existe
+
     const option = selectedOption.option;
+  
     if (viewType === 'front') {
-      return option.imageDataFront;
+      return option.imageDataFront || ''; // Retourne une chaîne vide si imageDataFront est undefined
     } else if (viewType === 'side') {
-      return option.imageDataSide;
+      return option.imageDataSide || ''; // Retourne une chaîne vide si imageDataSide est undefined
     } else if (viewType === 'back') {
-      return option.imageDataBack;
+      return option.imageDataBack || ''; // Retourne une chaîne vide si imageDataBack est undefined
     }
+  
     return '';
   };
 
@@ -184,6 +226,7 @@ const CustomisationPage: React.FC = () => {
   
     const options = [
       selectedCoque,
+      selectedBackCoque,
       selectedLaniere,
       selectedButton,
       selectedPad,
@@ -191,6 +234,7 @@ const CustomisationPage: React.FC = () => {
       selectedUsbC,
       selectedUpdatedBatterie,
       selectedScreen,
+      selectedLed,
     ];
   
     options.forEach((selectedOption) => {
@@ -235,13 +279,16 @@ const CustomisationPage: React.FC = () => {
       revokeOptionImages(selectedUpdatedBatterie);
       revokeOptionImages(selectedScreen);
       revokeOptionImages(selectedUsbC);
+      revokeOptionImages(selectedLed);
+      revokeOptionImages(selectedBackCoque)
     };
   }, []); // Dépendances vides pour n'exécuter qu'au démontage
 
   return (
     <div className="flex flex-col h-screen">
       <Header />
-      <div className="flex mt-4 flex-col md:flex-row justify-center overflow-hidden ">
+      <div className='flex justify-center items-center w-full h-full'>
+      <div className="flex mt-4 flex-col md:w-4/6 md:flex-row justify-center">
         {/* Section de gauche - Aperçu */}
         <div className="flex w-full md:w-4/6 border-4 justify-center ">
           <div className="w-full p-4 flex flex-col items-center">
@@ -252,6 +299,13 @@ const CustomisationPage: React.FC = () => {
                   <img
                     src={getImageData(selectedCoque)}
                     alt={selectedCoque.option.name}
+                    className="absolute w-full h-full object-contain"
+                  />
+                )}
+                {selectedBackCoque && getImageData(selectedBackCoque) && (
+                  <img
+                    src={getImageData(selectedBackCoque)}
+                    alt={selectedBackCoque.option.name}
                     className="absolute w-full h-full object-contain"
                   />
                 )}
@@ -287,6 +341,13 @@ const CustomisationPage: React.FC = () => {
                   <img
                   src={getImageData(selectedUsbC)}
                   alt={selectedUsbC.option.name}
+                  className='absolute w-full h-full object-contain'
+                  />
+                )}
+                {selectedLed && getImageData(selectedLed) && (
+                  <img
+                  src={getImageData(selectedLed)}
+                  alt={selectedLed.option.name}
                   className='absolute w-full h-full object-contain'
                   />
                 )}
@@ -377,6 +438,31 @@ const CustomisationPage: React.FC = () => {
                   onSelectOption={handleSelectCoque}
                   selectDefaultOption={true}
                   isExpanded={isCoqueExpanded}
+                />
+              </div>
+
+              {/* Section Coque arriere */}
+              <div>
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center">
+                    <h3 className="font-medium mr-2">Coque Arrière</h3>
+                    {selectedBackCoque && (
+                      <span
+                        className="w-4 h-4 rounded-full border border-gray-300"
+                        style={{ backgroundColor: selectedBackCoque.color.name }}
+                      />
+                    )}
+                  </div>
+                  <button onClick={() => setIsBackCoqueExpanded(!isBackCoqueExpanded)}>
+                    {isBackCoqueExpanded ? <IoIosArrowUp /> : <IoIosArrowDown />}
+                  </button>
+                </div>
+                <OptionsList
+                  type="coque arrière"
+                  consoleType="GBA-SP"
+                  onSelectOption={handleSelectBackCoque}
+                  selectDefaultOption={true}
+                  isExpanded={isBackCoqueExpanded}
                 />
               </div>
 
@@ -475,7 +561,7 @@ const CustomisationPage: React.FC = () => {
                   type="stickers"
                   consoleType="GBA-SP"
                   onSelectOption={handleSelectSticker}
-                  selectDefaultOption={true}
+                  selectDefaultOption={false}
                   isExpanded={isStickerExpanded}
                 />
               </div>
@@ -485,7 +571,7 @@ const CustomisationPage: React.FC = () => {
                 <div className="flex items-center justify-between">
                   <div className="flex items-center">
                     <h3 className="font-medium mr-2">Usb-c</h3>
-                    {selectedUsbC && (
+                    {selectedUsbC?.option?.price && (
                       <span>(+{selectedUsbC.option.price}€)</span>
                       
                     )}
@@ -503,16 +589,36 @@ const CustomisationPage: React.FC = () => {
                 />
               </div>
 
+              {/* Section led */}
+              <div>
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center">
+                    <h3 className="font-medium mr-2">LED RGBD</h3>
+                    {selectedLed?.option?.price && (
+                      <span>(+{selectedLed?.option?.price}€)</span>
+                      
+                    )}
+                  </div>
+                  <button onClick={() => setIsLedExpanded(!isLedExpanded)}>
+                    {isLedExpanded ? <IoIosArrowUp /> : <IoIosArrowDown />}
+                  </button>
+                </div>
+                <OptionsList
+                  type="LED RGB"
+                  consoleType="GBA-SP"
+                  onSelectOption={handleSelectLed}
+                  selectDefaultOption={false}
+                  isExpanded={isLedExpanded }
+                />
+              </div>
+
               {/* Section Batterie */}
               <div>
                 <div className="flex items-center justify-between">
                   <div className="flex items-center">
                     <h3 className="font-medium mr-2">Upgrade batterie</h3>
-                    {selectedUpdatedBatterie && (
-                      <span
-                        className="w-4 h-4 rounded-full border border-gray-300"
-                        style={{ backgroundColor: selectedUpdatedBatterie.color.name }}
-                      />
+                    {selectedUpdatedBatterie?.option?.price && (
+                      <span>(+{selectedUpdatedBatterie.option.price}€)</span>
                     )}
                   </div>
                   <button onClick={() => setIsBatterieExpanded(!isBatterieExpanded)}>
@@ -582,9 +688,10 @@ const CustomisationPage: React.FC = () => {
             />
           </div>
           </div>
-          
         </div>
       </div>
+      </div>
+      
     </div>
   );
 };

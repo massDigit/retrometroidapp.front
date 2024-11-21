@@ -223,320 +223,323 @@ const CustomisationPage: React.FC = () => {
   return (
     <div className="flex flex-col h-screen">
       <Header />
-      <div className="flex mt-4 flex-col md:flex-row justify-center overflow-hidden ">
-        {/* Section de gauche - Aperçu */}
-        <div className="flex w-full md:w-4/6 border-4 justify-center ">
-          <div className="w-full p-4 flex flex-col items-center">
-            <h2 className="text-center mb-4">Aperçu du produit</h2>
-            {selectedCoque ? (
-              <div className="relative w-full h-96 flex items-center justify-center bg-gray-100 rounded-lg overflow-hidden">
-                {selectedCoque && getImageData(selectedCoque) && (
-                  <img
-                    src={getImageData(selectedCoque)}
-                    alt={selectedCoque.option.name}
-                    className="absolute w-full h-full object-contain"
-                  />
-                )}
-                {selectedLaniere && getImageData(selectedLaniere) && (
-                  <img
-                    src={getImageData(selectedLaniere)}
-                    alt={selectedLaniere.option.name}
-                    className="absolute w-full h-full object-contain"
-                  />
-                )}
-                {selectedButton && getImageData(selectedButton) && (
-                  <img
-                    src={getImageData(selectedButton)}
-                    alt={selectedButton.option.name}
-                    className="absolute w-full h-full object-contain"
-                  />
-                )}
-                {selectedPad && getImageData(selectedPad) && (
-                  <img
-                    src={getImageData(selectedPad)}
-                    alt={selectedPad.option.name}
-                    className="absolute w-full h-full object-contain"
-                  />
-                )}
-                {selectedSticker && getImageData(selectedSticker) && (
-                  <img
-                    src={getImageData(selectedSticker)}
-                    alt={selectedSticker.option.name}
-                    className="absolute w-full h-full object-contain"
-                  />
-                )}
-                {selectedBatterie && getImageData(selectedBatterie) && (
-                  <img
-                    src={getImageData(selectedBatterie)}
-                    alt={selectedBatterie.option.name}
-                    className="absolute w-full h-full object-contain"
-                  />
-                )}
-                {selectedScreen && getImageData(selectedScreen) && (
-                  <img
-                    src={getImageData(selectedScreen)}
-                    alt={selectedScreen.option.name}
-                    className="absolute w-full h-full object-contain"
-                  />
-                )}
-              </div>
-            ) : (
-              <p>Chargement de l'aperçu...</p>
-            )}
+      <div className='flex justify-center items-center w-full h-full'>
+        <div className="flex mt-4 flex-col md:w-4/6 md:flex-row justify-center">
+          {/* Section de gauche - Aperçu */}
+          <div className="flex w-full md:w-4/6 border-4 justify-center ">
+            <div className="w-full p-4 flex flex-col items-center">
+              <h2 className="text-center mb-4">Aperçu du produit</h2>
+              {selectedCoque ? (
+                <div className="relative w-full h-96 flex items-center justify-center bg-gray-100 rounded-lg overflow-hidden">
+                  {selectedCoque && getImageData(selectedCoque) && (
+                    <img
+                      src={getImageData(selectedCoque)}
+                      alt={selectedCoque.option.name}
+                      className="absolute w-full h-full object-contain"
+                    />
+                  )}
+                  {selectedLaniere && getImageData(selectedLaniere) && (
+                    <img
+                      src={getImageData(selectedLaniere)}
+                      alt={selectedLaniere.option.name}
+                      className="absolute w-full h-full object-contain"
+                    />
+                  )}
+                  {selectedButton && getImageData(selectedButton) && (
+                    <img
+                      src={getImageData(selectedButton)}
+                      alt={selectedButton.option.name}
+                      className="absolute w-full h-full object-contain"
+                    />
+                  )}
+                  {selectedPad && getImageData(selectedPad) && (
+                    <img
+                      src={getImageData(selectedPad)}
+                      alt={selectedPad.option.name}
+                      className="absolute w-full h-full object-contain"
+                    />
+                  )}
+                  {selectedSticker && getImageData(selectedSticker) && (
+                    <img
+                      src={getImageData(selectedSticker)}
+                      alt={selectedSticker.option.name}
+                      className="absolute w-full h-full object-contain"
+                    />
+                  )}
+                  {selectedBatterie && getImageData(selectedBatterie) && (
+                    <img
+                      src={getImageData(selectedBatterie)}
+                      alt={selectedBatterie.option.name}
+                      className="absolute w-full h-full object-contain"
+                    />
+                  )}
+                  {selectedScreen && getImageData(selectedScreen) && (
+                    <img
+                      src={getImageData(selectedScreen)}
+                      alt={selectedScreen.option.name}
+                      className="absolute w-full h-full object-contain"
+                    />
+                  )}
+                </div>
+              ) : (
+                <p>Chargement de l'aperçu...</p>
+              )}
 
-            {/* Contrôles pour changer la vue */}
-            <div className="flex justify-center mt-4 gap-2">
-              {['side', 'front', 'back'].map((view) => (
-                <button
-                  key={view}
-                  onClick={() => setViewType(view)}
-                  className={`w-4 h-4 rounded-full bg-black ${
-                    viewType === view ? 'opacity-100' : 'opacity-50'
-                  }`}
-                  aria-label={`Vue ${view}`}
-                />
-              ))}
+              {/* Contrôles pour changer la vue */}
+              <div className="flex justify-center mt-4 gap-2">
+                {['side', 'front', 'back'].map((view) => (
+                  <button
+                    key={view}
+                    onClick={() => setViewType(view)}
+                    className={`w-4 h-4 rounded-full bg-black ${
+                      viewType === view ? 'opacity-100' : 'opacity-50'
+                    }`}
+                    aria-label={`Vue ${view}`}
+                  />
+                ))}
+              </div>
             </div>
           </div>
-        </div>
 
-        {/* Section de droite - Personnalisation */}
-        <div className="w-full md:w-2/5 p-4 flex flex-col h-[70vh] md:h-[600px]">
-        <h2 className="text-lg font-semibold text-left mb-4">Configuration</h2>
-        <div className="flex-1 overflow-y-auto">
-          <div className="space-y-4">
+          {/* Section de droite - Personnalisation */}
+          <div className="w-full md:w-2/5 p-4 flex flex-col h-[70vh] md:h-[600px]">
+          <h2 className="text-lg font-semibold text-left mb-4">Configuration</h2>
+          <div className="flex-1 overflow-y-auto">
+            <div className="space-y-4">
+              <div className="mt-4">
+                  <h3 className="font-medium mb-2">Sélection de la console</h3>
+                  <div className="flex flex-col">
+                    <label className="flex items-center mb-2">
+                      <input
+                        type="radio"
+                        value="client"
+                        checked={consoleSource === 'client'}
+                        onChange={() => setConsoleSource('client')}
+                        className="mr-2"
+                      />
+                      Console du client
+                    </label>
+                    <label className="flex items-center">
+                      <input
+                        type="radio"
+                        value="company"
+                        checked={consoleSource === 'company'}
+                        onChange={() => setConsoleSource('company')}
+                        className="mr-2"
+                      />
+                      Console de l'entreprise (+40€)
+                    </label>
+                  </div>
+                </div>
+                {/* Section Coque */}
+                <div>
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center">
+                      <h3 className="font-medium mr-2">Coque</h3>
+                      {selectedCoque && (
+                        <span
+                          className="w-4 h-4 rounded-full border border-gray-300"
+                          style={{ backgroundColor: selectedCoque.color.name }}
+                        />
+                      )}
+                    </div>
+                    <button onClick={() => setIsCoqueExpanded(!isCoqueExpanded)}>
+                      {isCoqueExpanded ? <IoIosArrowUp /> : <IoIosArrowDown />}
+                    </button>
+                  </div>
+                  <OptionsList
+                    type="coque"
+                    consoleType="GBA"
+                    onSelectOption={handleSelectCoque}
+                    selectDefaultOption={true}
+                    isExpanded={isCoqueExpanded}
+                  />
+                </div>
+
+                {/* Section Lanière */}
+                <div>
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center">
+                      <h3 className="font-medium mr-2">Lanière</h3>
+                      {selectedLaniere && (
+                        <span
+                          className="w-4 h-4 rounded-full border border-gray-300"
+                          style={{ backgroundColor: selectedLaniere.color.name }}
+                        />
+                      )}
+                    </div>
+                    <button onClick={() => setIsLaniereExpanded(!isLaniereExpanded)}>
+                      {isLaniereExpanded ? <IoIosArrowUp /> : <IoIosArrowDown />}
+                    </button>
+                  </div>
+                  <OptionsList
+                    type="lanière"
+                    consoleType="GBA"
+                    onSelectOption={handleSelectLaniere}
+                    selectDefaultOption={true}
+                    isExpanded={isLaniereExpanded}
+                  />
+                </div>
+
+                {/* Section Boutons */}
+                <div>
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center">
+                      <h3 className="font-medium mr-2">Boutons</h3>
+                      {selectedButton && (
+                        <span
+                          className="w-4 h-4 rounded-full border border-gray-300"
+                          style={{ backgroundColor: selectedButton.color.name }}
+                        />
+                      )}
+                    </div>
+                    <button onClick={() => setIsButtonExpanded(!isButtonExpanded)}>
+                      {isButtonExpanded ? <IoIosArrowUp /> : <IoIosArrowDown />}
+                    </button>
+                  </div>
+                  <OptionsList
+                    type="button"
+                    consoleType="GBA"
+                    onSelectOption={handleSelectButton}
+                    selectDefaultOption={true}
+                    isExpanded={isButtonExpanded}
+                  />
+                </div>
+
+                {/* Section Pad */}
+                <div>
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center">
+                      <h3 className="font-medium mr-2">Pad</h3>
+                      {selectedPad && (
+                        <span
+                          className="w-4 h-4 rounded-full border border-gray-300"
+                          style={{ backgroundColor: selectedPad.color.name }}
+                        />
+                      )}
+                    </div>
+                    <button onClick={() => setIsPadExpanded(!isPadExpanded)}>
+                      {isPadExpanded ? <IoIosArrowUp /> : <IoIosArrowDown />}
+                    </button>
+                  </div>
+                  <OptionsList
+                    type="pad"
+                    consoleType="GBA"
+                    onSelectOption={handleSelectPad}
+                    selectDefaultOption={true}
+                    isExpanded={isPadExpanded}
+                  />
+                </div>
+
+                {/* Section Stickers */}
+                <div>
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center">
+                      <h3 className="font-medium mr-2">Stickers</h3>
+                      {selectedSticker && (
+                        <span
+                          className="w-4 h-4 rounded-full border border-gray-300"
+                          style={{ backgroundColor: selectedSticker.color.name }}
+                        />
+                      )}
+                    </div>
+                    <button onClick={() => setIsStickerExpanded(!isStickerExpanded)}>
+                      {isStickerExpanded ? <IoIosArrowUp /> : <IoIosArrowDown />}
+                    </button>
+                  </div>
+                  <OptionsList
+                    type="stickers"
+                    consoleType="GBA"
+                    onSelectOption={handleSelectSticker}
+                    selectDefaultOption={true}
+                    isExpanded={isStickerExpanded}
+                  />
+                </div>
+
+                {/* Section Batterie */}
+                <div>
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center">
+                      <h3 className="font-medium mr-2">Batterie</h3>
+                      {selectedBatterie && (
+                        <span
+                          className="w-4 h-4 rounded-full border border-gray-300"
+                          style={{ backgroundColor: selectedBatterie.color.name }}
+                        />
+                      )}
+                    </div>
+                    <button onClick={() => setIsBatterieExpanded(!isBatterieExpanded)}>
+                      {isBatterieExpanded ? <IoIosArrowUp /> : <IoIosArrowDown />}
+                    </button>
+                  </div>
+                  <OptionsList
+                    type="batterie"
+                    consoleType="GBA"
+                    onSelectOption={handleSelectBatterie}
+                    selectDefaultOption={false}
+                    isExpanded={isBatterieExpanded}
+                  />
+                </div>
+
+                {/* Section Écran */}
+                <div>
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center">
+                      <h3 className="font-medium mr-2">Écran</h3>
+                      {selectedScreen && (
+                        <span
+                          className="w-4 h-4 rounded-full border border-gray-300"
+                          style={{ backgroundColor: selectedScreen.color.name }}
+                        />
+                      )}
+                    </div>
+                    <button onClick={() => setIsScreenExpanded(!isScreenExpanded)}>
+                      {isScreenExpanded ? <IoIosArrowUp /> : <IoIosArrowDown />}
+                    </button>
+                  </div>
+                  <OptionsList
+                    type="screen"
+                    consoleType="GBA"
+                    onSelectOption={handleSelectScreen}
+                    selectDefaultOption={true}
+                    isExpanded={isScreenExpanded}
+                  />
+                </div>
+
+                {/* Section Accessoires */}
+                <AccessoryList onSelectAccessory={handleSelectAccessory} />
+              </div>
+            </div>
+            <div>
+                {/* Affichage du prix total */}
             <div className="mt-4">
-                <h3 className="font-medium mb-2">Sélection de la console</h3>
-                <div className="flex flex-col">
-                  <label className="flex items-center mb-2">
-                    <input
-                      type="radio"
-                      value="client"
-                      checked={consoleSource === 'client'}
-                      onChange={() => setConsoleSource('client')}
-                      className="mr-2"
-                    />
-                    Console du client
-                  </label>
-                  <label className="flex items-center">
-                    <input
-                      type="radio"
-                      value="company"
-                      checked={consoleSource === 'company'}
-                      onChange={() => setConsoleSource('company')}
-                      className="mr-2"
-                    />
-                    Console de l'entreprise (+40€)
-                  </label>
-                </div>
-              </div>
-              {/* Section Coque */}
-              <div>
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center">
-                    <h3 className="font-medium mr-2">Coque</h3>
-                    {selectedCoque && (
-                      <span
-                        className="w-4 h-4 rounded-full border border-gray-300"
-                        style={{ backgroundColor: selectedCoque.color.name }}
-                      />
-                    )}
-                  </div>
-                  <button onClick={() => setIsCoqueExpanded(!isCoqueExpanded)}>
-                    {isCoqueExpanded ? <IoIosArrowUp /> : <IoIosArrowDown />}
-                  </button>
-                </div>
-                <OptionsList
-                  type="coque"
-                  consoleType="GBA"
-                  onSelectOption={handleSelectCoque}
-                  selectDefaultOption={true}
-                  isExpanded={isCoqueExpanded}
-                />
-              </div>
-
-              {/* Section Lanière */}
-              <div>
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center">
-                    <h3 className="font-medium mr-2">Lanière</h3>
-                    {selectedLaniere && (
-                      <span
-                        className="w-4 h-4 rounded-full border border-gray-300"
-                        style={{ backgroundColor: selectedLaniere.color.name }}
-                      />
-                    )}
-                  </div>
-                  <button onClick={() => setIsLaniereExpanded(!isLaniereExpanded)}>
-                    {isLaniereExpanded ? <IoIosArrowUp /> : <IoIosArrowDown />}
-                  </button>
-                </div>
-                <OptionsList
-                  type="lanière"
-                  consoleType="GBA"
-                  onSelectOption={handleSelectLaniere}
-                  selectDefaultOption={true}
-                  isExpanded={isLaniereExpanded}
-                />
-              </div>
-
-              {/* Section Boutons */}
-              <div>
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center">
-                    <h3 className="font-medium mr-2">Boutons</h3>
-                    {selectedButton && (
-                      <span
-                        className="w-4 h-4 rounded-full border border-gray-300"
-                        style={{ backgroundColor: selectedButton.color.name }}
-                      />
-                    )}
-                  </div>
-                  <button onClick={() => setIsButtonExpanded(!isButtonExpanded)}>
-                    {isButtonExpanded ? <IoIosArrowUp /> : <IoIosArrowDown />}
-                  </button>
-                </div>
-                <OptionsList
-                  type="button"
-                  consoleType="GBA"
-                  onSelectOption={handleSelectButton}
-                  selectDefaultOption={true}
-                  isExpanded={isButtonExpanded}
-                />
-              </div>
-
-              {/* Section Pad */}
-              <div>
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center">
-                    <h3 className="font-medium mr-2">Pad</h3>
-                    {selectedPad && (
-                      <span
-                        className="w-4 h-4 rounded-full border border-gray-300"
-                        style={{ backgroundColor: selectedPad.color.name }}
-                      />
-                    )}
-                  </div>
-                  <button onClick={() => setIsPadExpanded(!isPadExpanded)}>
-                    {isPadExpanded ? <IoIosArrowUp /> : <IoIosArrowDown />}
-                  </button>
-                </div>
-                <OptionsList
-                  type="pad"
-                  consoleType="GBA"
-                  onSelectOption={handleSelectPad}
-                  selectDefaultOption={true}
-                  isExpanded={isPadExpanded}
-                />
-              </div>
-
-              {/* Section Stickers */}
-              <div>
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center">
-                    <h3 className="font-medium mr-2">Stickers</h3>
-                    {selectedSticker && (
-                      <span
-                        className="w-4 h-4 rounded-full border border-gray-300"
-                        style={{ backgroundColor: selectedSticker.color.name }}
-                      />
-                    )}
-                  </div>
-                  <button onClick={() => setIsStickerExpanded(!isStickerExpanded)}>
-                    {isStickerExpanded ? <IoIosArrowUp /> : <IoIosArrowDown />}
-                  </button>
-                </div>
-                <OptionsList
-                  type="stickers"
-                  consoleType="GBA"
-                  onSelectOption={handleSelectSticker}
-                  selectDefaultOption={true}
-                  isExpanded={isStickerExpanded}
-                />
-              </div>
-
-              {/* Section Batterie */}
-              <div>
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center">
-                    <h3 className="font-medium mr-2">Batterie</h3>
-                    {selectedBatterie && (
-                      <span
-                        className="w-4 h-4 rounded-full border border-gray-300"
-                        style={{ backgroundColor: selectedBatterie.color.name }}
-                      />
-                    )}
-                  </div>
-                  <button onClick={() => setIsBatterieExpanded(!isBatterieExpanded)}>
-                    {isBatterieExpanded ? <IoIosArrowUp /> : <IoIosArrowDown />}
-                  </button>
-                </div>
-                <OptionsList
-                  type="batterie"
-                  consoleType="GBA"
-                  onSelectOption={handleSelectBatterie}
-                  selectDefaultOption={false}
-                  isExpanded={isBatterieExpanded}
-                />
-              </div>
-
-              {/* Section Écran */}
-              <div>
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center">
-                    <h3 className="font-medium mr-2">Écran</h3>
-                    {selectedScreen && (
-                      <span
-                        className="w-4 h-4 rounded-full border border-gray-300"
-                        style={{ backgroundColor: selectedScreen.color.name }}
-                      />
-                    )}
-                  </div>
-                  <button onClick={() => setIsScreenExpanded(!isScreenExpanded)}>
-                    {isScreenExpanded ? <IoIosArrowUp /> : <IoIosArrowDown />}
-                  </button>
-                </div>
-                <OptionsList
-                  type="screen"
-                  consoleType="GBA"
-                  onSelectOption={handleSelectScreen}
-                  selectDefaultOption={true}
-                  isExpanded={isScreenExpanded}
-                />
-              </div>
-
-              {/* Section Accessoires */}
-              <AccessoryList onSelectAccessory={handleSelectAccessory} />
+                  <h3 className="text-xl font-semibold">
+                    Prix Total : {calculateTotalPrice().toFixed(2)} €
+                  </h3>
             </div>
+            {/* Section pour passer la commande */}
+            <div className="mt-8">
+              <OrderButton
+                selectedOptions={{
+                  selectedCoque,
+                  selectedLaniere,
+                  selectedButton,
+                  selectedPad,
+                  selectedSticker,
+                  selectedBatterie,
+                  selectedScreen,
+                }}
+                selectedAccessories={selectedAccessories}
+                consoleSource={consoleSource}
+                totalPrice={calculateTotalPrice()}
+              />
+            </div>
+            </div>
+            
           </div>
-          <div>
-              {/* Affichage du prix total */}
-          <div className="mt-4">
-                <h3 className="text-xl font-semibold">
-                  Prix Total : {calculateTotalPrice().toFixed(2)} €
-                </h3>
-          </div>
-          {/* Section pour passer la commande */}
-          <div className="mt-8">
-            <OrderButton
-              selectedOptions={{
-                selectedCoque,
-                selectedLaniere,
-                selectedButton,
-                selectedPad,
-                selectedSticker,
-                selectedBatterie,
-                selectedScreen,
-              }}
-              selectedAccessories={selectedAccessories}
-              consoleSource={consoleSource}
-              totalPrice={calculateTotalPrice()}
-            />
-          </div>
-          </div>
-          
         </div>
       </div>
+      
     </div>
   );
 };
