@@ -1,9 +1,8 @@
-import "./globals.css";
+import "../app/styles/globals.css"; // Assurez-vous que ce chemin est correct
 import { ReactNode } from "react";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import Footer from "./components/Footer";
-import "../app/styles/globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
 
