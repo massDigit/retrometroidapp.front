@@ -1,54 +1,63 @@
-import * as yup from "yup";
 import React, { useState } from "react";
-<<<<<<< HEAD
-import { yupResolver } from "@hookform/resolvers/yup";
-import { useForm, SubmitHandler } from "react-hook-form";
-=======
+import * as yup from "yup";
 import { useRouter } from "next/navigation";
-
-
-
-
->>>>>>> devv
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useForm, Controller } from "react-hook-form";
 
 interface FormValues {
   name: string;
   description: string;
   price: number;
-<<<<<<< HEAD
-  category: string;
 }
 
 const schema = yup.object().shape({
-  name: yup.string().required("Name is required"),
-  description: yup.string().required("Description is required"),
+  name: yup.string().required("Nom de l'accessoire est requis"),
+  description: yup.string().required("Description est requise"),
   price: yup
     .number()
-    .required("Price is required")
-    .positive("Price must be positive"),
-  category: yup.string().required("Category is required"),
+    .required("Prix est requis")
+    .positive("Le prix doit être positif"),
 });
 
 const AccessoryForm: React.FC = () => {
+  const router = useRouter();
+  const [submitting, setSubmitting] = useState(false);
+
   const {
-    register,
     handleSubmit,
+    control,
     formState: { errors },
   } = useForm<FormValues>({
     resolver: yupResolver(schema),
   });
-  const [submitting, setSubmitting] = useState(false);
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
-  const onSubmit: SubmitHandler<FormValues> = async (data) => {
+  const onSubmit = async (data: FormValues) => {
     setSubmitting(true);
+
     try {
-      // API request to add the accessory
-      setTimeout(() => {
-        alert("Accessory added successfully!");
-      }, 1000);
+      const bodyData = {
+        name: data.name,
+        description: data.description,
+        price: data.price,
+      };
+      console.log("Données envoyées:", bodyData);
+
+      const response = await fetch(
+        "http://localhost:3000/accessories/addAccessorie",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(bodyData), // Conversion des données en JSON
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Erreur lors de l'ajout du produit");
+      }
     } catch (error) {
-      console.log(error);
+      console.error("Erreur lors de l'ajout du produit:", error);
     } finally {
       setSubmitting(false);
     }
@@ -161,104 +170,91 @@ const AccessoryForm: React.FC = () => {
       onSubmit={handleSubmit(onSubmit)}
       className="space-y-6 bg-gray-900 p-6 rounded-lg shadow-lg"
     >
-      <div>
-        <label className="block text-sm font-medium text-blue-400">
+      <div className="mb-6">
+        <label
+          htmlFor="name"
+          className="block text-sm font-medium text-blue-400"
+        >
           Nom de l'accessoire
         </label>
-        <input
-          type="text"
-<<<<<<< HEAD
-          {...register("name")}
-          className="mt-1 block w-full px-3 py-2 border border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm bg-gray-800 text-white"
-=======
-          id="name"
+        <Controller
           name="name"
-          value={formData.name}
-          onChange={handleChange}
-          className="w-full p-3 border border-gray-300 rounded-lg bg-gray-100 text-gray-900 placeholder-gray-400 focus:ring-2 focus:ring-indigo-500"
-          placeholder="Nom de l'accessoire"
->>>>>>> devv
+          control={control}
+          defaultValue=""
+          render={({ field }) => (
+            <input
+              type="text"
+              id="name"
+              {...field}
+              className={`mt-1 block w-full ${
+                errors.name ? "border-red-500" : "border-gray-300"
+              } rounded-md shadow-sm`}
+            />
+          )}
         />
         {errors.name && (
-          <p className="mt-2 text-sm text-red-600">{errors.name.message}</p>
+          <p className="text-red-500 text-sm mt-1">{errors.name.message}</p>
         )}
       </div>
 
-      <div>
-        <label className="block text-sm font-medium text-blue-400">
+      <div className="mb-6">
+        <label
+          htmlFor="description"
+          className="block text-sm font-medium text-blue-400"
+        >
           Description
         </label>
-        <textarea
-<<<<<<< HEAD
-          {...register("description")}
-          className="mt-1 block w-full px-3 py-2 border border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm bg-gray-800 text-white"
-=======
-          id="description"
+        <Controller
           name="description"
-          value={formData.description}
-          onChange={handleChange}
-          className="w-full p-3 border border-gray-300 rounded-lg bg-gray-100 text-gray-900 placeholder-gray-400 focus:ring-2 focus:ring-indigo-500"
-          placeholder="Description de l'accessoire"
->>>>>>> devv
+          control={control}
+          defaultValue=""
+          render={({ field }) => (
+            <textarea
+              id="description"
+              {...field}
+              className={`mt-1 block w-full ${
+                errors.description ? "border-red-500" : "border-gray-300"
+              } rounded-md shadow-sm`}
+            />
+          )}
         />
         {errors.description && (
-          <p className="mt-2 text-sm text-red-600">
+          <p className="text-red-500 text-sm mt-1">
             {errors.description.message}
           </p>
         )}
       </div>
 
-      <div>
-        <label className="block text-sm font-medium text-blue-400">Prix</label>
-        <input
-          type="number"
-<<<<<<< HEAD
-          {...register("price")}
-          className="mt-1 block w-full px-3 py-2 border border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm bg-gray-800 text-white"
-=======
-          id="price"
+      <div className="mb-6">
+        <label
+          htmlFor="price"
+          className="block text-sm font-medium text-blue-400"
+        >
+          Prix
+        </label>
+        <Controller
           name="price"
-          value={formData.price === 0 ? '' : formData.price} 
-          onChange={handleChange}
-          className="w-full p-3 border border-gray-300 rounded-lg bg-gray-100 text-gray-900 placeholder-gray-400 focus:ring-2 focus:ring-indigo-500"
-          placeholder="Prix de l'accessoire"
-          step="any"
->>>>>>> devv
+          control={control}
+          defaultValue={0}
+          render={({ field }) => (
+            <input
+              type="number"
+              id="price"
+              {...field}
+              className={`mt-1 block w-full ${
+                errors.price ? "border-red-500" : "border-gray-300"
+              } rounded-md shadow-sm`}
+            />
+          )}
         />
         {errors.price && (
-          <p className="mt-2 text-sm text-red-600">{errors.price.message}</p>
+          <p className="text-red-500 text-sm mt-1">{errors.price.message}</p>
         )}
       </div>
-<<<<<<< HEAD
-
-      <div>
-        <label className="block text-sm font-medium text-blue-400">
-          Category
-        </label>
-        <input
-          type="text"
-          {...register("category")}
-          className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-        />
-        {errors.category && (
-          <p className="mt-2 text-sm text-red-600">{errors.category.message}</p>
-        )}
-      </div>
-
-      <button
-        type="submit"
-        disabled={submitting}
-        className={`w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-4 rounded-lg ${
-          submitting ? "opacity-50 cursor-not-allowed" : ""
-        }`}
-      >
-        {submitting ? "Ajout en cours..." : "Ajouter l'accessoire"}
-      </button>
-=======
       <div className="text-center">
         <button
           type="submit"
-          className={`px-6 py-3 bg-indigo-500 text-white font-bold rounded-lg hover:bg-indigo-600 transition-colors ${
+          className={`w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-4 rounded-lg ${
             submitting ? "opacity-50 cursor-not-allowed" : ""
           }`}
           disabled={submitting}
@@ -266,7 +262,6 @@ const AccessoryForm: React.FC = () => {
           {submitting ? "Ajout en cours..." : "Ajouter l'accessoire"}
         </button>
       </div>
->>>>>>> devv
     </form>
   );
 };

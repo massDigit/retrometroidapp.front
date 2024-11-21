@@ -1,15 +1,24 @@
 "use client";
 
 import React from "react";
-import "./styles/globals.css"; // Assurez-vous que le chemin est correct
-import CarouselComponent from "./components/CarouselComponent"; // Assurez-vous que le chemin est correct
+import Card from "./components/Card";
 import Header from "./components/Header";
 import Carousel from "./components/Caroussel";
-import Card from "./components/Card";
 
 const Page = () => {
   return (
     <div>
+      <header>
+        <Header />
+      </header>
+      <main className="flex flex-col items-center gap-5">
+        <section className="w-full">
+          <Carousel />
+        </section>
+        <section className="w-full flex justify-center">
+          <Card />
+        </section>
+      </main>
       <header>
         <Header />
       </header>
