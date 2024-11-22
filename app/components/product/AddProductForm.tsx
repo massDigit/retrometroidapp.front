@@ -1,6 +1,5 @@
 "use client";
 
-<<<<<<< HEAD
 import * as yup from "yup";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
@@ -173,148 +172,6 @@ const AddProductForm: React.FC = () => {
         router.push(cartUrl);
       }
       setSubmitting(false);
-=======
-  
-
-  const validateForm = () => {
-    const newErrors: FormErrors = {};
-
-    if (!formData.itemName || formData.itemName.length < 3) {
-      newErrors.itemName =
-        "Le nom du produit doit comporter au moins 3 caractères";
-    }
-    if (!formData.description || formData.description.length < 10) {
-      newErrors.description =
-        "La description doit comporter au moins 10 caractères";
-    }
-    if (formData.price <= 0) {
-      newErrors.price = "Le prix doit être supérieur à 0";
-    }
-    if (formData.quantityStock <= 0) {
-      newErrors.quantityStock = "La quantité de stock doit être supérieure à 0";
-    }
-    if (!formData.category || formData.category.length < 3) {
-      newErrors.category = "La catégorie doit comporter au moins 3 caractères";
-    }
-    if (!formData.coqueName ) {
-      newErrors.coqueName = "Le nom de l'option doit etre spécifier";
-
-    }if (!formData.coqueColor ) {
-      newErrors.coqueColor = "La couleur de l option doit etre specifier";
-    }
-    if (!formData.buttonName ) {
-      newErrors. buttonName = "Le nom de l'option doit etre spécifier";
-
-    }if (!formData.buttonColor ) {
-      newErrors.buttonColor = "La couleur de l option doit etre specifier";
-    }
-    if (!formData.padsName) {
-      newErrors.padsName = "Le nom de l'option doit etre spécifier";
-
-    }if (!formData.padsColor ) {
-      newErrors.padsColor= "La couleur de l option doit etre specifier";
-
-    }if (!formData.laniereName ) {
-      newErrors.laniereName = "Le nom de l'option doit etre spécifier";
-
-    }if (!formData.laniereColor ) {
-      newErrors.laniereColor = "La couleur de l option doit etre specifier";
-    }
-    if (!formData.stickersName ) {
-      newErrors.stickersName = "Le nom de l'option doit etre spécifier";
-
-    }if (!formData.stickersColor ) {
-      newErrors.stickersColor= "La couleur de l option doit etre specifier";
-    }
-    if (!formData.batterieName ) {
-      newErrors.batterieName = "Le nom de l'option doit etre spécifier";
-
-    }
-    if (!formData.batterieColor ) {
-      newErrors.batterieColor = "La couleur de l option doit etre specifier";
-    }
-    if (!formData.screenName ) {
-      newErrors.screenName = "Le nom de l'option doit etre spécifier";
-
-    }if (!formData.screenColor ) {
-      newErrors.screenColor = "La couleur de l option doit etre specifier";
-    }
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
-
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    if (validateForm()) {
-      setSubmitting(true);
-
-
-      let productId = null
-      let cartUrl = null;
-
-      // Requête API pour ajouter le produit
-      try {
-        // Préparation des données en JSON
-        const bodyData = {
-          name: formData.itemName,
-          type: formData.type, 
-          description: formData.description,
-          price: formData.price,
-          stockQuantity: formData.quantityStock,
-          category: formData.category,
-          coqueName: formData.coqueName,
-          coqueColor: formData.coqueColor,
-          buttonName: formData.buttonName,
-          buttonColor: formData.buttonColor,
-          padsName: formData.padsName,
-          padsColor: formData.padsColor,
-          laniereName: formData.laniereName,
-          laniereColor: formData.laniereColor,
-          stickersName: formData.stickersName,
-          stickersColor: formData.stickersColor,
-          batterieName: formData.batterieName,
-          batterieColor: formData.batterieColor,
-          screenName: formData.screenName,
-          screenColor: formData.screenColor,
-          sacoche: Array.isArray(formData.sacoche) ? formData.sacoche : [formData.sacoche],
-          screen_shield: Array.isArray(formData.screen_shield) ? formData.screen_shield : [formData.screen_shield],
-          silicone_shield: Array.isArray(formData.silicone_shield) ? formData.silicone_shield : [formData.silicone_shield],
-        };
-      
-        console.log(bodyData);
-        
-        const response = await fetch("http://localhost:3000/products/addProduct/", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(bodyData), // Conversion des données en JSON
-          
-        });
-        console.log(response.body);
-        
-        if (!response.ok) {
-          throw new Error("Erreur lors de l'ajout du produit");
-        }
-
-        const data = await response.json();
-        
-        productId = data.product._id;
-
-        cartUrl = `https://api-retrometroid.devprod.fr/panier/${productId}`;
-        
-
-      } catch (error) {
-        console.error("Erreur lors de l'ajout du produit:", error);
-      } finally {
-        if (cartUrl) {
-          router.push(cartUrl);
-        }
-        setSubmitting(false);
-      
-      }
->>>>>>> devv
     }
   };
 
@@ -361,7 +218,6 @@ const AddProductForm: React.FC = () => {
         {errors.price && <p>{errors.price.message}</p>}
       </div>
       <div>
-<<<<<<< HEAD
         <label className="block text-sm font-medium text-green-400">
           Quantité/Stock
         </label>
@@ -373,7 +229,6 @@ const AddProductForm: React.FC = () => {
         {errors.quantityStock && <p>{errors.quantityStock.message}</p>}
       </div>
       <div>
-<<<<<<< HEAD
         <label className="block text-sm font-medium text-green-400">
           Categorie
         </label>

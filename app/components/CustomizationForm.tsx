@@ -5,8 +5,6 @@ interface CustomizationFormProps {
   onAddToCart: (item: any) => void;
 }
 
-=======
->>>>>>> devv
 const CustomizationForm: React.FC<CustomizationFormProps> = ({
   onPriceUpdate,
   onAddToCart,

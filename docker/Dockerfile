@@ -1,20 +1,23 @@
-# Use the official Node.js image as the base image
+# Utilisez une image de base officielle de Node.js 18
 FROM node:18-alpine
 
-# Set the working directory inside the container
+# Définissez le répertoire de travail dans le conteneur
 WORKDIR /app
 
-# Copy package.json and package-lock.json to the working directory
+# Copiez le fichier package.json et package-lock.json dans le répertoire de travail
 COPY package*.json ./
 
-# Install dependencies
+# Installez les dépendances
 RUN npm install
 
-# Copy the rest of the application code to the working directory
+# Copiez le reste de l'application dans le répertoire de travail
 COPY . .
 
-# Expose the port the app runs on
-EXPOSE 5001
+# Construisez l'application Next.js
+RUN npm run build
 
-# Start the Next.js application
-CMD ["npm", "run", "dev"]
+# Exposez le port sur lequel l'application va tourner
+EXPOSE 3000
+
+# Commande pour démarrer l'application
+CMD ["npm", "start"]

@@ -20,7 +20,6 @@ const ShowOptionsPage: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
-<<<<<<< HEAD
   // Récupération des options
   useEffect(() => {
     const fetchOptions = async () => {
@@ -33,20 +32,6 @@ const ShowOptionsPage: React.FC = () => {
         setOptions(data);
       } catch (error) {
         setError("Le contenu de la page est indisponible");
-=======
-  useEffect(() => {
-    const fetchOptions = async () => {
-      try {
-        const response = await fetch("http://localhost:3000/options");
-        if (!response.ok) {
-          throw new Error("Erreur lors de la récupération des options");
-        }
-        const data = await response.json();
-        setOptions(data.allOptions);
-      } catch (error: unknown) {
-        console.error("Erreur :", error);
-        setError("Impossible de récupérer les options");
->>>>>>> devv
       } finally {
         setLoading(false);
       }
@@ -74,13 +59,9 @@ const ShowOptionsPage: React.FC = () => {
     <div>
       <NavbarBackOffice />
       <div className="container mx-auto py-12">
-<<<<<<< HEAD
         <h1 className="text-4xl font-bold text-center mb-10">
           Liste des Options
         </h1>
-=======
-        <h1 className="text-4xl font-bold text-center mb-10">Liste des Options</h1>
->>>>>>> devv
 
         {types.map((type) => {
           const filteredOptions = filterOptionsByType(type);
@@ -96,17 +77,10 @@ const ShowOptionsPage: React.FC = () => {
               {/* Carrousel défilant */}
               <div className="flex overflow-x-auto space-x-6 p-4 bg-gray-100 rounded-lg">
                 {filteredOptions.map((option) => (
-<<<<<<< HEAD
                   <OptionCard
                     key={option._id}
                     options={[option]}
                     single={true}
-=======
-                  <OptionCard 
-                    key={option._id} 
-                    options={[option]} 
-                    single={true} 
->>>>>>> devv
                   />
                 ))}
               </div>

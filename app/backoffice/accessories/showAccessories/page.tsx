@@ -18,7 +18,6 @@ const ShowAccessoriesPage: React.FC = () => {
 
   // Récupération des accessoires
   useEffect(() => {
-<<<<<<< HEAD
     const fetchAccessories = async () => {
       try {
         const response = await fetch("/api/accessories");
@@ -31,22 +30,6 @@ const ShowAccessoriesPage: React.FC = () => {
         setError("Le contenu de la page est indisponible");
       } finally {
         setLoading(false);
-=======
-
-    const fetchAccessories = async () => {
-      try {
-        const response = await fetch('http://localhost:3000/accessories/');
-        if (!response.ok) {
-          throw new Error('Erreur lors de la récupération des accessoires');
-        }
-        const data = await response.json();
-        setAccessories(data.allAccessories) 
-      } catch (error: unknown) {
-        console.error('Erreur :', error);
-        setError('Impossible de récupérer les accessoires');
-      } finally {
-        setLoading(false); // Arrête le chargement
->>>>>>> devv
       }
     };
 
@@ -68,7 +51,7 @@ const ShowAccessoriesPage: React.FC = () => {
       </div>
     );
   }
-  
+
   return (
     <div>
       <div>
