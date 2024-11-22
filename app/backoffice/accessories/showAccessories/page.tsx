@@ -18,20 +18,18 @@ const ShowAccessoriesPage: React.FC = () => {
 
   // Récupération des accessoires
   useEffect(() => {
-
     const fetchAccessories = async () => {
       try {
-        const response = await fetch('http://localhost:3000/accessories/');
+        const response = await fetch("/api/accessories");
         if (!response.ok) {
-          throw new Error('Erreur lors de la récupération des accessoires');
+          throw new Error("Failed to fetch accessories");
         }
         const data = await response.json();
-        setAccessories(data.allAccessories) 
-      } catch (error: unknown) {
-        console.error('Erreur :', error);
-        setError('Impossible de récupérer les accessoires');
+        setAccessories(data);
+      } catch (error) {
+        setError("Le contenu de la page est indisponible");
       } finally {
-        setLoading(false); // Arrête le chargement
+        setLoading(false);
       }
     };
 
@@ -53,7 +51,7 @@ const ShowAccessoriesPage: React.FC = () => {
       </div>
     );
   }
-  
+
   return (
     <div>
       <div>

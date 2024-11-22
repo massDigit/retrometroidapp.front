@@ -21,18 +21,18 @@ const ShowOptionsPage: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
+  // Récupération des options
   useEffect(() => {
     const fetchOptions = async () => {
       try {
-        const response = await fetch("http://localhost:3000/options");
+        const response = await fetch("/api/options");
         if (!response.ok) {
-          throw new Error("Erreur lors de la récupération des options");
+          throw new Error("Failed to fetch options");
         }
         const data = await response.json();
-        setOptions(data.allOptions);
-      } catch (error: unknown) {
-        console.error("Erreur :", error);
-        setError("Impossible de récupérer les options");
+        setOptions(data);
+      } catch (error) {
+        setError("Le contenu de la page est indisponible");
       } finally {
         setLoading(false);
       }
@@ -60,7 +60,9 @@ const ShowOptionsPage: React.FC = () => {
     <div>
       <NavbarBackOffice />
       <div className="container mx-auto py-12">
-        <h1 className="text-4xl font-bold text-center mb-10">Liste des Options</h1>
+        <h1 className="text-4xl font-bold text-center mb-10">
+          Liste des Options
+        </h1>
 
         {consoleTypes.map((consoleType) => {
           const filteredOptions = filterOptionsByType(consoleType);
@@ -76,10 +78,10 @@ const ShowOptionsPage: React.FC = () => {
               {/* Carrousel défilant */}
               <div className="flex overflow-x-auto space-x-6 p-4 bg-gray-100 rounded-lg">
                 {filteredOptions.map((option) => (
-                  <OptionCard 
-                    key={option._id} 
-                    options={[option]} 
-                    single={true} 
+                  <OptionCard
+                    key={option._id}
+                    options={[option]}
+                    single={true}
                   />
                 ))}
               </div>
