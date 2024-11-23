@@ -10,6 +10,8 @@ interface Option {
   optionImgBack?: string;
   optionImgSide?: string;
   price?: number;
+  type: string;
+  consoleType:String;
 }
 
 interface OptionCardProps {

@@ -1,3 +1,26 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.custom-scrollbar::-webkit-scrollbar {
+    width: 6px; /* Largeur de la barre de défilement */
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent; /* Couleur de la piste */
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background-color: #888; /* Couleur du curseur */
+    border-radius: 10px; /* Arrondir les bords du curseur */
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background-color: #555; /* Couleur du curseur au survol */
+  }
+  
+  /* Styles pour Firefox */
+  .custom-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: #888 transparent;
+  }
