@@ -167,7 +167,13 @@ const OptionsList: React.FC<OptionListProps> = ({
     fetchOptions();
   }, [consoleType, type, selectDefaultOption]);
 
-  if (loading) return <p>Chargement des options...</p>;
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-32">
+        <div className="w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+      </div>
+    );
+  }
 
   if (options.length === 0) {
     return <p>Aucune option trouvée pour {type}.</p>;

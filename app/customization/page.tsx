@@ -143,19 +143,24 @@ const CustomisationPage: React.FC = () => {
     }
   }, []);
 
-  // Fonction pour obtenir l'image à afficher
-  const getImageData = (selectedOption: any) => {
-    if (!selectedOption) return '';
+ 
+   // Fonction pour obtenir l'image à afficher
+   const getImageData = (selectedOption: any) => {
+    if (!selectedOption || !selectedOption.option) return ''; // Vérifie si l'option existe
+
     const option = selectedOption.option;
+  
     if (viewType === 'front') {
-      return option.imageDataFront;
+      return option.imageDataFront || ''; // Retourne une chaîne vide si imageDataFront est undefined
     } else if (viewType === 'side') {
-      return option.imageDataSide;
+      return option.imageDataSide || ''; // Retourne une chaîne vide si imageDataSide est undefined
     } else if (viewType === 'back') {
-      return option.imageDataBack;
+      return option.imageDataBack || ''; // Retourne une chaîne vide si imageDataBack est undefined
     }
+  
     return '';
   };
+
 
   
 
@@ -282,7 +287,9 @@ const CustomisationPage: React.FC = () => {
                   )}
                 </div>
               ) : (
-                <p>Chargement de l'aperçu...</p>
+                <div className="flex flex-col justify-center items-center">
+                  <div className="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+                </div>
               )}
 
               {/* Contrôles pour changer la vue */}
@@ -461,11 +468,8 @@ const CustomisationPage: React.FC = () => {
                   <div className="flex items-center justify-between">
                     <div className="flex items-center">
                       <h3 className="font-medium mr-2">Batterie</h3>
-                      {selectedBatterie && (
-                        <span
-                          className="w-4 h-4 rounded-full border border-gray-300"
-                          style={{ backgroundColor: selectedBatterie.color.name }}
-                        />
+                      {selectedBatterie?.option?.price && (
+                        <span>(+{selectedBatterie?.option?.price}€)</span>
                       )}
                     </div>
                     <button onClick={() => setIsBatterieExpanded(!isBatterieExpanded)}>

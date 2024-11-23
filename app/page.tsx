@@ -19,17 +19,6 @@ const Home: React.FC = () => {
           <Card />
         </section>
       </main>
-      <header>
-        <Header />
-      </header>
-      <main className="flex flex-col items-center gap-5">
-        <section className="w-full">
-          <Carousel />
-        </section>
-        <section className="w-full flex justify-center">
-          <Card />
-        </section>
-      </main>
     </div>
   );
 };
