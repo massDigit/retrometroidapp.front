@@ -64,18 +64,17 @@ const ShowOptionsPage: React.FC = () => {
     <div className="min-h-screen bg-white">
       <NavbarBackOffice />
       <div className="container mx-auto py-12">
-        <h1 className="text-4xl font-bold text-center mb-10 text-gray-900">
+        <h1 className="text-4xl font-extrabold text-center mb-8 bg-gradient-to-r from-yellow-400 via-red-500 to-pink-500 text-transparent bg-clip-text">
           Liste des Options
         </h1>
 
         {options.length === 0 ? (
-          <div className="text-center bg-black text-green-400 py-10 px-6 rounded-lg border-4 border-red-500">
-            <h2 className="text-3xl font-semibold mb-4">
+          <div className="text-center py-16 px-6 rounded-lg border-4 border-dashed border-gray-300 bg-gray-100">
+            <h2 className="text-2xl font-semibold mb-4">
               Aucune option disponible
             </h2>
             <p className="text-lg">
-              Il n'y a actuellement aucune option à afficher. Revenez plus tard
-              !
+              Ajoutez des options pour les voir apparaître ici.
             </p>
           </div>
         ) : (
