@@ -1,93 +1,105 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
+import OptionCard from "@/app/components/OptionCardBackOffice";
 import NavbarBackOffice from "@/app/components/NavbarBackOffice";
-import OptionCard from "@/app/components/option/OptionCard";
 
 interface Option {
   _id: string;
   name: string;
   description: string;
   type: string;
-  consoleType:String;
+  consoleType: string;
   price?: number;
   optionImgFront?: string;
-  optionImgBack?: string;
-  optionImgSide?: string;
 }
 
 const ShowOptionsPage: React.FC = () => {
-  const [options, setOptions] = useState<Option[]>([]);
-  const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<string | null>(null);
+  // Données en dur
+  const [options] = useState<Option[]>([
+    {
+      _id: "1",
+      name: "Manette Classique",
+      description: "Manette ergonomique pour un confort optimal.",
+      type: "Controller",
+      consoleType: "NES",
+      price: 49.99,
+      optionImgFront: "/images/nes-controller-front.jpg",
+    },
+    {
+      _id: "2",
+      name: "Coque Transparente",
+      description: "Coque translucide pour voir l'intérieur de votre console.",
+      type: "Accessory",
+      consoleType: "GBA",
+      price: 19.99,
+      optionImgFront: "/images/gba-case-front.jpg",
+    },
+    {
+      _id: "3",
+      name: "Adaptateur HDMI",
+      description: "Transformez votre console rétro en HD.",
+      type: "Accessory",
+      consoleType: "SNES",
+      price: 29.99,
+      optionImgFront: "/images/snes-hdmi-adapter.jpg",
+    },
+    {
+      _id: "4",
+      name: "Boutons Dorés",
+      description: "Des boutons dorés pour un look premium.",
+      type: "Customization",
+      consoleType: "NES",
+      price: 14.99,
+      optionImgFront: "/images/nes-golden-buttons.jpg",
+    },
+  ]);
 
-  // Récupération des options
-  useEffect(() => {
-    const fetchOptions = async () => {
-      try {
-        const response = await fetch("/api/options");
-        if (!response.ok) {
-          throw new Error("Failed to fetch options");
-        }
-        const data = await response.json();
-        setOptions(data);
-      } catch (error) {
-        setError("Le contenu de la page est indisponible");
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchOptions();
-  }, []);
-
-  if (loading) {
-    return <div>Chargement des options...</div>;
-  }
-
-  if (error) {
-    return <div>{error}</div>;
-  }
-
-  // Fonction pour filtrer les options par type
   const filterOptionsByType = (consoleType: string) => {
     return options.filter((option) => option.consoleType === consoleType);
   };
 
-  const consoleTypes = ["GBA", "NES", "SNES"]; // Liste des types que vous voulez afficher
-
+  const consoleTypes = ["GBA", "NES", "SNES"];
   return (
-    <div>
+    <div className="min-h-screen bg-white">
       <NavbarBackOffice />
       <div className="container mx-auto py-12">
-        <h1 className="text-4xl font-bold text-center mb-10">
+        <h1 className="text-4xl font-bold text-center mb-10 text-gray-900">
           Liste des Options
         </h1>
 
-        {consoleTypes.map((consoleType) => {
-          const filteredOptions = filterOptionsByType(consoleType);
+        {options.length === 0 ? (
+          <div className="text-center bg-black text-green-400 py-10 px-6 rounded-lg border-4 border-red-500">
+            <h2 className="text-3xl font-semibold mb-4">
+              Aucune option disponible
+            </h2>
+            <p className="text-lg">
+              Il n'y a actuellement aucune option à afficher. Revenez plus tard
+              !
+            </p>
+          </div>
+        ) : (
+          consoleTypes.map((consoleType) => {
+            const filteredOptions = filterOptionsByType(consoleType);
 
-          if (filteredOptions.length === 0) return null;
+            if (filteredOptions.length === 0) return null;
 
-          return (
-            <div key={consoleType} className="mb-12">
-              <h2 className="text-3xl font-semibold mb-6">
-                Options {consoleType === "GBA" ? "Game Boy Advance" : consoleType}
-              </h2>
+            return (
+              <div key={consoleType} className="mb-12">
+                <h2 className="text-3xl font-semibold mb-6 text-gray-800">
+                  Options{" "}
+                  {consoleType === "GBA" ? "Game Boy Advance" : consoleType}
+                </h2>
 
-              {/* Carrousel défilant */}
-              <div className="flex overflow-x-auto space-x-6 p-4 bg-gray-100 rounded-lg">
-                {filteredOptions.map((option) => (
-                  <OptionCard
-                    key={option._id}
-                    options={[option]}
-                    single={true}
-                  />
-                ))}
+                <div className="flex overflow-x-auto space-x-6 p-4 bg-black border-4 border-green-600 rounded-lg scrollbar-hide">
+                  {filteredOptions.map((option) => (
+                    <OptionCard key={option._id} option={option} />
+                  ))}
+                </div>
               </div>
-            </div>
-          );
-        })}
+            );
+          })
+        )}
       </div>
     </div>
   );
