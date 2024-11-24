@@ -12,7 +12,7 @@ interface Accessory {
 }
 
 const ShowAccessoriesPage: React.FC = () => {
-  // Données en dur
+  // Données en dur (à remplacer par des appels API)
   const [accessories] = useState<Accessory[]>([
     {
       id: 1,

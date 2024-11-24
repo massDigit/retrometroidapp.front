@@ -15,7 +15,7 @@ interface Option {
 }
 
 const ShowOptionsPage: React.FC = () => {
-  // Données en dur
+  // Données en dur (à remplacer par des appels API)
   const [options] = useState<Option[]>([
     {
       _id: "1",
