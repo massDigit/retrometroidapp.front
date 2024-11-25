@@ -11,9 +11,9 @@ interface FormValues {
   consoleType: string;
   price: number;
   color: string;
-  imagePathFront: string;
-  imagePathSide: string;
-  imagePathBack: string;
+  imagePathFront?: string;
+  imagePathSide?: string;
+  imagePathBack?: string;
 }
 
 // Validation Schema using Yup
