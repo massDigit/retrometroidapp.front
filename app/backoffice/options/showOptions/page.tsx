@@ -1,7 +1,8 @@
 "use client";
 
 import React, { useState } from "react";
-import OptionCard from "@/app/components/OptionCardBackOffice";
+import { Toaster, toast } from "react-hot-toast";
+import { FaEdit, FaTrash } from "react-icons/fa";
 import NavbarBackOffice from "@/app/components/NavbarBackOffice";
 
 interface Option {
@@ -16,7 +17,7 @@ interface Option {
 
 const ShowOptionsPage: React.FC = () => {
   // Données en dur (à remplacer par des appels API)
-  const [options] = useState<Option[]>([
+  const [options, setOptions] = useState<Option[]>([
     {
       _id: "1",
       name: "Manette Classique",
@@ -55,13 +56,29 @@ const ShowOptionsPage: React.FC = () => {
     },
   ]);
 
+  // Fonction pour supprimer une option
+  const handleDelete = (id: string) => {
+    const updatedOptions = options.filter((option) => option._id !== id);
+    setOptions(updatedOptions);
+    toast.success("Option supprimée avec succès");
+    // Rajouter l'appel d'API pour modifier les données de l'option
+  };
+
+  // Fonction pour modifier une option
+  const handleEdit = (id: string) => {
+    toast.success("Modification effectuée avec succès");
+    // Rajouter l'appel d'API pour modifier les données de l'option
+  };
+
   const filterOptionsByType = (consoleType: string) => {
     return options.filter((option) => option.consoleType === consoleType);
   };
 
   const consoleTypes = ["GBA", "NES", "SNES"];
+
   return (
     <div className="min-h-screen bg-white">
+      <Toaster />
       <NavbarBackOffice />
       <div className="container mx-auto py-12">
         <h1 className="text-4xl font-extrabold text-center mb-8 bg-gradient-to-r from-yellow-400 via-red-500 to-pink-500 text-transparent bg-clip-text">
@@ -90,9 +107,43 @@ const ShowOptionsPage: React.FC = () => {
                   {consoleType === "GBA" ? "Game Boy Advance" : consoleType}
                 </h2>
 
-                <div className="flex overflow-x-auto space-x-6 p-4 bg-black border-4 border-green-600 rounded-lg scrollbar-hide">
+                <div className="flex overflow-x-auto space-x-6 p-4 bg-gray-100 border-4 border-gray-400 rounded-lg scrollbar-hide">
                   {filteredOptions.map((option) => (
-                    <OptionCard key={option._id} option={option} />
+                    <div
+                      key={option._id}
+                      className="bg-white shadow-md rounded-lg p-6 border border-gray-300 flex flex-col items-center relative"
+                    >
+                      <img
+                        src={option.optionImgFront}
+                        alt={option.name}
+                        className="w-32 h-32 object-cover mb-4 rounded-md"
+                      />
+                      <h3 className="text-lg font-bold mb-2">{option.name}</h3>
+                      <p className="text-gray-600 text-center mb-4">
+                        {option.description}
+                      </p>
+                      {option.price && (
+                        <p className="text-green-600 font-semibold">
+                          Prix : {option.price.toFixed(2)} €
+                        </p>
+                      )}
+                      <div className="flex mt-4 space-x-4">
+                        <button
+                          onClick={() => handleEdit(option._id)}
+                          className="text-blue-500 hover:text-blue-700"
+                          title="Modifier"
+                        >
+                          <FaEdit size={20} />
+                        </button>
+                        <button
+                          onClick={() => handleDelete(option._id)}
+                          className="text-red-500 hover:text-red-700"
+                          title="Supprimer"
+                        >
+                          <FaTrash size={20} />
+                        </button>
+                      </div>
+                    </div>
                   ))}
                 </div>
               </div>

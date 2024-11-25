@@ -1,6 +1,8 @@
 "use client";
 
 import React, { useState } from "react";
+import { FaEdit, FaTrash } from "react-icons/fa";
+import { Toaster, toast } from "react-hot-toast";
 import NavbarBackOffice from "@/app/components/NavbarBackOffice";
 
 interface Accessory {
@@ -12,8 +14,8 @@ interface Accessory {
 }
 
 const ShowAccessoriesPage: React.FC = () => {
-  // Données en dur (à remplacer par des appels API)
-  const [accessories] = useState<Accessory[]>([
+  // Données en dur (à remplacer par l'appels API)
+  const [accessories, setAccessories] = useState<Accessory[]>([
     {
       id: 1,
       name: "Manette Classique",
@@ -38,8 +40,25 @@ const ShowAccessoriesPage: React.FC = () => {
     },
   ]);
 
+  // Fonction pour supprimer un accessoire
+  const handleDelete = (id: number) => {
+    const updatedAccessories = accessories.filter(
+      (accessory) => accessory.id !== id
+    );
+    setAccessories(updatedAccessories);
+    toast.success("Accessoire supprimé avec succès !");
+    // Rajouter l'appel d'API pour supprimer les données de l'accessoire
+  };
+
+  // Fonction pour modifier un accessoire
+  const handleEdit = (id: number) => {
+    toast.success("Modification effectuée avec succès !");
+    // Rajouter l'appel d'API pour modifier les données de l'accessoire
+  };
+
   return (
     <div className="min-h-screen bg-white text-gray-900">
+      <Toaster />
       <NavbarBackOffice />
       <div className="container mx-auto py-12">
         <h1 className="text-4xl font-extrabold text-center mb-8 bg-gradient-to-r from-yellow-400 via-red-500 to-pink-500 text-transparent bg-clip-text">
@@ -60,7 +79,7 @@ const ShowAccessoriesPage: React.FC = () => {
             {accessories.map((accessory) => (
               <div
                 key={accessory.id}
-                className="bg-gray-800 text-white p-6 rounded-lg shadow-lg border-4 border-purple-500 transition-transform transform hover:scale-105"
+                className="bg-gray-800 text-white p-6 rounded-lg shadow-lg border-4 border-purple-500 transition-transform transform hover:scale-105 relative"
               >
                 <h2 className="text-2xl font-bold mb-4 text-center bg-purple-500 text-white p-2 rounded-md">
                   {accessory.name}
@@ -72,6 +91,22 @@ const ShowAccessoriesPage: React.FC = () => {
                 <p className="text-green-400 font-bold text-lg">
                   Prix : {accessory.price.toFixed(2)} €
                 </p>
+                <div className="absolute bottom-4 right-4 flex space-x-2">
+                  <button
+                    onClick={() => handleEdit(accessory.id)}
+                    className="text-blue-400 hover:text-blue-600"
+                    title="Modifier"
+                  >
+                    <FaEdit size={20} />
+                  </button>
+                  <button
+                    onClick={() => handleDelete(accessory.id)}
+                    className="text-red-400 hover:text-red-600"
+                    title="Supprimer"
+                  >
+                    <FaTrash size={20} />
+                  </button>
+                </div>
               </div>
             ))}
           </div>
