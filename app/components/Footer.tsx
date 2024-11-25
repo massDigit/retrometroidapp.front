@@ -57,7 +57,7 @@ const Footer: React.FC = () => {
           </div>
         </div>
 
-        <div className="footer-legal flex-1 text-center sm:text-left">
+        <div className="flex-1 text-center sm:text-left">
           <ul className="space-y-2 text-gray-300">
             <li>
               <a

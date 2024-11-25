@@ -1,4 +1,4 @@
-import "../app/styles/globals.css"; // Assurez-vous que ce chemin est correct
+import "./globals.css";
 import { ReactNode } from "react";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";

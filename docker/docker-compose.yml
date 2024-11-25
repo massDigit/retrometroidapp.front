@@ -1,12 +1,12 @@
 services:
   app:
     build:
-      context: ..
-      dockerfile: docker/Dockerfile
+      context: .
+      dockerfile: Dockerfile
     ports:
-      - "5001:5001"
-    environment:
-      - NODE_ENV=development
+      - "5000:5000"
     volumes:
-      - ..:/app
+      - .:/app
       - /app/node_modules
+    environment:
+      NODE_ENV: development

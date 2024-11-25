@@ -5,7 +5,7 @@ import Card from "./components/Card";
 import Header from "./components/Header";
 import Carousel from "./components/Caroussel";
 
-const Page = () => {
+const Home: React.FC = () => {
   return (
     <div>
       <header>
@@ -23,4 +23,4 @@ const Page = () => {
   );
 };
 
-export default Page;
+export default Home;
