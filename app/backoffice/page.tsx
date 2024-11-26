@@ -2,7 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
-import { FaShoppingCart, FaMoneyBill, FaBoxOpen, FaUser } from "react-icons/fa";
+import { FaShoppingCart, FaBoxOpen } from "react-icons/fa";
 import NavbarBackOffice from "../components/NavbarBackOffice";
 
 const Dashboard: React.FC = () => {
@@ -25,14 +25,6 @@ const Dashboard: React.FC = () => {
             <FaBoxOpen className="text-3xl mb-4" />
             <h3 className="text-lg font-semibold mb-2">Produits en stock</h3>
             <p className="text-3xl font-bold">10</p>
-          </div>
-
-          <div className="bg-gradient-to-r from-red-400 to-pink-500 p-6 rounded-lg shadow-lg transform hover:scale-105 transition duration-300 text-white">
-            <FaUser className="text-3xl mb-4" />
-            <h3 className="text-lg font-semibold mb-2">
-              Nouveaux utilisateurs
-            </h3>
-            <p className="text-3xl font-bold">23</p>
           </div>
         </div>
 

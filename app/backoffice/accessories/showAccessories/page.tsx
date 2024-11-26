@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import { Toaster, toast } from "react-hot-toast";
+import Pagination from "@/app/components/Pagination";
 import NavbarBackOffice from "@/app/components/NavbarBackOffice";
 
 interface Accessory {
@@ -14,31 +15,68 @@ interface Accessory {
 }
 
 const ShowAccessoriesPage: React.FC = () => {
-  // Données en dur (à remplacer par l'appels API)
+  // Données en dur ( à remplacer par la requête API )
   const [accessories, setAccessories] = useState<Accessory[]>([
     {
       id: 1,
       name: "Manette Classique",
-      description: "Une manette ergonomique et durable pour les jeux rétro.",
+      description: "Une manette ergonomique.",
       price: 29.99,
       category: "Manettes",
     },
     {
       id: 2,
       name: "Coque Transparente",
-      description: "Protégez votre console tout en affichant son intérieur.",
+      description: "Protégez votre console.",
       price: 14.99,
       category: "Accessoires",
     },
     {
       id: 3,
       name: "Adaptateur HDMI",
-      description:
-        "Jouez à vos classiques sur un écran moderne avec cet adaptateur.",
+      description: "Jouez sur un écran moderne.",
       price: 39.99,
       category: "Câbles",
     },
+    {
+      id: 4,
+      name: "Chargeur Portable",
+      description: "Rechargez votre console.",
+      price: 19.99,
+      category: "Accessoires",
+    },
+    {
+      id: 5,
+      name: "Manette Sans Fil",
+      description: "Pour plus de liberté.",
+      price: 49.99,
+      category: "Manettes",
+    },
+    {
+      id: 6,
+      name: "Câble USB",
+      description: "Connexion rapide et efficace.",
+      price: 9.99,
+      category: "Câbles",
+    },
+    {
+      id: 7,
+      name: "Écran Protecteur",
+      description: "Protégez votre écran.",
+      price: 12.99,
+      category: "Accessoires",
+    },
   ]);
+
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const itemsPerPage = 6;
+
+  const totalPages = Math.ceil(accessories.length / itemsPerPage);
+
+  const paginatedAccessories = accessories.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
 
   // Fonction pour supprimer un accessoire
   const handleDelete = (id: number) => {
@@ -46,18 +84,18 @@ const ShowAccessoriesPage: React.FC = () => {
       (accessory) => accessory.id !== id
     );
     setAccessories(updatedAccessories);
+    // Rajouter l'appel d'API pour supprimer l'accessoire
     toast.success("Accessoire supprimé avec succès !");
-    // Rajouter l'appel d'API pour supprimer les données de l'accessoire
   };
 
   // Fonction pour modifier un accessoire
   const handleEdit = (id: number) => {
+    // Rajouter la redirection vers la page de modification de l'accessoire
     toast.success("Modification effectuée avec succès !");
-    // Rajouter l'appel d'API pour modifier les données de l'accessoire
   };
 
   return (
-    <div className="min-h-screen bg-white text-gray-900">
+    <div className="min-h-screen bg-white">
       <Toaster />
       <NavbarBackOffice />
       <div className="container mx-auto py-12">
@@ -65,7 +103,7 @@ const ShowAccessoriesPage: React.FC = () => {
           Liste des Accessoires
         </h1>
 
-        {accessories.length === 0 ? (
+        {paginatedAccessories.length === 0 ? (
           <div className="text-center py-16 px-6 rounded-lg border-4 border-dashed border-gray-300 bg-gray-100">
             <h2 className="text-2xl font-semibold mb-4">
               Aucun accessoire disponible
@@ -76,7 +114,7 @@ const ShowAccessoriesPage: React.FC = () => {
           </div>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            {accessories.map((accessory) => (
+            {paginatedAccessories.map((accessory) => (
               <div
                 key={accessory.id}
                 className="bg-gray-800 text-white p-6 rounded-lg shadow-lg border-4 border-purple-500 transition-transform transform hover:scale-105 relative"
@@ -111,6 +149,12 @@ const ShowAccessoriesPage: React.FC = () => {
             ))}
           </div>
         )}
+
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChange={(page) => setCurrentPage(page)}
+        />
       </div>
     </div>
   );

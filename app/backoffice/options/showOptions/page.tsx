@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { Toaster, toast } from "react-hot-toast";
 import { FaEdit, FaTrash } from "react-icons/fa";
+import Pagination from "@/app/components/Pagination";
 import NavbarBackOffice from "@/app/components/NavbarBackOffice";
 
 interface Option {
@@ -16,7 +17,7 @@ interface Option {
 }
 
 const ShowOptionsPage: React.FC = () => {
-  // Données en dur (à remplacer par des appels API)
+  // Données en dur (à remplacer par la requête API)
   const [options, setOptions] = useState<Option[]>([
     {
       _id: "1",
@@ -56,25 +57,29 @@ const ShowOptionsPage: React.FC = () => {
     },
   ]);
 
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const itemsPerPage = 6;
+
+  const totalPages = Math.ceil(options.length / itemsPerPage);
+
+  const paginatedOptions = options.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
+
   // Fonction pour supprimer une option
   const handleDelete = (id: string) => {
     const updatedOptions = options.filter((option) => option._id !== id);
     setOptions(updatedOptions);
+    // Rajouter l'appel d'API pour supprimer l'option
     toast.success("Option supprimée avec succès");
-    // Rajouter l'appel d'API pour modifier les données de l'option
   };
 
   // Fonction pour modifier une option
   const handleEdit = (id: string) => {
+    // Rajouter la redirection vers la page de modification de l'option
     toast.success("Modification effectuée avec succès");
-    // Rajouter l'appel d'API pour modifier les données de l'option
   };
-
-  const filterOptionsByType = (consoleType: string) => {
-    return options.filter((option) => option.consoleType === consoleType);
-  };
-
-  const consoleTypes = ["GBA", "NES", "SNES"];
 
   return (
     <div className="min-h-screen bg-white">
@@ -85,7 +90,7 @@ const ShowOptionsPage: React.FC = () => {
           Liste des Options
         </h1>
 
-        {options.length === 0 ? (
+        {paginatedOptions.length === 0 ? (
           <div className="text-center py-16 px-6 rounded-lg border-4 border-dashed border-gray-300 bg-gray-100">
             <h2 className="text-2xl font-semibold mb-4">
               Aucune option disponible
@@ -95,61 +100,52 @@ const ShowOptionsPage: React.FC = () => {
             </p>
           </div>
         ) : (
-          consoleTypes.map((consoleType) => {
-            const filteredOptions = filterOptionsByType(consoleType);
-
-            if (filteredOptions.length === 0) return null;
-
-            return (
-              <div key={consoleType} className="mb-12">
-                <h2 className="text-3xl font-semibold mb-6 text-gray-800">
-                  Options{" "}
-                  {consoleType === "GBA" ? "Game Boy Advance" : consoleType}
-                </h2>
-
-                <div className="flex overflow-x-auto space-x-6 p-4 bg-gray-100 border-4 border-gray-400 rounded-lg scrollbar-hide">
-                  {filteredOptions.map((option) => (
-                    <div
-                      key={option._id}
-                      className="bg-white shadow-md rounded-lg p-6 border border-gray-300 flex flex-col items-center relative"
-                    >
-                      <img
-                        src={option.optionImgFront}
-                        alt={option.name}
-                        className="w-32 h-32 object-cover mb-4 rounded-md"
-                      />
-                      <h3 className="text-lg font-bold mb-2">{option.name}</h3>
-                      <p className="text-gray-600 text-center mb-4">
-                        {option.description}
-                      </p>
-                      {option.price && (
-                        <p className="text-green-600 font-semibold">
-                          Prix : {option.price.toFixed(2)} €
-                        </p>
-                      )}
-                      <div className="flex mt-4 space-x-4">
-                        <button
-                          onClick={() => handleEdit(option._id)}
-                          className="text-blue-500 hover:text-blue-700"
-                          title="Modifier"
-                        >
-                          <FaEdit size={20} />
-                        </button>
-                        <button
-                          onClick={() => handleDelete(option._id)}
-                          className="text-red-500 hover:text-red-700"
-                          title="Supprimer"
-                        >
-                          <FaTrash size={20} />
-                        </button>
-                      </div>
-                    </div>
-                  ))}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            {paginatedOptions.map((option) => (
+              <div
+                key={option._id}
+                className="bg-white shadow-md rounded-lg p-6 border border-gray-300 flex flex-col items-center relative"
+              >
+                <img
+                  src={option.optionImgFront}
+                  alt={option.name}
+                  className="w-32 h-32 object-cover mb-4 rounded-md"
+                />
+                <h3 className="text-lg font-bold mb-2">{option.name}</h3>
+                <p className="text-gray-600 text-center mb-4">
+                  {option.description}
+                </p>
+                {option.price && (
+                  <p className="text-green-600 font-semibold">
+                    Prix : {option.price.toFixed(2)} €
+                  </p>
+                )}
+                <div className="flex mt-4 space-x-4">
+                  <button
+                    onClick={() => handleEdit(option._id)}
+                    className="text-blue-500 hover:text-blue-700"
+                    title="Modifier"
+                  >
+                    <FaEdit size={20} />
+                  </button>
+                  <button
+                    onClick={() => handleDelete(option._id)}
+                    className="text-red-500 hover:text-red-700"
+                    title="Supprimer"
+                  >
+                    <FaTrash size={20} />
+                  </button>
                 </div>
               </div>
-            );
-          })
+            ))}
+          </div>
         )}
+
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChange={(page) => setCurrentPage(page)}
+        />
       </div>
     </div>
   );

@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { Toaster, toast } from "react-hot-toast";
 import { FaEdit, FaTrash } from "react-icons/fa";
+import Pagination from "@/app/components/Pagination";
 import NavbarBackOffice from "@/app/components/NavbarBackOffice";
 
 interface Color {
@@ -80,24 +81,34 @@ const ShowProductsPage: React.FC = () => {
     },
   ]);
 
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const itemsPerPage = 6;
+
+  const totalPages = Math.ceil(products.length / itemsPerPage);
+
+  const paginatedProducts = products.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
+
   // Fonction pour supprimer un produit
   const handleDelete = (id: string) => {
     const updatedProducts = products.filter((product) => product._id !== id);
     setProducts(updatedProducts);
-    toast.success("Produit supprimé avec succès");
     // Rajouter l'appel d'API pour supprimer les données du produit
+    toast.success("Produit supprimé avec succès");
   };
 
   // Fonction pour modifier un produit
   const handleEdit = (id: string) => {
-    toast.success("Modification effectuée avec succès");
     // Rajouter l'appel d'API pour modifier les données du produit
+    toast.success("Modification effectuée avec succès");
   };
 
   return (
     <div>
       <Toaster />
-      <div className="min-h-screen bg-white text-gray-900">
+      <div className="min-h-screen bg-white">
         <NavbarBackOffice />
         <div className="container mx-auto py-12">
           <h1 className="text-4xl font-extrabold text-center mb-10 text-transparent bg-clip-text bg-gradient-to-r from-green-400 via-blue-500 to-purple-500 drop-shadow-md">
@@ -118,14 +129,14 @@ const ShowProductsPage: React.FC = () => {
                 </tr>
               </thead>
               <tbody>
-                {products.length === 0 ? (
+                {paginatedProducts.length === 0 ? (
                   <tr>
                     <td colSpan={7} className="text-center py-6 text-red-500">
                       Aucun produit n'a été ajouté pour le moment.
                     </td>
                   </tr>
                 ) : (
-                  products.map((product) => (
+                  paginatedProducts.map((product) => (
                     <tr
                       key={product._id}
                       className="hover:bg-gradient-to-r hover:from-green-200 hover:to-blue-200 transition-all"
@@ -190,6 +201,12 @@ const ShowProductsPage: React.FC = () => {
               </tbody>
             </table>
           </div>
+
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={(page) => setCurrentPage(page)}
+          />
         </div>
       </div>
     </div>
