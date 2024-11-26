@@ -8,7 +8,7 @@
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
 ![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)
 
-## Langues/langages
+## Langues/Languages 🌍
 
 - [English version](#english-version)
 - [Version française](#version-française)
@@ -17,7 +17,7 @@
 
 ## Description
 
-**RetroMetroid Customs** is a site for customizing retro controllers and other classic consoles. It lets users configure their own controllers by customizing various aspects (shell, screen, buttons, accessories, etc.) and place orders online. The site also includes back-office management functions. 
+**RetroMetroid Customs** is a platform for customizing retro controllers and consoles. Users can configure their own controllers by customizing shells, screens, buttons, and accessories. They can place orders online, and administrators can manage the products via a back-office dashboard.
 
 ## Table of Contents
 
@@ -27,55 +27,59 @@
 - [Prerequisites](#prerequisites)
 - [Getting Started](#getting-started)
 - [Docker Setup](#docker-setup)
+  
+## Features 🚀
 
-## Features
-
-- Controller customization : Users can choose from various options to configure their controllers.
-- Shopping cart: An interactive shopping cart with personalized item management.
-- Back-office: A dashboard for managing products, options and accessories.
-- Pages: Includes login, registration, personalization, shopping cart and product management pages.
+- **Controller customization**: Configure your controllers with various options.
+- **Shopping cart**: Interactive cart for managing personalized items.
+- **Back-office management**: Dashboard for administrators to manage products, options, and accessories.
+- **Pages included**:
+  - Login & Registration
+  - Customization
+  - Shopping cart
+  - Product management
   
 ## Technologies Used 🧱
 
-- **React**: A JavaScript library for building user interfaces.
-- **Next.js**: A React framework for production.
-- **TypeScript**: A typed superset of JavaScript that compiles to plain JavaScript.
-- **React Hook Form**: Performant, flexible and extensible forms with easy-to-use validation.
-- **Yup**: A JavaScript schema builder for value parsing and validation.
-- **Tailwind CSS**: A utility-first CSS framework for rapid UI development.
+- **React**: JavaScript library for building interactive UIs.
+- **Next.js**: Framework for production-ready React apps with server-side rendering.
+- **TypeScript**: Strongly-typed JavaScript for better code reliability.
+- **React Hook Form**: Performant form handling with validation.
+- **Yup**: Schema builder for data validation.
+- **Tailwind CSS**: Utility-first CSS for responsive design.
+- **Docker**: Simplified app containerization and deployment.
 
 ## Prerequisites
 
-Before you begin, ensure you have met the following requirements:
+Before starting, ensure you have the following installed:
 
-- You have installed :
-  - Node.js,
-  - npm/yarn
-  - Docker
+- Node.js
+- npm or Yarn
+- Docker
 
-## Getting Started
+## Getting Started 💻
 
-1. Clone the repository:
+1. Clone the repository: 
 
 ```
 git clone https://github.com/massDigit/retrometroidapp.front.git
 ```
 
-2. Go to the project directory :
+2. Navigate to the project directory:
 
 ```
 cd retrometroidapp.front
 ```   
 
-3. Install the dependencies :
+3. Install the dependencies:
    
-  if you use npm :
+  Using npm: 
 
 ```
 npm install
 ```
 
-  or if you use yarn :
+  Or using Yarn: 
 
 ```
 yarn install
@@ -83,27 +87,27 @@ yarn install
 
 4. Run the development server:
 
-   if you use npm :
+   Using npm: 
 
 ```
 npm run dev
 ```
 
-or if you use yarn :
+Or using Yarn: 
 
 ```
 yarn dev
 ```
 
-5. Open your browser at the following address :
+5. Open your browser and go to: 
    
 ```
 http://localhost:3000
 ```
    
-## Docker Setup
+## Docker Setup 🐳
 
-To run the application using Docker, use the following commands:
+To run the application with Docker:
 
 ```
 docker-compose up --build
@@ -113,46 +117,49 @@ docker-compose up --build
 
 ## Description
 
-**RetroMetroid Customs** est un site de personnalisation de manettes rétro et d'autres consoles classiques. Il permet aux utilisateurs de configurer leurs propres manettes en personnalisant différents aspects (coque, écran, boutons, accessoires, etc.) et de passer commande en ligne. Le site inclut également des fonctionnalités de gestion pour l'administrateur (back-office).
+**RetroMetroid Customs** est une plateforme de personnalisation de manettes rétro et consoles classiques. Les utilisateurs peuvent configurer leurs propres manettes en personnalisant les coques, écrans, boutons et accessoires. Ils peuvent passer commande en ligne, et les administrateurs peuvent gérer les produits via un tableau de bord.
 
 ## Table of Contents
 
 - [Description](#description)
 - [Fonctionnalités](#fonctionnalités)
-- [Technologies Utilisées](#Technologies-Utilisées)
+- [Technologies Utilisées](#technologies-Utilisées)
 - [Pré-requis](#pré-requis)
 - [Getting Started](#getting-started)
 - [Configuration Docker](#configuration-docker)
 
-## Fonctionnalités
+## Fonctionnalités 🚀
 
-- Personnalisation des manettes : Les utilisateurs peuvent choisir parmi différentes options pour configurer leurs manettes.
-- Panier d'achat : Un panier d'achat interactif avec gestion des articles personnalisés.
-- Back-office : Un tableau de bord pour gérer les produits, les options et les accessoires.
-- Pages : Inclus les pages de connexion, inscription, personnalisation, panier, et gestion des produits.
+- **Personnalisation des manettes** : Configurez vos manettes avec différentes options.
+- **Panier d'achat** : Panier interactif pour gérer vos articles personnalisés.
+- **Gestion back-office** : Tableau de bord pour administrateurs (gestion des produits, options et accessoires).
+- **Pages incluses** :
+  - Connexion & Inscription
+  - Personnalisation
+  - Panier
+  - Gestion des produits
 
 ## Technologies Utilisées 🧱
 
-- **React**: 
-- **Next.js**: Framework React pour le développement d'applications web.
-- **TypeScript**: Langage de programmation avec typage statique.
-- **React Hook Form**: 
-- **Yup**: 
-- **Tailwind CSS**: Framework CSS pour une mise en page réactive.
-- **React Icons** : Librairie d'icônes pour React.
+- **React** : Librairie JavaScript pour créer des interfaces interactives.
+- **Next.js** : Framework pour des applications React prêtes pour la production.
+- **TypeScript** : Superset de JavaScript pour un typage strict.
+- **React Hook Form** : Gestion performante des formulaires avec validation.
+- **Yup** : Constructeur de schémas pour valider les données.
+- **Tailwind CSS** : Framework CSS utilitaire pour une conception réactive.
+- **Docker** : Conteneurisation et déploiement simplifiés.
   
 ## Pré-requis
 
-Avant de commencer, assurez-vous d'avoir rempli les conditions suivantes :
+Avant de commencer, assurez-vous d'avoir :
 
-- Tu dois avoir déjà installer :
-  - Node.js,
-  - npm/yarn
-  - Docker
+- **Node.js** (dernière version stable recommandée)
+- **npm** ou **Yarn**
+- **Docker**
 
 ## Getting Started
 
-1. Clonez le projet :
+1. Clonez le dépôt :
 
 ```
 git clone https://github.com/massDigit/retrometroidapp.front.git
@@ -164,14 +171,14 @@ git clone https://github.com/massDigit/retrometroidapp.front.git
 cd retrometroidapp.front
 ```
 
-3. Run the development server :
+3. Installez les dépendances :
 
-  si tu utilise npm :
+  Avec npm :
 ```
 npm install
 ```
 
-or si tu utilise yarn :
+Ou avec Yarn :
 
 ```
 yarn install
@@ -179,27 +186,27 @@ yarn install
 
 4. Lancez le serveur de développement :
 
-  si tu utilise npm :
+  Avec npm :
   
 ```
 npm run dev
 ```
 
-  or si tu utilise yarn :
+  Ou avec Yarn :
 
 ```
 yarn dev
 ```
 
-5. Ouvrez votre navigateur à l'adresse suivante :
+5. Ouvrez votre navigateur et accédez à l'URL suivante :
    
 ```
 http://localhost:3000
 ```
 
-## Configuration Docker
+## Configuration Docker 🐳
 
-Pour exécuter l'application à l'aide de Docker, utilisez les commandes suivantes :
+Lancez Docker Compose pour démarrer l'application :
 
 ```
 docker-compose up --build
