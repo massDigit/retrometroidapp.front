@@ -1,32 +1,30 @@
 import "./globals.css";
-import localFont from "next/font/local";
+import { ReactNode } from "react";
+import type { Metadata } from "next";
+import { Inter } from "next/font/google";
+import Footer from "./components/Footer";
 
-const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-  weight: "100 900",
-});
+const inter = Inter({ subsets: ["latin"] });
 
-import Footer from "../components/Footer";
-import Header from "../components/Header";
-
-export const metadata = {
-  title: "Car Hub",
-  description: "Discover world's best car showcase application",
+export const metadata: Metadata = {
+  title: "retrometroid",
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+interface LayoutProps {
+  children: ReactNode;
+}
+
+const Layout: React.FC<LayoutProps> = ({ children }) => {
   return (
     <html lang="en">
-      <body className={`relative ${geistMono.variable}`}>
-        <Header />
-        {children}
-        <Footer />
+      <body className={`${inter.className}`}>
+        <div className="flex flex-col min-h-screen">
+          <main className="flex-grow">{children}</main>
+          <Footer />
+        </div>
       </body>
     </html>
   );
-}
+};
+
+export default Layout;
