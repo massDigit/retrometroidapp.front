@@ -209,6 +209,7 @@ const CustomisationPage: React.FC = () => {
       const revokeOptionImages = (selectedOption: any) => {
         if (selectedOption && selectedOption.option) {
           const option = selectedOption.option;
+          console.log(option.imageDataFront)
           if (option.imageDataFront) URL.revokeObjectURL(option.imageDataFront);
           if (option.imageDataBack) URL.revokeObjectURL(option.imageDataBack);
           if (option.imageDataSide) URL.revokeObjectURL(option.imageDataSide);

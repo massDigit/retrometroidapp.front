@@ -62,6 +62,7 @@ const OptionsList: React.FC<OptionListProps> = ({
 
           if (option.optionImgFront) {
             const imageUrlFront = baseUrl + option.optionImgFront;
+            console.log(imageUrlFront)
             imagePromises.push(
               fetch(imageUrlFront)
                 .then((res) => {
@@ -139,13 +140,14 @@ const OptionsList: React.FC<OptionListProps> = ({
         const response = await fetch(
           `${baseUrl}/options/getOptionsByConsoleType?consoleType=${consoleType}`
         );
+       
         if (!response.ok) {
           throw new Error(
             `Erreur lors de la récupération des options: ${response.statusText}`
           );
         }
         const data: Option[] = await response.json();
-
+        
         const filteredOptions = data.filter((option) => option.type === type);
         setOptions(filteredOptions || []);
         setLoading(false);
